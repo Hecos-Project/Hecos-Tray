@@ -7,7 +7,7 @@
 
 
 # Launch the Hecos core service automatically when the tray starts
-start_hecos_on_launch = false
+start_hecos_on_launch = true
 
 # Open the web browser to the Hecos UI when the service comes online
 autoopen_webui = false
@@ -32,3 +32,7 @@ use_daemon = true
 
 # Enable full ANSI colour output in the live-log tab
 full_color_logs = false
+
+autoopen_dashboard = true
+
+start_tray_on_os_boot = true

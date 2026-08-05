@@ -181,3 +181,34 @@ def get_named_executable(name: str, base_exe: str = None) -> str:
         return target_path
     except Exception:
         return base_exe
+
+def set_os_startup(enable: bool):
+    import sys
+    if sys.platform != "win32":
+        return
+        
+    try:
+        startup_dir = os.path.join(os.environ.get("APPDATA", ""), "Microsoft", "Windows", "Start Menu", "Programs", "Startup")
+        if not os.path.exists(startup_dir):
+            return
+            
+        vbs_path = os.path.join(startup_dir, "HecosTray.vbs")
+        if enable:
+            _this_dir = os.path.dirname(os.path.abspath(__file__))
+            tray_root = os.path.dirname(_this_dir)
+            bat_path = os.path.join(tray_root, "START_HECOS_TRAY_WIN.bat")
+            
+            # Runs the bat file completely hidden and from the correct working directory
+            vbs_content = (
+                f'Set WshShell = CreateObject("WScript.Shell")\n'
+                f'WshShell.CurrentDirectory = "{tray_root}"\n'
+                f'WshShell.Run chr(34) & "{bat_path}" & chr(34), 0\n'
+                f'Set WshShell = Nothing'
+            )
+            with open(vbs_path, "w", encoding="utf-8") as f_vbs:
+                f_vbs.write(vbs_content)
+        else:
+            if os.path.exists(vbs_path):
+                os.remove(vbs_path)
+    except Exception as e:
+        print(f"[TRAY] Error toggling OS startup: {e}")

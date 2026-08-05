@@ -1,5 +1,6 @@
 @echo off
 setlocal
+cd /d "%~dp0"
 title Hecos - Restart Tray Icon
 color 0B
 

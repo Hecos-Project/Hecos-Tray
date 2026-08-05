@@ -48,7 +48,8 @@ PLUGINS_YAML        = os.path.join(_ROOT, "hecos", "config", "data", "plugins.ya
 #  Settings — default values
 # ─────────────────────────────────────────────────────────────
 _DEFAULTS: dict = {
-    "start_hecos_on_launch":    False,  # launch Hecos python subprocess at tray startup
+    "start_tray_on_os_boot":    True,   # auto-start Tray on Windows boot
+    "start_hecos_on_launch":    True,   # launch Hecos python subprocess at tray startup
     "autoopen_webui":           False,  # open the browser automatically when service comes online
     "autoopen_ai_browser":      False,  # open Playwright Chromium browser when service comes online
     "auto_launch_chrome_for_ai": False, # auto-launch Chrome in AI-Ready (CDP) mode on startup
