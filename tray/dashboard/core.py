@@ -153,7 +153,7 @@ def run_dashboard():
         ("mobile",   "📱  Remote Access"),
         ("logs",     "📋  Live Logs"),
         ("processes","🛠  Processes"),
-        ("update",   "🔄  Updates"),
+        ("update",   "📦  Manage Core"),
         ("guide",    "📖  Guide & Help"),
         ("about",    "ℹ  About"),
     ]
