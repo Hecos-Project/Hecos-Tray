@@ -20,6 +20,7 @@ from tray.dashboard.tabs.processes import build_processes
 from tray.dashboard.tabs.about import build_about
 from tray.dashboard.tabs.webui import build_webui
 from tray.dashboard.tabs.update import build_update
+from tray.dashboard.tabs.guide import build_guide
 
 _proc = None
 
@@ -153,6 +154,7 @@ def run_dashboard():
         ("logs",     "📋  Live Logs"),
         ("processes","🛠  Processes"),
         ("update",   "🔄  Updates"),
+        ("guide",    "📖  Guide & Help"),
         ("about",    "ℹ  About"),
     ]
 
@@ -194,6 +196,7 @@ def run_dashboard():
         "logs":      lambda: build_logs(ctx),
         "processes": lambda: build_processes(ctx),
         "update":    lambda: build_update(ctx),
+        "guide":     lambda: build_guide(ctx),
         "about":     lambda: build_about(ctx),
     }
 
