@@ -7,18 +7,16 @@ echo.
 echo  [*] Restoring system tray icon...
 echo.
 
-:: Detect PythonW (Windowless)
+:: Detect PythonW (Windowless) from Hecos Core for now
 set PYTHONW_CMD=pythonw
-if exist "venv\Scripts\pythonw.exe" (
-    set PYTHONW_CMD="venv\Scripts\pythonw.exe"
-) else if exist "python_env\pythonw.exe" (
-    set PYTHONW_CMD="pythonw_env\pythonw.exe"
-) else if exist "venv\Scripts\python.exe" (
-    set PYTHONW_CMD="venv\Scripts\python.exe"
+if exist "..\Hecos\venv\Scripts\pythonw.exe" (
+    set PYTHONW_CMD="..\Hecos\venv\Scripts\pythonw.exe"
+) else if exist "C:\Hecos\venv\Scripts\pythonw.exe" (
+    set PYTHONW_CMD="C:\Hecos\venv\Scripts\pythonw.exe"
 )
 
 :: Run the tray app in detached mode
-start "" %PYTHONW_CMD% -m hecos.tray.tray_app
+start "" %PYTHONW_CMD% -m tray.tray_app
 
 echo  [+] Command sent. The icon will appear in the system tray.
 echo  [!] This window will close in 2 seconds...

@@ -39,13 +39,16 @@ def show_control_center(icon=None, item=None):
             cmd = [dashboard_exe_nuitka]
         else:
             exe = get_named_executable("hecos_dashboard", sys.executable)
-            cmd = [exe, "-m", "hecos.tray.control_center"]
+            cmd = [exe, "-m", "tray.control_center"]
+        
+        # cwd = root of the Hecos-Tray repo (2 levels up from tray/dashboard/)
+        _tray_repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
         
         _proc = subprocess.Popen(
             cmd,
             creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0,
             env=env,
-            cwd=os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..")),
+            cwd=_tray_repo_root,
         )
 
 def run_dashboard():
@@ -110,7 +113,7 @@ def run_dashboard():
     # Icon and AppUserModelID for Taskbar
     try:
         import ctypes
-        myappid = 'hecos.tray.dashboard'
+        myappid = 'hecos.tray.dashboard'  # Keep same ID to preserve taskbar grouping
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
     except Exception:
         pass
@@ -139,8 +142,6 @@ def run_dashboard():
     hdr.pack(fill="x", padx=12, pady=(20, 8))
     ctk.CTkLabel(hdr, text="HECOS", font=ctk.CTkFont(size=22, weight="bold"),
                  text_color=ACCENT).pack(anchor="w")
-    ctk.CTkLabel(hdr, text=f"v{get_version()}", font=ctk.CTkFont(size=10),
-                 text_color=MUTED).pack(anchor="w")
 
     # ── Nav buttons ────────────────────────────────────────────────────────────
     NAV_ITEMS = [

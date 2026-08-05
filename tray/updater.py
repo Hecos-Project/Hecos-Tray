@@ -19,7 +19,8 @@ def get_current_version() -> str:
 
 def get_tray_version() -> str:
     try:
-        tray_ver_file = os.path.join(_ROOT, "hecos", "tray", "version")
+        # The version file lives in the tray/ directory (sibling of this file)
+        tray_ver_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "version")
         with open(tray_ver_file, "r", encoding="utf-8") as f:
             return f.read().strip()
     except Exception:

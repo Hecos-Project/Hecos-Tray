@@ -1,9 +1,9 @@
 """
-MODULE: hecos/tray/tray_app.py
-PURPOSE: Hecos System Tray icon — lightweight control panel for the background process.
+MODULE: tray/tray_app.py  (Hecos-Tray repository)
+PURPOSE: Hecos System Tray icon — standalone control panel for the Hecos Core engine.
 
 USAGE:
-  Run standalone: python -m hecos.tray.tray_app
+  Run standalone: python -m tray.tray_app  (from C:\Hecos-Tray\)
   Auto-launched at user login via Registry HKCU\\Run
 """
 
@@ -15,13 +15,15 @@ import threading
 import webbrowser
 import subprocess
 
-# Relaunch as hecos_tray.exe if running generically
-if sys.platform == "win32" and not getattr(sys, 'compiled', False):
+# Relaunch as hecos_tray.exe if running as a compiled executable
+# In development (plain python), we skip this entirely.
+_is_compiled = getattr(sys, 'frozen', False) or getattr(sys, 'compiled', False)
+if sys.platform == "win32" and _is_compiled:
     if not sys.executable.lower().endswith("hecos_tray.exe"):
         from tray.system_utils import get_named_executable
         tray_exe = get_named_executable("hecos_tray")
-        if tray_exe != sys.executable:
-            subprocess.Popen([tray_exe, "-m", "hecos.tray.tray_app"])
+        if tray_exe and tray_exe != sys.executable:
+            subprocess.Popen([tray_exe, "-m", "tray.tray_app"])
             sys.exit(0)
 
 from tray.config import SETTINGS_FILE, _DEFAULTS, _ROOT, load_settings, save_settings

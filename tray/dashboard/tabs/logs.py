@@ -6,7 +6,7 @@ import customtkinter as ctk
 import tkinter as tk
 import re as _re
 
-from tray.config import load_settings, save_settings
+from tray.config import load_settings, save_settings, _ROOT
 from tray.dashboard.theme import CARD, TEXT, MUTED, ACCENT, ACCENT2, RED, AMBER, SURFACE, BORDER
 from tray.dashboard.ui import title, subtitle
 
@@ -19,7 +19,18 @@ def build_logs(ctx):
     title(ctx, outer, "Live Logs")
     subtitle(ctx, outer, "Read directly from disk — works even when the WebUI is offline.")
 
-    logs_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "logs"))
+    # State variables
+    _last_size       = [0]
+    _last_line_count = [0]
+    full_color       = [load_settings().get("full_color_logs", True)]
+
+    # Default logs directory: Hecos Core hecos/logs subfolder
+    _default_logs_dir = os.path.join(_ROOT, "hecos", "logs")
+    _settings = load_settings()
+    logs_dir = _settings.get("custom_logs_dir", _default_logs_dir)
+    if not os.path.isdir(logs_dir):
+        logs_dir = _default_logs_dir
+    logs_dir_var = [logs_dir]  # mutable reference
 
     SEV_COLORS = {
         "ERROR": RED, "CRITICAL": RED,
@@ -35,33 +46,88 @@ def build_logs(ctx):
                 return col
         return MUTED
 
-    # Top controls
+    # ── Path Bar: shows current folder + browse button ─────────────────────
+    path_row = ctk.CTkFrame(outer, fg_color="transparent")
+    path_row.pack(fill="x", pady=(0, 4))
+
+    path_lbl = ctk.CTkLabel(
+        path_row, text=logs_dir_var[0],
+        font=ctk.CTkFont(family="Consolas", size=10),
+        text_color=MUTED, anchor="w"
+    )
+    path_lbl.pack(side="left", fill="x", expand=True)
+
+    def _browse_folder():
+        from tkinter import filedialog
+        chosen = filedialog.askdirectory(
+            title="Select Logs Folder",
+            initialdir=logs_dir_var[0]
+        )
+        if not chosen:
+            return
+        logs_dir_var[0] = chosen
+        path_lbl.configure(text=chosen)
+        # Persist the choice
+        s = load_settings()
+        s["custom_logs_dir"] = chosen
+        save_settings(s)
+        # Reload the file list
+        _refresh_file_list()
+
+    ctk.CTkButton(
+        path_row, text="📂", width=34,
+        fg_color=SURFACE, text_color=ACCENT,
+        hover_color=BORDER, corner_radius=6,
+        command=_browse_folder
+    ).pack(side="right", padx=(6, 0))
+
+    # ── File selector ────────────────────────────────────────────────────────
     ctrl_row = ctk.CTkFrame(outer, fg_color="transparent")
     ctrl_row.pack(fill="x", pady=(0, 6))
 
-    # File selector
-    log_files = []
-    try:
-        log_files = sorted(
-            [f for f in os.listdir(logs_dir) if f.endswith(".log")],
-            key=lambda x: os.path.getmtime(os.path.join(logs_dir, x)),
-            reverse=True
-        )
-    except Exception:
-        pass
-
-    default_log = "hecos_main.log" if "hecos_main.log" in log_files else (log_files[0] if log_files else "")
-
-    file_var = ctk.StringVar(value=default_log)
-    file_dd = ctk.CTkOptionMenu(ctrl_row, variable=file_var,
-                                values=log_files if log_files else ["(no logs)"],
-                                fg_color=CARD, button_color=ACCENT2,
-                                dropdown_fg_color=CARD, text_color=TEXT,
-                                font=ctk.CTkFont(size=11), width=260)
+    file_var = ctk.StringVar(value="")
+    file_dd = ctk.CTkOptionMenu(
+        ctrl_row, variable=file_var,
+        values=["(no logs)"],
+        fg_color=CARD, button_color=ACCENT2,
+        dropdown_fg_color=CARD, text_color=TEXT,
+        font=ctk.CTkFont(size=11), width=260,
+        command=lambda choice: _on_file_change(choice)
+    )
     file_dd.pack(side="left", padx=(0, 8))
 
     lines_lbl = ctk.CTkLabel(ctrl_row, text="", font=ctk.CTkFont(size=10), text_color=MUTED)
     lines_lbl.pack(side="right")
+
+    def _refresh_file_list():
+        d = logs_dir_var[0]
+        log_files = []
+        try:
+            log_files = sorted(
+                [f for f in os.listdir(d) if f.endswith(".log")],
+                key=lambda x: os.path.getmtime(os.path.join(d, x)),
+                reverse=True
+            )
+        except Exception:
+            pass
+        if log_files:
+            file_dd.configure(values=log_files)
+            default = "hecos_main.log" if "hecos_main.log" in log_files else log_files[0]
+            file_var.set(default)
+            _last_size[0] = 0
+            _last_line_count[0] = 0
+            # _load() will be called from the end of the file
+        else:
+            file_dd.configure(values=["(no logs)"])
+            file_var.set("(no logs)")
+            log_text.configure(state="normal")
+            log_text.delete("1.0", "end")
+            log_text.insert("end", f"No .log files found in:\n{d}")
+            log_text.configure(state="disabled")
+
+    # Initial population without triggering _load() since it's not defined yet
+    _refresh_file_list()
+
 
     font_size = [10]  # mutable
 
@@ -118,10 +184,6 @@ def build_logs(ctx):
     log_text.tag_bind("URL", "<Enter>", lambda e: log_text.configure(cursor="hand2"))
     log_text.tag_bind("URL", "<Leave>", lambda e: log_text.configure(cursor=""))
 
-    full_color       = [load_settings().get("full_color_logs", True)]
-    _last_size       = [0]
-    _last_line_count = [0]   # total lines tracked in the background thread
-    
     url_pattern = _re.compile(r'(https?://[^\s\'"<>]+)')
     tag_pattern  = _re.compile(r'(\[(?:CORE|PLUGIN|WEBUI|DAEMON)[^\]]*\])', _re.IGNORECASE)
 
@@ -194,13 +256,19 @@ def build_logs(ctx):
     def _load(auto=False):
         fname = file_var.get()
         if not fname or fname == "(no logs)": return
-        path = os.path.join(logs_dir, fname)
+        path = os.path.join(logs_dir_var[0], fname)
         if not os.path.exists(path): return
         threading.Thread(target=_do_full_reload, args=(path,), daemon=True).start()
 
     def _on_file_change(choice):
         _last_size[0] = 0
         _last_line_count[0] = 0
+        _load()
+
+    def _full_refresh_from_btn():
+        _last_size[0] = 0
+        _last_line_count[0] = 0
+        _refresh_file_list()
         _load()
 
     file_dd.configure(command=_on_file_change)
@@ -256,7 +324,7 @@ def build_logs(ctx):
                   command=lambda: _zoom(2)).pack(side="left", padx=2)
     ctk.CTkButton(btn_row, text="↻", width=34, fg_color=SURFACE, text_color=ACCENT,
                   hover_color=BORDER, corner_radius=6,
-                  command=lambda: (_last_size.__setitem__(0, 0), _last_line_count.__setitem__(0, 0), _load())).pack(side="left", padx=2)
+                  command=_full_refresh_from_btn).pack(side="left", padx=2)
 
     _load()
 
@@ -268,7 +336,7 @@ def build_logs(ctx):
             fname = file_var.get()
             if not fname or fname == "(no logs)":
                 continue
-            path = os.path.join(logs_dir, fname)
+            path = os.path.join(logs_dir_var[0], fname)
             try:
                 sz = os.path.getsize(path)
                 if sz == _last_size[0]:
