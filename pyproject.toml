@@ -16,6 +16,7 @@ dependencies = [
     "packaging",
     "psutil",
     "pyyaml",
+    "customtkinter",
     "pywin32; sys_platform=='win32'",
 ]
 
