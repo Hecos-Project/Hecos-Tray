@@ -1,0 +1,17 @@
+[07/08/2026 16:30:01,19] HECOS SETUP WIZARD STARTED 
+[07/08/2026 16:30:01,19] Tray dir: C:\Hecos-Tray\ 
+[07/08/2026 16:30:01,40] Python found: System (py launcher) with cmd: py -3 
+[07/08/2026 16:30:01,40] Running dependency check... 
+[07/08/2026 16:30:01,85] Deps OK - going to READY 
+[07/08/2026 16:30:01,86] Reached READY block. CORE_FOUND=1 
+[07/08/2026 16:30:01,89] Launching setup_wizard.py from ROOT_DIR: C:\Hecos 
+Traceback (most recent call last):
+  File "C:\Hecos\hecos\setup_wizard.py", line 13, in <module>
+    main()
+  File "C:\Hecos\hecos\setup\main.py", line 39, in main
+    start_cli_wizard()
+  File "C:\Hecos\hecos\setup\cli_ui.py", line 117, in start_cli_wizard
+    choice = input("\n--> ")
+             ^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+[07/08/2026 16:30:02,27] setup_wizard.py exited with code: 1 

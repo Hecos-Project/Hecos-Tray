@@ -159,7 +159,7 @@ if [ "$goto_setup_wizard" = "1" ]; then
     echo ""
     echo "[*] Launching Hecos Setup Wizard..."
     cd "$ROOT_DIR" || exit 1
-    $PYTHON_CMD "hecos/setup_wizard.py"
+    $PYTHON_CMD "hecos/setup_wizard.py" --web
     exit 0
 fi
 
