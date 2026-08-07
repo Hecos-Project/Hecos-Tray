@@ -1,48 +1,60 @@
 #!/bin/bash
-# Hecos - Restart Tray Icon
+# ─────────────────────────────────────────────────────────────────────────────
+#  START_HECOS_TRAY_LINUX.sh — launches the Hecos Tray Icon (detached, no console)
+# ─────────────────────────────────────────────────────────────────────────────
 
-# Navigate to the script's directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 cd "$SCRIPT_DIR" || exit 1
 
 echo ""
-echo " [*] Restoring system tray icon..."
+echo " [*] Starting Hecos Tray Icon..."
 echo ""
 
-# Detect ROOT_DIR (where Hecos Core is installed)
-if [ -d "$SCRIPT_DIR/../Hecos" ]; then
+# ── Detect ROOT_DIR (Hecos Core location) ────────────────────────────────────
+ROOT_DIR=""
+if [ -f "$SCRIPT_DIR/../Hecos/hecos/core/version" ]; then
     ROOT_DIR="$(cd "$SCRIPT_DIR/../Hecos" && pwd)"
 elif [ -d "/opt/hecos" ]; then
     ROOT_DIR="/opt/hecos"
-else
-    # Fallback to assuming they are in the same dir
-    ROOT_DIR="$(cd "$SCRIPT_DIR/../Hecos" 2>/dev/null && pwd)"
+elif [ -d "$HOME/Hecos" ]; then
+    ROOT_DIR="$HOME/Hecos"
 fi
 
-# Detect Python
+# ── Python Detection — find ANY python, never re-install ─────────────────────
 PY_CMD=""
+
+# Priority 1: Core venv
 if [ -f "$ROOT_DIR/venv/bin/python3" ]; then
     PY_CMD="$ROOT_DIR/venv/bin/python3"
-elif command -v python3 &>/dev/null; then
+
+# Priority 2: python3 on PATH
+elif command -v python3 &> /dev/null; then
     PY_CMD="python3"
-elif command -v python &>/dev/null; then
+
+# Priority 3: python on PATH
+elif command -v python &> /dev/null; then
     PY_CMD="python"
 fi
 
 if [ -z "$PY_CMD" ]; then
-    echo -e "\e[31m[!] ERROR: Python is not installed or not found.\e[0m"
+    echo " [!] ERROR: Python is not installed or not found."
     echo ""
-    echo "Hecos Tray requires Python to run."
-    echo "Please run HECOS_SETUP_WIZARD.sh to configure the Python environment."
+    echo " Hecos Tray requires Python 3. Please install it:"
+    echo "   Ubuntu/Debian:  sudo apt install python3"
+    echo "   Fedora:         sudo dnf install python3"
+    echo "   Arch:           sudo pacman -S python"
+    echo ""
+    echo " Or run HECOS_SETUP_WIZARD.sh to configure the environment."
     echo ""
     read -p "Press Enter to exit..."
     exit 1
 fi
 
-# Run the tray app in background (quietly)
-nohup $PY_CMD -m tray.tray_app >/dev/null 2>&1 &
+# ── Launch Tray detached (nohup + background, no console window) ─────────────
+nohup $PY_CMD -m tray.tray_app > /dev/null 2>&1 &
 
-echo " [+] Command sent. The icon will appear shortly."
+echo " [+] Tray launched with: $PY_CMD"
+echo " [+] The icon will appear in your system tray shortly."
 echo ""
 sleep 1
 exit 0
