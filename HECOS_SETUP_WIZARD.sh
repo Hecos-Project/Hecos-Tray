@@ -161,20 +161,146 @@ if [ "$CREATE_VENV" == "1" ]; then
     sleep 2
 fi
 
+
 echo ""
 echo "=============================================================================="
 echo "                          STARTING INTERFACE"
 echo "=============================================================================="
+
 if [ -f "$ROOT_DIR/hecos/setup_wizard.py" ]; then
     echo "[*] Launching Core Setup Wizard..."
     cd "$ROOT_DIR" || exit 1
     $PYTHON_CMD "hecos/setup_wizard.py"
-elif [ -f "$TRAY_DIR/START_HECOS_TRAY_LINUX.sh" ]; then
-    echo "[!] Core Setup Wizard not found (Core is not downloaded yet)."
-    echo "[*] Launching Hecos Tray instead. You can download the Core from there."
-    sleep 3
-    bash "$TRAY_DIR/START_HECOS_TRAY_LINUX.sh"
+    exit 0
+fi
+
+# Core is not downloaded yet — offer to download it
+echo ""
+echo "  [!] Hecos Core is not installed on this machine yet."
+echo ""
+echo "  The Core is the AI engine that powers Hecos. It needs to be"
+echo "  downloaded from GitHub before setup can continue."
+echo ""
+echo "  ============================================================"
+echo "   DOWNLOAD HECOS CORE"
+echo "  ============================================================"
+echo ""
+echo "  The download is approximately 50-100 MB."
+echo "  It will be extracted to: $ROOT_DIR"
+echo ""
+echo "   1. Download Core from GitHub (Recommended)"
+echo "   2. Skip and launch Tray only"
+echo "   3. Exit"
+echo ""
+read -p "Select an option (1-3): " DL_CHOICE
+
+if [ "$DL_CHOICE" == "3" ]; then
+    exit 0
+fi
+
+if [ "$DL_CHOICE" == "2" ]; then
+    if [ -n "$TRAY_DIR" ] && [ -f "$TRAY_DIR/START_HECOS_TRAY_LINUX.sh" ]; then
+        echo "[*] Launching Hecos Tray. Use the Dashboard to download the Core later."
+        sleep 2
+        bash "$TRAY_DIR/START_HECOS_TRAY_LINUX.sh"
+    else
+        echo "[!] Tray not found. Cannot proceed."
+        read -p "Press Enter to exit..."
+    fi
+    exit 0
+fi
+
+# --- DOWNLOAD CORE ---
+echo ""
+echo "=============================================================================="
+echo "                    DOWNLOADING HECOS CORE FROM GITHUB"
+echo "=============================================================================="
+echo ""
+
+GH_API_URL="https://api.github.com/repos/Hecos-Project/Hecos/releases/latest"
+TEMP_ZIP="/tmp/hecos_core_$$.zip"
+TEMP_EXTRACT="/tmp/hecos_extract_$$"
+
+# Check for curl or wget
+if command -v curl &> /dev/null; then
+    DOWNLOADER="curl"
+elif command -v wget &> /dev/null; then
+    DOWNLOADER="wget"
 else
-    echo "[!] CRITICAL ERROR: Neither Core nor Tray were found!"
+    echo "[!] Neither curl nor wget is available. Please install one and retry."
+    echo "[!] Or download manually from: https://github.com/Hecos-Project/Hecos/releases/latest"
+    read -p "Press Enter to exit..."
+    exit 1
+fi
+
+echo "[*] Fetching latest release info from GitHub..."
+if [ "$DOWNLOADER" == "curl" ]; then
+    ZIPBALL_URL=$(curl -sS -H "User-Agent: HecosSetup/1.0" "$GH_API_URL" | python3 -c "import sys,json; print(json.load(sys.stdin).get('zipball_url',''))" 2>/dev/null)
+else
+    ZIPBALL_URL=$(wget -q -O- --header="User-Agent: HecosSetup/1.0" "$GH_API_URL" | python3 -c "import sys,json; print(json.load(sys.stdin).get('zipball_url',''))" 2>/dev/null)
+fi
+
+if [ -z "$ZIPBALL_URL" ]; then
+    echo ""
+    echo "[!] Failed to fetch release info from GitHub."
+    echo "[!] Check your internet connection, or download manually from:"
+    echo "[!]   https://github.com/Hecos-Project/Hecos/releases/latest"
+    echo "[!]   and extract it to: $ROOT_DIR"
+    read -p "Press Enter to exit..."
+    exit 1
+fi
+
+echo "[*] Downloading from: $ZIPBALL_URL"
+echo "[*] This may take a moment..."
+
+if [ "$DOWNLOADER" == "curl" ]; then
+    curl -L --progress-bar -H "User-Agent: HecosSetup/1.0" -o "$TEMP_ZIP" "$ZIPBALL_URL"
+else
+    wget -q --show-progress --user-agent="HecosSetup/1.0" -O "$TEMP_ZIP" "$ZIPBALL_URL"
+fi
+
+if [ $? -ne 0 ] || [ ! -f "$TEMP_ZIP" ]; then
+    echo "[!] Download failed. Please check your internet connection."
+    read -p "Press Enter to exit..."
+    exit 1
+fi
+
+echo ""
+echo "[*] Extracting files..."
+mkdir -p "$TEMP_EXTRACT"
+unzip -q "$TEMP_ZIP" -d "$TEMP_EXTRACT"
+
+# GitHub zipballs extract into a single subfolder like Hecos-Project-Hecos-abc123
+# Move its contents directly into ROOT_DIR
+echo "[*] Installing to $ROOT_DIR..."
+mkdir -p "$ROOT_DIR"
+INNER_DIR=$(find "$TEMP_EXTRACT" -mindepth 1 -maxdepth 1 -type d | head -n 1)
+if [ -n "$INNER_DIR" ]; then
+    cp -a "$INNER_DIR/." "$ROOT_DIR/"
+else
+    cp -a "$TEMP_EXTRACT/." "$ROOT_DIR/"
+fi
+
+# Cleanup
+rm -f "$TEMP_ZIP"
+rm -rf "$TEMP_EXTRACT"
+
+if [ -f "$ROOT_DIR/hecos/core/version" ]; then
+    echo ""
+    echo "  [+] Hecos Core downloaded and installed successfully!"
+    echo ""
+    sleep 2
+    # Re-enter the wizard with Core now available
+    if [ -f "$ROOT_DIR/hecos/setup_wizard.py" ]; then
+        echo "[*] Launching Core Setup Wizard..."
+        cd "$ROOT_DIR" || exit 1
+        $PYTHON_CMD "hecos/setup_wizard.py"
+    fi
+else
+    echo ""
+    echo "  [!] WARNING: Extraction completed but Core files were not found in:"
+    echo "  [!]   $ROOT_DIR"
+    echo "  [!] Please try extracting the ZIP manually from GitHub."
     read -p "Press Enter to exit..."
 fi
+
