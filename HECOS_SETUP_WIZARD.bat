@@ -61,7 +61,7 @@ echo [SYSTEM CHECK]
 
 :: Check Tray
 if "!TRAY_NOT_IN_C!"=="1" (
-    echo [!] Tray is NOT in C:\ drive.
+    echo [-] Tray is NOT in C:\ drive.
     echo  [-] Please make sure the Hecos-Tray folder is placed directly in C:\
     echo  [-] It should be at: C:\Hecos-Tray
     echo  [-] Current location: !TRAY_DIR!
@@ -200,7 +200,7 @@ echo  What would you like to do?
 echo.
 
 if "!CORE_FOUND!"=="1" (
-    echo   1. Open the Hecos Setup Wizard (configure AI, voices, install deps)
+    echo   1. Open the Hecos Setup Wizard ^(configure AI, voices, install deps^)
     echo   2. Launch the Tray Icon directly
     echo   3. Exit
     echo.
