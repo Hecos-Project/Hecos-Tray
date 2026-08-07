@@ -98,16 +98,16 @@ else
     if [ -f "$PYPROJECT" ]; then
         $PYTHON_CMD -m pip install --quiet --upgrade pip &> /dev/null
         $PYTHON_CMD -m pip install --quiet "$TRAY_DIR[.]" 2>/dev/null || \
-            $PYTHON_CMD -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml
+            $PYTHON_CMD -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml customtkinter
     else
-        $PYTHON_CMD -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml
+        $PYTHON_CMD -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml customtkinter
     fi
 
     # Verify
     if ! $PYTHON_CMD -c "import tomli_w, pystray, PIL" &> /dev/null; then
         echo ""
         echo "  [!] ERROR: Failed to install Tray dependencies."
-        echo "  [!] Try running manually: pip3 install pystray pillow tomli-w packaging psutil pyyaml"
+        echo "  [!] Try running manually: pip3 install pystray pillow tomli-w packaging psutil pyyaml customtkinter"
         read -p "Press Enter to exit..."
         exit 1
     fi

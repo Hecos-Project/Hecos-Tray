@@ -3,7 +3,7 @@ MODULE: tray/tray_app.py  (Hecos-Tray repository)
 PURPOSE: Hecos System Tray icon — standalone control panel for the Hecos Core engine.
 
 USAGE:
-  Run standalone: python -m tray.tray_app  (from C:\Hecos-Tray\)
+  Run standalone: python -m tray.tray_app  (from C:\\Hecos-Tray\\)
   Auto-launched at user login via Registry HKCU\\Run
 """
 
@@ -28,7 +28,7 @@ except Exception as e:
 # --- Dependency pre-check (if launched directly, not via wizard) ---
 def _check_deps():
     missing = []
-    for mod, pkg in [("tomli_w", "tomli-w"), ("pystray", "pystray"), ("PIL", "pillow")]:
+    for mod, pkg in [("tomli_w", "tomli-w"), ("pystray", "pystray"), ("PIL", "pillow"), ("customtkinter", "customtkinter")]:
         try:
             __import__(mod)
         except ImportError:
