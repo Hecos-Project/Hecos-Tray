@@ -3,7 +3,7 @@ MODULE: tray/tray_app.py  (Hecos-Tray repository)
 PURPOSE: Hecos System Tray icon — standalone control panel for the Hecos Core engine.
 
 USAGE:
-  Run standalone: python -m tray.tray_app  (from C:\Hecos-Tray\)
+  Run standalone: python -m tray.tray_app  (from C:\\Hecos-Tray\\)
   Auto-launched at user login via Registry HKCU\\Run
 """
 
@@ -57,7 +57,6 @@ def _check_deps():
             sys.exit(1)
         print(f"[TRAY] Packages installed OK. Restarting tray to load them...")
         # Restart the process so newly installed packages are importable
-        import os
         os.execv(sys.executable, [sys.executable] + sys.argv)
     except Exception as e:
         print(f"[TRAY] Auto-install failed: {e}")
@@ -195,21 +194,6 @@ def run_tray():
         # Already running
         print("[TRAY] Hecos Tray is already running. Exiting current instance.")
         sys.exit(0)
-
-    # Redirect all stdout/stderr to a log file to avoid pythonw.exe silent crashing
-    log_dir = os.path.join(_ROOT, "hecos", "logs")
-    os.makedirs(log_dir, exist_ok=True)
-    log_file = os.path.join(log_dir, "hecos_tray.log")
-    try:
-        sys.stdout = sys.stderr = open(log_file, "a", encoding="utf-8")
-        def handle_exception(exc_type, exc_value, exc_traceback):
-            import traceback
-            print("Uncaught exception:")
-            traceback.print_exception(exc_type, exc_value, exc_traceback)
-            sys.stdout.flush()
-        sys.excepthook = handle_exception
-    except Exception:
-        pass
 
     if not TRAY_AVAILABLE:
         print("\n[!] ERRORE: Dipendenze mancanti per la Tray Icon.")
