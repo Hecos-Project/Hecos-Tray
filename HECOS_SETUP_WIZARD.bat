@@ -60,7 +60,7 @@ if exist "%ROOT_DIR%\hecos\core\version" (
     echo [OK] Core found at: %ROOT_DIR%
     set "CORE_FOUND=1"
 ) else (
-    echo [!] Core NOT found — will offer download below.
+    echo [-] Core NOT found — will offer download below.
 )
 echo.
 
@@ -190,8 +190,8 @@ if "!CORE_FOUND!"=="1" (
     if "!READY_CHOICE!"=="2" goto LAUNCH_TRAY_ONLY
     exit
 ) else (
-    echo   1. Download Hecos Core from GitHub (then open Setup Wizard)
-    echo   2. Launch the Tray Icon only (download Core later from the Dashboard)
+    echo   1. Download Hecos Core from GitHub ^(then open Setup Wizard^)
+    echo   2. Launch the Tray Icon only ^(download Core later from the Dashboard^)
     echo   3. Exit
     echo.
     set /p READY_CHOICE="Select an option (1-3): "
