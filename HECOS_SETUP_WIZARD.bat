@@ -92,14 +92,14 @@ set "PYTHON_LOC="
 
 :: Priority 1: Core portable python_env
 if exist "%ROOT_DIR%\python_env\python.exe" (
-    set "PYTHON_CMD=%ROOT_DIR%\python_env\python.exe"
+    set PYTHON_CMD="%ROOT_DIR%\python_env\python.exe"
     set "PYTHON_LOC=Portable Environment (%ROOT_DIR%\python_env)"
     goto PYTHON_FOUND
 )
 
 :: Priority 2: Core venv
 if exist "%ROOT_DIR%\venv\Scripts\python.exe" (
-    set "PYTHON_CMD=%ROOT_DIR%\venv\Scripts\python.exe"
+    set PYTHON_CMD="%ROOT_DIR%\venv\Scripts\python.exe"
     set "PYTHON_LOC=Virtual Environment (%ROOT_DIR%\venv)"
     goto PYTHON_FOUND
 )
@@ -227,7 +227,10 @@ if "!CORE_FOUND!"=="1" (
 echo.
 echo [*] Launching Hecos Setup Wizard...
 cd /d "%ROOT_DIR%"
-"%PYTHON_CMD%" "hecos\setup_wizard.py"
+%PYTHON_CMD% "hecos\setup_wizard.py"
+echo.
+echo [!] Setup Wizard exited. If there was an error, please read it above.
+pause
 goto END
 
 
