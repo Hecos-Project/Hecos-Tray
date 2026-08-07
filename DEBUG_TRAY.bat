@@ -7,7 +7,9 @@ echo [*] Working directory: %CD%
 echo.
 
 set PY_CMD=python
-if exist "C:\Hecos\venv\Scripts\python.exe" (
+if exist "C:\Hecos\python_env\python.exe" (
+    set PY_CMD="C:\Hecos\python_env\python.exe"
+) else if exist "C:\Hecos\venv\Scripts\python.exe" (
     set PY_CMD="C:\Hecos\venv\Scripts\python.exe"
 )
 

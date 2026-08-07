@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build-meta"
+
+[project]
+name = "hecos-tray"
+version = "1.5.4"
+description = "Hecos Standalone Tray Launcher & Dashboard"
+
+# These are the ONLY packages needed to run the Tray standalone.
+# The Hecos Core has its own, larger dependency list.
+dependencies = [
+    "pystray",
+    "pillow",
+    "tomli-w",
+    "packaging",
+    "psutil",
+    "pyyaml",
+    "pywin32; sys_platform=='win32'",
+]
+
+[project.scripts]
+hecos-tray = "tray.tray_app:run_tray"
+
+[tool.setuptools.packages.find]
+where = ["."]

@@ -15,6 +15,21 @@ import threading
 import webbrowser
 import subprocess
 
+# --- Dependency pre-check (if launched directly, not via wizard) ---
+def _check_deps():
+    missing = []
+    for mod, pkg in [("tomli_w", "tomli-w"), ("pystray", "pystray"), ("PIL", "pillow")]:
+        try:
+            __import__(mod)
+        except ImportError:
+            missing.append(pkg)
+    if missing:
+        print(f"[TRAY] Missing packages: {', '.join(missing)}")
+        print(f"[TRAY] Run: pip install {' '.join(missing)}")
+        print(f"[TRAY] Or launch HECOS_SETUP_WIZARD.bat — it installs these automatically.")
+        sys.exit(1)
+_check_deps()
+
 # Relaunch as hecos_tray.exe if running as a compiled executable
 # In development (plain python), we skip this entirely.
 _is_compiled = getattr(sys, 'frozen', False) or getattr(sys, 'compiled', False)
