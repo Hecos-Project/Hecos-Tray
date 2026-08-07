@@ -179,10 +179,10 @@ if exist "%TRAY_DIR%\pyproject.toml" (
     !PYTHON_CMD! -m pip install "%TRAY_DIR%[.]" --quiet
     if !ERRORLEVEL! NEQ 0 (
         :: Fallback: install deps individually
-        !PYTHON_CMD! -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml
+        !PYTHON_CMD! -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml customtkinter
     )
 ) else (
-    !PYTHON_CMD! -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml
+    !PYTHON_CMD! -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml customtkinter
 )
 
 :: Verify install succeeded
@@ -190,7 +190,7 @@ if exist "%TRAY_DIR%\pyproject.toml" (
 if !ERRORLEVEL! NEQ 0 (
     echo.
     echo  [!] ERROR: Failed to install Tray dependencies.
-    echo  [!] Try running manually: pip install pystray pillow tomli-w packaging psutil pyyaml
+    echo  [!] Try running manually: pip install pystray pillow tomli-w packaging psutil pyyaml customtkinter
     pause
     exit
 )
