@@ -17,7 +17,19 @@ color 0B
 :: --- Determine TRAY_DIR (where this script lives) ---
 set "TRAY_DIR=%~dp0"
 if "!TRAY_DIR:~-1!"=="\" set "TRAY_DIR=!TRAY_DIR:~0,-1!"
-set "TRAY_WARN="
+
+set "TRAY_WARN=0"
+set "TRAY_NOT_IN_C=0"
+
+:: Check if the path starts with C:\Hecos-Tray
+echo !TRAY_DIR! | findstr /I /B "C:\\Hecos-Tray" >nul
+if !ERRORLEVEL! NEQ 0 (
+    set "TRAY_NOT_IN_C=1"
+) else (
+    if /I NOT "!TRAY_DIR!"=="C:\Hecos-Tray" (
+        set "TRAY_WARN=1"
+    )
+)
 
 :: --- Determine ROOT_DIR (Hecos Core) ---
 set "ROOT_DIR=C:\Hecos"
@@ -48,10 +60,17 @@ echo.
 echo [SYSTEM CHECK]
 
 :: Check Tray
-echo [OK] Tray found at: !TRAY_DIR!
-if "!TRAY_WARN!"=="1" (
-    echo.
-    echo  [!] WARNING: Tray folder has a version suffix. Rename it to C:\Hecos-Tray
+if "!TRAY_NOT_IN_C!"=="1" (
+    echo [!] Tray is NOT in C:\ drive.
+    echo  [-] Please make sure the Hecos-Tray folder is placed directly in C:\
+    echo  [-] It should be at: C:\Hecos-Tray
+    echo  [-] Current location: !TRAY_DIR!
+) else (
+    echo [OK] Tray found at: !TRAY_DIR!
+    if "!TRAY_WARN!"=="1" (
+        echo.
+        echo  [-] WARNING: Tray folder has a version suffix. Rename it to C:\Hecos-Tray
+    )
 )
 
 :: Check Core
