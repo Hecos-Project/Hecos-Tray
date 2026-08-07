@@ -25,19 +25,45 @@ except Exception as e:
     # If logger itself fails to load, fallback to standard stream print
     print(f"[TRAY] Fatal Error initializing logger: {e}", file=sys.stderr)
 
-# --- Dependency pre-check (if launched directly, not via wizard) ---
+# --- Dependency pre-check with AUTO-INSTALL ---
 def _check_deps():
+    PACKAGES = [
+        ("tomli_w",       "tomli-w"),
+        ("pystray",       "pystray"),
+        ("PIL",           "pillow"),
+        ("customtkinter", "customtkinter"),
+        ("psutil",        "psutil"),
+        ("yaml",          "pyyaml"),
+    ]
     missing = []
-    for mod, pkg in [("tomli_w", "tomli-w"), ("pystray", "pystray"), ("PIL", "pillow")]:
+    for mod, pkg in PACKAGES:
         try:
             __import__(mod)
         except ImportError:
             missing.append(pkg)
-    if missing:
-        print(f"[TRAY] Missing packages: {', '.join(missing)}")
-        print(f"[TRAY] Run: pip install {' '.join(missing)}")
-        print(f"[TRAY] Or launch HECOS_SETUP_WIZARD.bat — it installs these automatically.")
+
+    if not missing:
+        return  # All good
+
+    print(f"[TRAY] Auto-installing missing packages: {', '.join(missing)}")
+    try:
+        import subprocess as _sp
+        result = _sp.run(
+            [sys.executable, "-m", "pip", "install", "--quiet"] + missing,
+            capture_output=True, text=True, timeout=120
+        )
+        if result.returncode != 0:
+            print(f"[TRAY] pip error: {result.stderr.strip()}")
+            sys.exit(1)
+        print(f"[TRAY] Packages installed OK. Restarting tray to load them...")
+        # Restart the process so newly installed packages are importable
+        import os
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+    except Exception as e:
+        print(f"[TRAY] Auto-install failed: {e}")
+        print(f"[TRAY] Run manually: pip install {' '.join(missing)}")
         sys.exit(1)
+
 _check_deps()
 
 # Relaunch as hecos_tray.exe if running as a compiled executable
