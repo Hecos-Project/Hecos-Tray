@@ -210,25 +210,28 @@ echo  The Tray is fully configured and ready to launch.
 echo  What would you like to do?
 echo.
 
-if "!CORE_FOUND!"=="1" (
-    echo   1. Open the Hecos Setup Wizard ^(configure AI, voices, install deps^)
-    echo   2. Launch the Tray Icon directly
-    echo   3. Exit
-    echo.
-    set /p READY_CHOICE="Select an option (1-3): "
-    if "!READY_CHOICE!"=="1" goto LAUNCH_SETUP_WIZARD
-    if "!READY_CHOICE!"=="2" goto LAUNCH_TRAY_ONLY
-    exit
-) else (
-    echo   1. Download Hecos Core from GitHub ^(then open Setup Wizard^)
-    echo   2. Launch the Tray Icon only ^(download Core later from the Dashboard^)
-    echo   3. Exit
-    echo.
-    set /p READY_CHOICE="Select an option (1-3): "
-    if "!READY_CHOICE!"=="1" goto DOWNLOAD_CORE
-    if "!READY_CHOICE!"=="2" goto LAUNCH_TRAY_ONLY
-    exit
-)
+if "!CORE_FOUND!"=="1" goto MENU_CORE_FOUND
+goto MENU_NO_CORE
+
+:MENU_CORE_FOUND
+echo   1. Open the Hecos Setup Wizard ^(configure AI, voices, install deps^)
+echo   2. Launch the Tray Icon directly
+echo   3. Exit
+echo.
+set /p READY_CHOICE="Select an option (1-3): "
+if "!READY_CHOICE!"=="1" goto LAUNCH_SETUP_WIZARD
+if "!READY_CHOICE!"=="2" goto LAUNCH_TRAY_ONLY
+exit
+
+:MENU_NO_CORE
+echo   1. Download Hecos Core from GitHub ^(then open Setup Wizard^)
+echo   2. Launch the Tray Icon only ^(download Core later from the Dashboard^)
+echo   3. Exit
+echo.
+set /p READY_CHOICE="Select an option (1-3): "
+if "!READY_CHOICE!"=="1" goto DOWNLOAD_CORE
+if "!READY_CHOICE!"=="2" goto LAUNCH_TRAY_ONLY
+exit
 
 
 :: ─────────────────────────────────────────────────────────────────────────────
@@ -239,7 +242,7 @@ echo.
 echo [*] Launching Hecos Setup Wizard...
 echo [%DATE% %TIME%] Launching setup_wizard.py from ROOT_DIR: %ROOT_DIR% >> "!WIZARD_LOG!"
 cd /d "%ROOT_DIR%"
-%PYTHON_CMD% "hecos\setup_wizard.py" 2>> "!WIZARD_LOG!"
+%PYTHON_CMD% "hecos\setup_wizard.py" --web 2>> "!WIZARD_LOG!"
 echo [%DATE% %TIME%] setup_wizard.py exited with code: !ERRORLEVEL! >> "!WIZARD_LOG!"
 echo.
 echo [!] Setup Wizard exited. If there was an error, check logs\wizard.log

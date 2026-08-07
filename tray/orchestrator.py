@@ -68,6 +68,7 @@ def start_hecos():
         python_exe = get_platform_python(is_daemon=use_daemon)
         
         boot_log_path = os.path.join(_ROOT, "hecos", "logs", "hecos_boot_trace.log")
+        os.makedirs(os.path.dirname(boot_log_path), exist_ok=True)
         boot_log = open(boot_log_path, "a", encoding="utf-8")
         # Add a visual separator for new boot attempts
         boot_log.write(f"\n{'='*50}\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] ORCHESTRATOR: Spawning Hecos backend...\n{'='*50}\n")
@@ -170,6 +171,7 @@ def restart_hecos():
     """Stops the existing process and spawns a new one."""
     try:
         boot_log_path = os.path.join(_ROOT, "hecos", "logs", "hecos_boot_trace.log")
+        os.makedirs(os.path.dirname(boot_log_path), exist_ok=True)
         with open(boot_log_path, "a", encoding="utf-8") as f:
             f.write(f"\n{'='*50}\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 🔄 ORCHESTRATOR: RESTART TRIGGERED FROM TRAY\n{'='*50}\n")
     except Exception:
@@ -216,6 +218,7 @@ def start_hecos_with_daemon():
     python_exe = get_platform_python()
     try:
         boot_log_path = os.path.join(_ROOT, "hecos", "logs", "hecos_boot_trace.log")
+        os.makedirs(os.path.dirname(boot_log_path), exist_ok=True)
         boot_log = open(boot_log_path, "a", encoding="utf-8")
         boot_log.write(f"\n{'='*50}\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] ORCHESTRATOR: Spawning Hecos via Daemon Supervisor...\n{'='*50}\n")
         boot_log.flush()
