@@ -14,13 +14,13 @@ set "ROOT_DIR=C:\Hecos"
 
 :: Strategy 1: Core portable python_env
 if exist "%ROOT_DIR%\python_env\pythonw.exe" (
-    set "PYTHONW_CMD=%ROOT_DIR%\python_env\pythonw.exe"
+    set PYTHONW_CMD="%ROOT_DIR%\python_env\pythonw.exe"
     goto START_TRAY
 )
 
 :: Strategy 2: Core venv
 if exist "%ROOT_DIR%\venv\Scripts\pythonw.exe" (
-    set "PYTHONW_CMD=%ROOT_DIR%\venv\Scripts\pythonw.exe"
+    set PYTHONW_CMD="%ROOT_DIR%\venv\Scripts\pythonw.exe"
     goto START_TRAY
 )
 
@@ -29,7 +29,7 @@ py -3 --version >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
     for /f "tokens=*" %%P in ('py -3 -c "import sys,os; print(os.path.dirname(sys.executable))"') do set "PY_DIR=%%P"
     if exist "!PY_DIR!\pythonw.exe" (
-        set "PYTHONW_CMD=!PY_DIR!\pythonw.exe"
+        set PYTHONW_CMD="!PY_DIR!\pythonw.exe"
         goto START_TRAY
     )
     :: py launcher exists but no pythonw.exe — use python directly via start (detached)
@@ -49,7 +49,7 @@ python3 --version >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
     for /f "tokens=*" %%P in ('python3 -c "import sys,os; print(os.path.dirname(sys.executable))"') do set "PY_DIR=%%P"
     if exist "!PY_DIR!\pythonw.exe" (
-        set "PYTHONW_CMD=!PY_DIR!\pythonw.exe"
+        set PYTHONW_CMD="!PY_DIR!\pythonw.exe"
         goto START_TRAY
     )
     set "PYTHONW_CMD=python3"
@@ -61,7 +61,7 @@ python --version >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
     for /f "tokens=*" %%P in ('python -c "import sys,os; print(os.path.dirname(sys.executable))"') do set "PY_DIR=%%P"
     if exist "!PY_DIR!\pythonw.exe" (
-        set "PYTHONW_CMD=!PY_DIR!\pythonw.exe"
+        set PYTHONW_CMD="!PY_DIR!\pythonw.exe"
         goto START_TRAY
     )
     set "PYTHONW_CMD=python"
