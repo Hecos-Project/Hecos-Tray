@@ -25,19 +25,44 @@ except Exception as e:
     # If logger itself fails to load, fallback to standard stream print
     print(f"[TRAY] Fatal Error initializing logger: {e}", file=sys.stderr)
 
-# --- Dependency pre-check (if launched directly, not via wizard) ---
+# --- Dependency pre-check with AUTO-INSTALL ---
 def _check_deps():
+    PACKAGES = [
+        ("tomli_w",       "tomli-w"),
+        ("pystray",       "pystray"),
+        ("PIL",           "pillow"),
+        ("customtkinter", "customtkinter"),
+        ("psutil",        "psutil"),
+        ("yaml",          "pyyaml"),
+    ]
     missing = []
-    for mod, pkg in [("tomli_w", "tomli-w"), ("pystray", "pystray"), ("PIL", "pillow"), ("customtkinter", "customtkinter")]:
+    for mod, pkg in PACKAGES:
         try:
             __import__(mod)
         except ImportError:
             missing.append(pkg)
-    if missing:
-        print(f"[TRAY] Missing packages: {', '.join(missing)}")
-        print(f"[TRAY] Run: pip install {' '.join(missing)}")
-        print(f"[TRAY] Or launch HECOS_SETUP_WIZARD.bat — it installs these automatically.")
+
+    if not missing:
+        return  # All good
+
+    print(f"[TRAY] Auto-installing missing packages: {', '.join(missing)}")
+    try:
+        import subprocess as _sp
+        result = _sp.run(
+            [sys.executable, "-m", "pip", "install", "--quiet"] + missing,
+            capture_output=True, text=True, timeout=120
+        )
+        if result.returncode != 0:
+            print(f"[TRAY] pip error: {result.stderr.strip()}")
+            sys.exit(1)
+        print(f"[TRAY] Packages installed OK. Restarting tray to load them...")
+        # Restart the process so newly installed packages are importable
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+    except Exception as e:
+        print(f"[TRAY] Auto-install failed: {e}")
+        print(f"[TRAY] Run manually: pip install {' '.join(missing)}")
         sys.exit(1)
+
 _check_deps()
 
 # Relaunch as hecos_tray.exe if running as a compiled executable
@@ -169,21 +194,6 @@ def run_tray():
         # Already running
         print("[TRAY] Hecos Tray is already running. Exiting current instance.")
         sys.exit(0)
-
-    # Redirect all stdout/stderr to a log file to avoid pythonw.exe silent crashing
-    log_dir = os.path.join(_ROOT, "hecos", "logs")
-    os.makedirs(log_dir, exist_ok=True)
-    log_file = os.path.join(log_dir, "hecos_tray.log")
-    try:
-        sys.stdout = sys.stderr = open(log_file, "a", encoding="utf-8")
-        def handle_exception(exc_type, exc_value, exc_traceback):
-            import traceback
-            print("Uncaught exception:")
-            traceback.print_exception(exc_type, exc_value, exc_traceback)
-            sys.stdout.flush()
-        sys.excepthook = handle_exception
-    except Exception:
-        pass
 
     if not TRAY_AVAILABLE:
         print("\n[!] ERRORE: Dipendenze mancanti per la Tray Icon.")

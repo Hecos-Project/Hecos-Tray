@@ -4,6 +4,13 @@ cd /d "%~dp0"
 title HECOS - SETUP WIZARD
 color 0B
 
+:: ─── WIZARD LOG ────────────────────────────────────────────────────────────
+:: All wizard output is mirrored to logs\wizard.log for debugging
+if not exist "logs" mkdir "logs"
+set "WIZARD_LOG=%~dp0logs\wizard.log"
+echo [%DATE% %TIME%] HECOS SETUP WIZARD STARTED >> "!WIZARD_LOG!"
+echo [%DATE% %TIME%] Tray dir: %~dp0 >> "!WIZARD_LOG!"
+
 :: ─────────────────────────────────────────────────────────────────────────────
 ::  HECOS SETUP WIZARD  (launched from C:\Hecos-Tray)
 ::  This script handles:
@@ -145,17 +152,20 @@ exit
 :PYTHON_FOUND
 echo [OK] Python found: !PYTHON_LOC!
 !PYTHON_CMD! --version
+echo [%DATE% %TIME%] Python found: !PYTHON_LOC! with cmd: !PYTHON_CMD! >> "!WIZARD_LOG!"
 echo.
 
 :: ─────────────────────────────────────────────────────────────────────────────
 :: 3. TRAY DEPENDENCY CHECK — install from pyproject.toml if missing
 :: ─────────────────────────────────────────────────────────────────────────────
 echo [DEPENDENCY CHECK]
+echo [%DATE% %TIME%] Running dependency check... >> "!WIZARD_LOG!"
 
-:: Quick check: if tomli_w and pystray are importable, we're good
-!PYTHON_CMD! -c "import tomli_w, pystray, PIL" >nul 2>&1
+:: Quick check: ALL required tray modules must be importable
+!PYTHON_CMD! -c "import tomli_w, pystray, PIL, customtkinter" >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
     echo [OK] All Tray dependencies are already installed.
+    echo [%DATE% %TIME%] Deps OK - going to READY >> "!WIZARD_LOG!"
     echo.
     goto READY
 )
@@ -191,6 +201,7 @@ echo.
 :: 4. READY — let the user choose what to do
 :: ─────────────────────────────────────────────────────────────────────────────
 :READY
+echo [%DATE% %TIME%] Reached READY block. CORE_FOUND=!CORE_FOUND! >> "!WIZARD_LOG!"
 echo ==============================================================================
 echo                       HECOS TRAY IS READY
 echo ==============================================================================
@@ -226,10 +237,12 @@ if "!CORE_FOUND!"=="1" (
 :LAUNCH_SETUP_WIZARD
 echo.
 echo [*] Launching Hecos Setup Wizard...
+echo [%DATE% %TIME%] Launching setup_wizard.py from ROOT_DIR: %ROOT_DIR% >> "!WIZARD_LOG!"
 cd /d "%ROOT_DIR%"
-%PYTHON_CMD% "hecos\setup_wizard.py"
+%PYTHON_CMD% "hecos\setup_wizard.py" 2>> "!WIZARD_LOG!"
+echo [%DATE% %TIME%] setup_wizard.py exited with code: !ERRORLEVEL! >> "!WIZARD_LOG!"
 echo.
-echo [!] Setup Wizard exited. If there was an error, please read it above.
+echo [!] Setup Wizard exited. If there was an error, check logs\wizard.log
 pause
 goto END
 
