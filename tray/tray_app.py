@@ -56,8 +56,14 @@ def _check_deps():
             print(f"[TRAY] pip error: {result.stderr.strip()}")
             sys.exit(1)
         print(f"[TRAY] Packages installed OK. Restarting tray to load them...")
-        # Restart the process so newly installed packages are importable
-        os.execv(sys.executable, [sys.executable] + sys.argv)
+        # On Windows os.execv does NOT replace the process (unlike Linux).
+        # The singleton socket on port 17099 stays bound until the old process
+        # actually exits, causing the restarted process to quit immediately.
+        # Use Popen + sys.exit instead: exit first, then the new process starts.
+        import subprocess as _sp2
+        _sp2.Popen([sys.executable] + sys.argv,
+                   creationflags=getattr(_sp2, 'CREATE_NEW_CONSOLE', 0) if sys.platform == 'win32' else 0)
+        sys.exit(0)
     except Exception as e:
         print(f"[TRAY] Auto-install failed: {e}")
         print(f"[TRAY] Run manually: pip install {' '.join(missing)}")
