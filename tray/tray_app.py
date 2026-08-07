@@ -15,6 +15,16 @@ import threading
 import webbrowser
 import subprocess
 
+# --- INIT TRAY LOGGER ---
+# Must be initialized before any other 3rd party imports or checks!
+try:
+    _TRAY_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    from tray.logger import setup_logger
+    setup_logger(_TRAY_ROOT)
+except Exception as e:
+    # If logger itself fails to load, fallback to standard stream print
+    print(f"[TRAY] Fatal Error initializing logger: {e}", file=sys.stderr)
+
 # --- Dependency pre-check (if launched directly, not via wizard) ---
 def _check_deps():
     missing = []
