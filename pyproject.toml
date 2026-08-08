@@ -17,6 +17,7 @@ dependencies = [
     "psutil",
     "pyyaml",
     "customtkinter",
+    "qrcode",
     "pywin32; sys_platform=='win32'",
 ]
 

@@ -23,10 +23,19 @@ if /i not "!THIS_DIR!"=="!CANONICAL!" (
         pause
         exit
     )
-    echo  [AUTO-FIX] Done! Folder moved to !CANONICAL!
-    echo  [AUTO-FIX] Relaunching from correct location...
     echo.
-    timeout /t 2 >nul
+    echo ========================================================================
+    echo  [!] IMPORTANT: FOLDER HAS BEEN RELOCATED
+    echo ========================================================================
+    echo  Hecos requires its folders to be in a specific location to work.
+    echo  Your Tray folder has been automatically moved to:
+    echo    -^> !CANONICAL!
+    echo.
+    echo  Please remember this new location for the future!
+    echo  The application will now restart automatically.
+    echo ========================================================================
+    echo.
+    pause
     start "" "!CANONICAL!\%~nx0"
     exit
 )
