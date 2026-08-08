@@ -1,4 +1,4 @@
-﻿"""
+"""
 hecos_uninstall_terminator.py
 ─────────────────────────────────────────────────────────────────────────────
 Standalone terminator script for Hecos.
@@ -113,6 +113,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", choices=["full", "core", "tray"], required=True)
     parser.add_argument("--wait", type=int, default=4)
+    parser.add_argument("--skip-tray-delete", action="store_true")
     args = parser.parse_args()
 
     print("=" * 64)
@@ -146,7 +147,10 @@ def main():
     if mode in ("full", "core"):
         _delete_folder(CORE_DIR)
     if mode in ("full", "tray"):
-        _delete_folder(TRAY_DIR)
+        if args.skip_tray_delete:
+            print(f"  ~ Skipping deletion of {TRAY_DIR} (--skip-tray-delete enabled)")
+        else:
+            _delete_folder(TRAY_DIR)
 
     print()
     print("=" * 64)

@@ -440,6 +440,7 @@ def build_update(ctx):
     # ══════════════════════════════════════════════════════════════════════════
     import shutil
     import tempfile
+    import threading
 
     uni_card = _card(container, "🗑  Uninstall & Cleanup")
 
@@ -447,80 +448,126 @@ def build_update(ctx):
         uni_card,
         text=(
             "Permanently remove Hecos from your system.\n"
-            "The selected components will be uninstalled in the background "
-            "after this window closes."
+            "The selected components will be uninstalled while you watch."
         ),
         font=ctk.CTkFont(size=11), text_color=MUTED, justify="left", wraplength=460
     ).pack(anchor="w", padx=16, pady=(0, 8))
 
-    uni_status = ctk.CTkLabel(uni_card, text="", text_color=MUTED, font=ctk.CTkFont(size=11))
-    uni_status.pack(anchor="w", padx=16)
+    # The Live Log Console (hidden by default)
+    log_box = ctk.CTkTextbox(
+        uni_card, height=180, fg_color="#1e1e1e", text_color="#a3a3a3",
+        font=ctk.CTkFont(family="Consolas", size=10), wrap="word"
+    )
 
     # ── Source script path (shipped alongside the Tray) ──
     _TRAY_PKG_DIR = os.path.dirname(os.path.abspath(__file__))
     _TERMINATOR_SRC = os.path.join(_TRAY_PKG_DIR, "..", "..", "uninstall_terminator.py")
     _TERMINATOR_SRC = os.path.normpath(_TERMINATOR_SRC)
 
-    def _launch_terminator(mode: str):
-        """Copy the terminator to temp and launch it detached, then quit the Tray."""
+    def _append_log(text: str):
+        log_box.insert("end", text)
+        log_box.see("end")
+
+    def _suicide_and_quit():
+        """Phase 2: Drop a bat script to delete the Tray folder after we close."""
+        _append_log("\n[!] Tray self-destruct initiated. Closing UI in 3 seconds...\n")
+        
+        tmp_dir = tempfile.gettempdir()
+        bat_path = os.path.join(tmp_dir, "hecos_suicide.bat")
+        
+        # Determine the root of the Tray
+        tray_root = os.path.abspath(os.path.join(_TRAY_PKG_DIR, "..", ".."))
+        
+        bat_content = f"""@echo off
+timeout /t 3 /nobreak >nul
+taskkill /F /IM pythonw.exe >nul 2>&1
+taskkill /F /IM python.exe >nul 2>&1
+rmdir /s /q "{tray_root}"
+del "%~f0"
+"""
+        with open(bat_path, "w") as f:
+            f.write(bat_content)
+
+        # Launch the bat script detached
+        if sys.platform == "win32":
+            subprocess.Popen(["cmd.exe", "/c", bat_path], creationflags=subprocess.CREATE_NEW_CONSOLE | subprocess.DETACHED_PROCESS)
+        else:
+            # Linux fallback (though on Linux python can just delete the folder)
+            shutil.rmtree(tray_root, ignore_errors=True)
+
+        # Give user 3 seconds to read the final log, then die
+        log_box.after(3000, lambda: os.kill(os.getpid(), 9) if sys.platform != "win32"
+                      else subprocess.call(["taskkill", "/F", "/PID", str(os.getpid())]))
+
+    def _run_terminator_thread(mode: str, dest: str):
         try:
-            # Copy to system temp so it can delete our own folders
+            exe_cmd = sys.executable.replace("pythonw.exe", "python.exe")
+            
+            # Run terminator but TELL IT TO SKIP deleting the Tray folder
+            # because we are still running from it!
+            cmd = [exe_cmd, dest, "--mode", mode, "--wait", "1", "--skip-tray-delete"]
+            
+            proc = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                bufsize=1,
+                creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
+            )
+
+            # Stream output
+            for line in proc.stdout:
+                # Use after() to safely update Tkinter UI from background thread
+                log_box.after(0, _append_log, line)
+            
+            proc.wait()
+            
+            if proc.returncode == 0:
+                log_box.after(0, _append_log, "\n✅ Phase 1 Cleanup Complete.\n")
+                if mode in ("full", "tray"):
+                    log_box.after(500, _suicide_and_quit)
+                else:
+                    log_box.after(0, _append_log, "\n[!] Core has been removed. The Tray is still installed.\n    You may safely close this window.")
+            else:
+                log_box.after(0, _append_log, f"\n❌ Terminator exited with error code {proc.returncode}\n")
+
+        except Exception as e:
+            log_box.after(0, _append_log, f"\n❌ Error launching terminator: {e}\n")
+
+    def _launch_live_terminator(mode: str):
+        """Phase 1: Start the live log UI and spawn the terminator thread."""
+        try:
+            # Hide buttons, show terminal
+            uni_buttons.pack_forget()
+            confirm_btn.pack_forget()
+            log_box.pack(fill="x", padx=16, pady=(10, 14))
+
+            _append_log(f"Initializing {mode.upper()} wipe...\n")
+
+            # Copy to temp so it's not locked
             tmp_dir = tempfile.gettempdir()
             dest = os.path.join(tmp_dir, "hecos_uninstall_terminator.py")
             shutil.copy2(_TERMINATOR_SRC, dest)
 
-            # Build launch command - new console window so user can see progress
-            if sys.platform == "win32":
-                # Force python.exe (console) instead of pythonw.exe (windowless)
-                exe_cmd = sys.executable.replace("pythonw.exe", "python.exe")
-                subprocess.Popen(
-                    [exe_cmd, dest, "--mode", mode, "--wait", "4"],
-                    creationflags=subprocess.CREATE_NEW_CONSOLE,
-                )
-            else:
-                subprocess.Popen(
-                    [sys.executable, dest, "--mode", mode, "--wait", "4"],
-                    start_new_session=True,
-                    close_fds=True,
-                )
+            # Start background thread
+            threading.Thread(target=_run_terminator_thread, args=(mode, dest), daemon=True).start()
 
-            uni_status.configure(
-                text=(
-                    f"Uninstallation started ({mode.upper()} mode).\n"
-                    "A terminal window will show the progress.\n"
-                    "Hecos Tray will now close."
-                ),
-                text_color="#f97316"
-            )
-            # Give the user 3 seconds to read the message, then quit Tray
-            uni_status.after(3000, lambda: os.kill(os.getpid(), 9) if sys.platform != "win32"
-                             else subprocess.call(["taskkill", "/F", "/PID", str(os.getpid())]))
-
-        except FileNotFoundError:
-            uni_status.configure(
-                text="⚠ uninstall_terminator.py not found in Tray folder.",
-                text_color=RED
-            )
         except Exception as e:
-            uni_status.configure(text=f"⚠ {e}", text_color=RED)
+            _append_log(f"⚠ Failed to initialize: {e}\n")
 
     def _confirm_and_run(mode: str, label: str):
-        """Show a confirmation label and then run after a short delay."""
         descriptions = {
-            "full": "ALL Hecos data (Core + Tray + all dependencies + both folders).",
+            "full": "ALL Hecos data (Core + Tray + dependencies + both folders).",
             "core": "Hecos Core and its dependencies. The Tray will remain.",
             "tray": "Hecos Tray and its dependencies. The Core will remain.",
         }
-        uni_status.configure(
-            text=f"⚠ {label}: This will permanently remove {descriptions[mode]}\nClick again to confirm.",
-            text_color=RED
-        )
         # Second click confirms
         for btn in _uninstall_buttons:
             btn.configure(state="disabled")
         confirm_btn.configure(
             state="normal", text=f"CONFIRM: {label}",
-            command=lambda: _launch_terminator(mode)
+            command=lambda: _launch_live_terminator(mode)
         )
 
     _uninstall_buttons = []
@@ -552,7 +599,6 @@ def build_update(ctx):
     b3.grid(row=0, column=2, padx=(6, 0), sticky="ew")
     _uninstall_buttons.extend([b1, b2, b3])
 
-    # Hidden confirm button — appears only after first click
     confirm_btn = ctk.CTkButton(
         uni_card, text="", state="disabled",
         fg_color=RED, hover_color="#7f1d1d", text_color="white",
