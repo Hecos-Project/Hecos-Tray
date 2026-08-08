@@ -15,3 +15,58 @@ Traceback (most recent call last):
              ^^^^^^^^^^^^^^^
 EOFError: EOF when reading a line
 [07/08/2026 16:30:02,27] setup_wizard.py exited with code: 1 
+[08/08/2026  7:04:31,09] HECOS SETUP WIZARD STARTED 
+[08/08/2026  7:04:31,09] Tray dir: C:\Hecos-Tray\ 
+[08/08/2026  7:04:31,24] Python found: System (py launcher) with cmd: py -3 
+[08/08/2026  7:04:31,24] Running dependency check... 
+[08/08/2026  7:04:31,59] Deps OK - going to READY 
+[08/08/2026  7:04:31,59] Reached READY block. CORE_FOUND=1 
+[08/08/2026  7:04:40,43] Launching setup_wizard.py from ROOT_DIR: C:\Hecos 
+127.0.0.1 - - [08/Aug/2026 07:04:41] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:04:41] "GET /logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:04:45] "POST /select_setup_lang HTTP/1.1" 303 -
+127.0.0.1 - - [08/Aug/2026 07:04:46] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:04:46] "GET /logo.png HTTP/1.1" 200 -
+^C[08/08/2026  7:10:05,45] HECOS SETUP WIZARD STARTED 
+[08/08/2026  7:10:05,45] Tray dir: C:\Hecos-Tray\ 
+[08/08/2026  7:10:05,61] Python found: System (py launcher) with cmd: py -3 
+[08/08/2026  7:10:05,61] Running dependency check... 
+[08/08/2026  7:10:05,92] Deps OK - going to READY 
+[08/08/2026  7:10:05,92] Reached READY block. CORE_FOUND=1 
+[08/08/2026  7:10:08,49] Launching setup_wizard.py from ROOT_DIR: C:\Hecos 
+127.0.0.1 - - [08/Aug/2026 07:10:09] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:10:09] "GET /logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:10:11] "POST /select_setup_lang HTTP/1.1" 303 -
+127.0.0.1 - - [08/Aug/2026 07:10:12] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:10:12] "GET /logo.png HTTP/1.1" 200 -
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+torch 2.12.0 requires setuptools<82, but you have setuptools 83.0.0 which is incompatible.
+C:\Users\Tony\AppData\Local\Programs\Python\Python311\python.exe: No module named playwright
+127.0.0.1 - - [08/Aug/2026 07:11:52] "POST /onboarding HTTP/1.1" 303 -
+127.0.0.1 - - [08/Aug/2026 07:11:52] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:11:52] "GET /logo.png HTTP/1.1" 200 -
+^C[08/08/2026  7:19:08,55] HECOS SETUP WIZARD STARTED 
+[08/08/2026  7:19:08,55] Tray dir: C:\Hecos-Tray\ 
+[08/08/2026  7:19:08,71] Python found: System (py launcher) with cmd: py -3 
+[08/08/2026  7:19:08,72] Running dependency check... 
+[08/08/2026  7:19:09,03] Deps OK - going to READY 
+[08/08/2026  7:19:09,03] Reached READY block. CORE_FOUND=1 
+[08/08/2026  7:19:24,81] Launching setup_wizard.py from ROOT_DIR: C:\Hecos 
+127.0.0.1 - - [08/Aug/2026 07:19:25] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:19:25] "GET /logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:19:29] "POST /select_setup_lang HTTP/1.1" 303 -
+127.0.0.1 - - [08/Aug/2026 07:19:30] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:19:30] "GET /logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:19:38] "POST /set_lang HTTP/1.1" 303 -
+127.0.0.1 - - [08/Aug/2026 07:19:38] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:19:39] "GET /logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:19:41] "POST /set_lang HTTP/1.1" 303 -
+127.0.0.1 - - [08/Aug/2026 07:19:42] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:19:42] "GET /logo.png HTTP/1.1" 200 -
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+torch 2.12.0 requires setuptools<82, but you have setuptools 83.0.0 which is incompatible.
+C:\Users\Tony\AppData\Local\Programs\Python\Python311\python.exe: No module named playwright
+127.0.0.1 - - [08/Aug/2026 07:20:11] "POST /onboarding HTTP/1.1" 303 -
+127.0.0.1 - - [08/Aug/2026 07:20:11] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Aug/2026 07:20:11] "GET /logo.png HTTP/1.1" 200 -
+^C
