@@ -89,7 +89,7 @@ from tray.system_utils import play_beep
 from tray.orchestrator import start_hecos, stop_hecos, is_hecos_running
 from tray.hotkeys import tray_hotkeys
 from tray.ui import load_icon, build_menu, refresh_ui, TRAY_AVAILABLE
-from tray.control_center import show_control_center
+# Deferred import of Dashboard to avoid crashing if tkinter is missing in portable python
 
 try:
     import pystray

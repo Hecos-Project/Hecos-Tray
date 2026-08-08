@@ -24,7 +24,6 @@ from tray.browser_manager import (
     open_ai_browser, close_ai_browser
 )
 from tray.orchestrator import start_hecos, stop_hecos, restart_hecos, start_hecos_with_daemon, stop_daemon, is_daemon_running
-from tray.control_center import show_control_center
 
 
 def load_icon(online: bool) -> "Image.Image":
@@ -76,8 +75,14 @@ def build_menu(icon_ref: list):
 
     icon = icon_ref[0]
 
-    def open_cc(i, it):
-        show_control_center(i, it)
+    def _open_dashboard(i, it):
+        try:
+            from tray.control_center import show_control_center
+            show_control_center(i, it)
+        except ImportError:
+            import ctypes
+            msg = "Hecos Dashboard requires a full Python installation (with tkinter).\n\nThe portable Python environment is limited. Please install Python from python.org to use the Dashboard."
+            ctypes.windll.user32.MessageBoxW(0, msg, "Hecos Tray - Missing Dependency", 0x10)
 
     def open_chat(i, it):
         intelligent_open_webui(i, it)
@@ -198,7 +203,7 @@ def build_menu(icon_ref: list):
         pystray.MenuItem(status_label, None, enabled=False),
         pystray.Menu.SEPARATOR,
         # ── Main entry points
-        pystray.MenuItem("🎛️  Tray Dashboard", open_cc),
+        pystray.MenuItem("🎛️  Tray Dashboard", _open_dashboard),
         pystray.MenuItem("🌐 Open Chat", open_chat),
         pystray.MenuItem("⚙️  Central Hub", open_config),
         pystray.Menu.SEPARATOR,

@@ -48,13 +48,19 @@ echo.
 set "PYTHONW_CMD="
 set "ROOT_DIR=C:\Hecos"
 
-:: Strategy 1: Core portable python_env
+:: Strategy 1: Tray's own portable python_env
+if exist "%THIS_DIR%\python_env\pythonw.exe" (
+    set PYTHONW_CMD="%THIS_DIR%\python_env\pythonw.exe"
+    goto START_TRAY
+)
+
+:: Strategy 2: Core's portable python_env (fallback)
 if exist "%ROOT_DIR%\python_env\pythonw.exe" (
     set PYTHONW_CMD="%ROOT_DIR%\python_env\pythonw.exe"
     goto START_TRAY
 )
 
-:: Strategy 2: Core venv
+:: Strategy 3: Core venv
 if exist "%ROOT_DIR%\venv\Scripts\pythonw.exe" (
     set PYTHONW_CMD="%ROOT_DIR%\venv\Scripts\pythonw.exe"
     goto START_TRAY
@@ -119,7 +125,7 @@ exit
 :: Use "start" to detach the process so no console window stays open
 :: Works whether PYTHONW_CMD is pythonw.exe (no window) or python (window hidden by start)
 echo  [+] Launching with: !PYTHONW_CMD!
-start "" /b !PYTHONW_CMD! -m tray.tray_app
+start "" /b !PYTHONW_CMD! -m tray.tray_app > "%THIS_DIR%\tray_crash.log" 2>&1
 
 echo  [+] Command sent. The icon will appear in the system tray shortly.
 echo  [!] This window will close in 2 seconds...

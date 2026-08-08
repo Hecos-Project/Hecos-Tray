@@ -284,7 +284,7 @@ echo              DOWNLOADING PORTABLE PYTHON ENVIRONMENT
 echo ==============================================================================
 set "PYTHON_VERSION=3.11.9"
 set "PYTHON_URL=https://www.python.org/ftp/python/%PYTHON_VERSION%/python-%PYTHON_VERSION%-embed-amd64.zip"
-set "PYTHON_DIR=%ROOT_DIR%\python_env"
+set "PYTHON_DIR=%TRAY_DIR%\python_env"
 
 echo [*] Downloading Portable Python %PYTHON_VERSION%...
 mkdir "%PYTHON_DIR%" >nul 2>&1
