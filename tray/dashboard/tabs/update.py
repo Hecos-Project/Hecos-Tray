@@ -471,8 +471,10 @@ def build_update(ctx):
 
             # Build launch command - new console window so user can see progress
             if sys.platform == "win32":
+                # Force python.exe (console) instead of pythonw.exe (windowless)
+                exe_cmd = sys.executable.replace("pythonw.exe", "python.exe")
                 subprocess.Popen(
-                    [sys.executable, dest, "--mode", mode, "--wait", "4"],
+                    [exe_cmd, dest, "--mode", mode, "--wait", "4"],
                     creationflags=subprocess.CREATE_NEW_CONSOLE,
                 )
             else:
