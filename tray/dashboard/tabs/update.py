@@ -469,12 +469,11 @@ def build_update(ctx):
             dest = os.path.join(tmp_dir, "hecos_uninstall_terminator.py")
             shutil.copy2(_TERMINATOR_SRC, dest)
 
-            # Build launch command — detached, new console window, no wait
+            # Build launch command - new console window so user can see progress
             if sys.platform == "win32":
                 subprocess.Popen(
                     [sys.executable, dest, "--mode", mode, "--wait", "4"],
-                    creationflags=subprocess.CREATE_NEW_CONSOLE | subprocess.DETACHED_PROCESS,
-                    close_fds=True,
+                    creationflags=subprocess.CREATE_NEW_CONSOLE,
                 )
             else:
                 subprocess.Popen(

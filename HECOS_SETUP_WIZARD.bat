@@ -97,12 +97,12 @@ if exist "%ROOT_DIR%\hecos\core\version" (
     echo [OK] Core found at: %ROOT_DIR%
     set "CORE_FOUND=1"
 ) else (
-    echo [-] Core NOT found — will offer download below.
+    echo [-] Core NOT found - will offer download below.
 )
 echo.
 
 :: ─────────────────────────────────────────────────────────────────────────────
-:: 2. PYTHON DETECTION — find ANY python, never re-download if already present
+:: 2. PYTHON DETECTION - find ANY python, never re-download if already present
 :: ─────────────────────────────────────────────────────────────────────────────
 echo [PYTHON DETECTION]
 set "PYTHON_CMD="
@@ -146,7 +146,7 @@ if !ERRORLEVEL! EQU 0 (
     goto PYTHON_FOUND
 )
 
-:: No Python found at all — must install
+:: No Python found at all - must install
 echo [!] Python is NOT installed or not found anywhere on this system.
 echo.
 echo  Hecos Tray requires Python 3.10 or later.
@@ -167,7 +167,7 @@ echo [%DATE% %TIME%] Python found: !PYTHON_LOC! with cmd: !PYTHON_CMD! >> "!WIZA
 echo.
 
 :: ─────────────────────────────────────────────────────────────────────────────
-:: 3. TRAY DEPENDENCY CHECK — install from pyproject.toml if missing
+:: 3. TRAY DEPENDENCY CHECK - install from pyproject.toml if missing
 :: ─────────────────────────────────────────────────────────────────────────────
 echo [DEPENDENCY CHECK]
 echo [%DATE% %TIME%] Running dependency check... >> "!WIZARD_LOG!"
@@ -209,7 +209,7 @@ echo [+] Tray dependencies installed successfully.
 echo.
 
 :: ─────────────────────────────────────────────────────────────────────────────
-:: 4. READY — let the user choose what to do
+:: 4. READY - let the user choose what to do
 :: ─────────────────────────────────────────────────────────────────────────────
 :READY
 echo [%DATE% %TIME%] Reached READY block. CORE_FOUND=!CORE_FOUND! >> "!WIZARD_LOG!"

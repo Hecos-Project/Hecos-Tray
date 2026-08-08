@@ -44,7 +44,7 @@ if /i not "!THIS_DIR!"=="!CANONICAL!" (
 echo.
 echo.
 
-:: Detect PythonW — try multiple strategies
+:: Detect PythonW - try multiple strategies
 set "PYTHONW_CMD="
 set "ROOT_DIR=C:\Hecos"
 
@@ -68,7 +68,7 @@ if !ERRORLEVEL! EQU 0 (
         set PYTHONW_CMD="!PY_DIR!\pythonw.exe"
         goto START_TRAY
     )
-    :: py launcher exists but no pythonw.exe — use python directly via start (detached)
+    :: py launcher exists but no pythonw.exe - use python directly via start (detached)
     set "PYTHONW_CMD=py -3"
     goto START_TRAY
 )
