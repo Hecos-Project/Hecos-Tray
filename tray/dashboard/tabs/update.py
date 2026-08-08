@@ -438,48 +438,123 @@ def build_update(ctx):
     # ══════════════════════════════════════════════════════════════════════════
     # SECTION 4 — Uninstall & Cleanup
     # ══════════════════════════════════════════════════════════════════════════
+    import shutil
+    import tempfile
+
     uni_card = _card(container, "🗑  Uninstall & Cleanup")
 
     ctk.CTkLabel(
         uni_card,
-        text="Remove Hecos Core and its dependencies from your system.",
-        font=ctk.CTkFont(size=11), text_color=MUTED, justify="left"
-    ).pack(anchor="w", padx=16, pady=(0, 10))
+        text=(
+            "Permanently remove Hecos from your system.\n"
+            "The selected components will be uninstalled in the background "
+            "after this window closes."
+        ),
+        font=ctk.CTkFont(size=11), text_color=MUTED, justify="left", wraplength=460
+    ).pack(anchor="w", padx=16, pady=(0, 8))
 
     uni_status = ctk.CTkLabel(uni_card, text="", text_color=MUTED, font=ctk.CTkFont(size=11))
     uni_status.pack(anchor="w", padx=16)
 
-    def run_uninstall(mode):
-        uni_status.configure(text=f"Opening Uninstaller ({mode})…", text_color=MUTED)
-        uninstaller = os.path.join(_ROOT, "scripts", "windows", "setup", "UNINSTALL_HECOS_WIN.bat")
-        if not os.path.exists(uninstaller):
-            uni_status.configure(text="⚠ Uninstaller not found.", text_color=RED)
-            return
+    # ── Source script path (shipped alongside the Tray) ──
+    _TRAY_PKG_DIR = os.path.dirname(os.path.abspath(__file__))
+    _TERMINATOR_SRC = os.path.join(_TRAY_PKG_DIR, "..", "..", "uninstall_terminator.py")
+    _TERMINATOR_SRC = os.path.normpath(_TERMINATOR_SRC)
+
+    def _launch_terminator(mode: str):
+        """Copy the terminator to temp and launch it detached, then quit the Tray."""
         try:
-            subprocess.Popen(["cmd.exe", "/c", uninstaller, mode], creationflags=0x00000010, cwd=_ROOT)
+            # Copy to system temp so it can delete our own folders
+            tmp_dir = tempfile.gettempdir()
+            dest = os.path.join(tmp_dir, "hecos_uninstall_terminator.py")
+            shutil.copy2(_TERMINATOR_SRC, dest)
+
+            # Build launch command — detached, new console window, no wait
+            if sys.platform == "win32":
+                subprocess.Popen(
+                    [sys.executable, dest, "--mode", mode, "--wait", "4"],
+                    creationflags=subprocess.CREATE_NEW_CONSOLE | subprocess.DETACHED_PROCESS,
+                    close_fds=True,
+                )
+            else:
+                subprocess.Popen(
+                    [sys.executable, dest, "--mode", mode, "--wait", "4"],
+                    start_new_session=True,
+                    close_fds=True,
+                )
+
+            uni_status.configure(
+                text=(
+                    f"Uninstallation started ({mode.upper()} mode).\n"
+                    "A terminal window will show the progress.\n"
+                    "Hecos Tray will now close."
+                ),
+                text_color="#f97316"
+            )
+            # Give the user 3 seconds to read the message, then quit Tray
+            uni_status.after(3000, lambda: os.kill(os.getpid(), 9) if sys.platform != "win32"
+                             else subprocess.call(["taskkill", "/F", "/PID", str(os.getpid())]))
+
+        except FileNotFoundError:
+            uni_status.configure(
+                text="⚠ uninstall_terminator.py not found in Tray folder.",
+                text_color=RED
+            )
         except Exception as e:
             uni_status.configure(text=f"⚠ {e}", text_color=RED)
 
+    def _confirm_and_run(mode: str, label: str):
+        """Show a confirmation label and then run after a short delay."""
+        descriptions = {
+            "full": "ALL Hecos data (Core + Tray + all dependencies + both folders).",
+            "core": "Hecos Core and its dependencies. The Tray will remain.",
+            "tray": "Hecos Tray and its dependencies. The Core will remain.",
+        }
+        uni_status.configure(
+            text=f"⚠ {label}: This will permanently remove {descriptions[mode]}\nClick again to confirm.",
+            text_color=RED
+        )
+        # Second click confirms
+        for btn in _uninstall_buttons:
+            btn.configure(state="disabled")
+        confirm_btn.configure(
+            state="normal", text=f"CONFIRM: {label}",
+            command=lambda: _launch_terminator(mode)
+        )
+
+    _uninstall_buttons = []
     uni_cfg = dict(height=32, corner_radius=8, font=ctk.CTkFont(size=11))
     uni_buttons = ctk.CTkFrame(uni_card, fg_color="transparent")
-    uni_buttons.pack(fill="x", padx=16, pady=(6, 14))
+    uni_buttons.pack(fill="x", padx=16, pady=(6, 4))
     uni_buttons.columnconfigure((0, 1, 2), weight=1, uniform="ubtn")
 
-    ctk.CTkButton(
+    b1 = ctk.CTkButton(
         uni_buttons, text="Remove Core",
         fg_color=BORDER, text_color=TEXT, hover_color="#8b5cf6",
-        command=lambda: run_uninstall("--core"), **uni_cfg
-    ).grid(row=0, column=0, padx=(0, 6), sticky="ew")
+        command=lambda: _confirm_and_run("core", "Remove Core"), **uni_cfg
+    )
+    b1.grid(row=0, column=0, padx=(0, 6), sticky="ew")
 
-    ctk.CTkButton(
-        uni_buttons, text="Remove Core + Deps",
+    b2 = ctk.CTkButton(
+        uni_buttons, text="Remove Tray",
         fg_color=BORDER, text_color=TEXT, hover_color="#f97316",
-        command=lambda: run_uninstall("--deps"), **uni_cfg
-    ).grid(row=0, column=1, padx=6, sticky="ew")
+        command=lambda: _confirm_and_run("tray", "Remove Tray"), **uni_cfg
+    )
+    b2.grid(row=0, column=1, padx=6, sticky="ew")
 
-    ctk.CTkButton(
-        uni_buttons, text="🔴  Full Nuke",
+    b3 = ctk.CTkButton(
+        uni_buttons, text="🔴  Full Nuke (Both)",
         fg_color="transparent", border_width=1, border_color=RED,
         text_color=RED, hover_color="#3a1a1a",
-        command=lambda: run_uninstall("--full"), **uni_cfg
-    ).grid(row=0, column=2, padx=(6, 0), sticky="ew")
+        command=lambda: _confirm_and_run("full", "Full Nuke"), **uni_cfg
+    )
+    b3.grid(row=0, column=2, padx=(6, 0), sticky="ew")
+    _uninstall_buttons.extend([b1, b2, b3])
+
+    # Hidden confirm button — appears only after first click
+    confirm_btn = ctk.CTkButton(
+        uni_card, text="", state="disabled",
+        fg_color=RED, hover_color="#7f1d1d", text_color="white",
+        height=32, corner_radius=8, font=ctk.CTkFont(size=11, weight="bold")
+    )
+    confirm_btn.pack(fill="x", padx=16, pady=(4, 14))
