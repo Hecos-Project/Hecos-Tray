@@ -32,3 +32,5 @@
 [2026-08-08 16:19:55] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
 [2026-08-08 16:20:23] [STDOUT] [ORCHESTRATOR] Killed process 10600 on port 7070.
 [2026-08-08 16:20:24] [STDOUT] [ORCHESTRATOR] Hecos Supervisor (Daemon) spawned successfully.
+[2026-08-08 16:21:08] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-08 16:21:08] [STDOUT] [ORCHESTRATOR] No process found on port 7070.

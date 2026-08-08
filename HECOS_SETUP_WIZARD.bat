@@ -378,8 +378,20 @@ if exist "%ROOT_DIR%\hecos\core\version" (
     echo  [+] Hecos Core installed successfully!
     set "CORE_FOUND=1"
     echo.
+    echo  [*] Now running the Core self-installer to set up Python and dependencies...
+    echo  [*] This may take a few minutes on first run. Please wait.
+    echo.
+    :: Run the Core's own setup bat which installs portable Python + all Core pip deps
+    if exist "%ROOT_DIR%\scripts\windows\setup\HECOS_SETUP_WIZARD.bat" (
+        call "%ROOT_DIR%\scripts\windows\setup\HECOS_SETUP_WIZARD.bat" --silent
+    ) else (
+        echo  [!] Warning: Core setup script not found. Dependencies may be missing.
+        echo  [!] Run %ROOT_DIR%\scripts\windows\setup\HECOS_SETUP_WIZARD.bat manually if Hecos fails to start.
+    )
+    echo.
+    echo  [+] Core setup complete! Returning to menu.
     timeout /t 2 >nul
-    goto LAUNCH_SETUP_WIZARD
+    goto READY
 ) else (
     echo  [!] Extraction done but Core files not found. Extract the ZIP manually.
     pause

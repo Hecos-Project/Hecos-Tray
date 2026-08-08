@@ -12,8 +12,26 @@ _hecos_process = None
 _daemon_process = None  # Separate reference when running under the Supervisor
 
 def get_platform_python(is_daemon=False):
-    """Returns the correct python executable depending on the environment."""
+    """
+    Returns the correct Python executable to run the Hecos Core.
+    Priority order (ensures Core is always independent from Tray):
+      1. Core's own portable Python  (C:\Hecos\python_env\python.exe)
+      2. Core's own venv             (C:\Hecos\venv\Scripts\python.exe)
+      3. Tray's Python / system Python (fallback)
+    """
     import shutil
+
+    # Priority 1: Core's portable Python (installed by the Core's own setup wizard)
+    core_portable = os.path.join(_ROOT, "python_env", "python.exe")
+    if os.path.exists(core_portable):
+        return core_portable
+
+    # Priority 2: Core's venv
+    core_venv = os.path.join(_ROOT, "venv", "Scripts", "python.exe")
+    if os.path.exists(core_venv):
+        return core_venv
+
+    # Priority 3: Fall back to Tray's own Python (last resort)
     base_exe = sys.executable
     if "hecos_tray.exe" in base_exe.lower() or "hecos_dashboard.exe" in base_exe.lower():
         base_exe = shutil.which("python") or base_exe
@@ -22,7 +40,7 @@ def get_platform_python(is_daemon=False):
         from tray.system_utils import get_named_executable
         name = "hecos_daemon" if is_daemon else "hecos_main"
         return get_named_executable(name, base_exe=base_exe)
-    # If running from a venv, sys.executable points to the venv python
+
     return base_exe
 
 def _wait_and_respawn(proc):
