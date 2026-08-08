@@ -25,18 +25,31 @@ echo [%DATE% %TIME%] Tray dir: %~dp0 >> "!WIZARD_LOG!"
 set "TRAY_DIR=%~dp0"
 if "!TRAY_DIR:~-1!"=="\" set "TRAY_DIR=!TRAY_DIR:~0,-1!"
 
-set "TRAY_WARN=0"
-set "TRAY_NOT_IN_C=0"
-
-:: Check if the path starts with C:\Hecos-Tray
-echo !TRAY_DIR! | findstr /I /B "C:\\Hecos-Tray" >nul
-if !ERRORLEVEL! NEQ 0 (
-    set "TRAY_NOT_IN_C=1"
-) else (
-    if /I NOT "!TRAY_DIR!"=="C:\Hecos-Tray" (
-        set "TRAY_WARN=1"
+:: ─── SELF-HEALING FOLDER CHECK ──────────────────────────────────────────────
+set "CANONICAL=C:\Hecos-Tray"
+if /i not "!TRAY_DIR!"=="!CANONICAL!" (
+    echo.
+    echo  [AUTO-FIX] Hecos-Tray is in the wrong location:
+    echo  [AUTO-FIX]   Found at: !TRAY_DIR!
+    echo  [AUTO-FIX]   Moving to: !CANONICAL! ...
+    echo.
+    robocopy "!TRAY_DIR!" "!CANONICAL!" /E /IS /IT /NFL /NDL /NJH /NJS /NC /NS /NP >nul 2>&1
+    if !ERRORLEVEL! GEQ 8 (
+        color 0C
+        echo  [ERROR] Auto-move failed. Please move the folder manually:
+        echo    From: !TRAY_DIR!
+        echo    To:   !CANONICAL!
+        pause
+        exit
     )
+    echo  [AUTO-FIX] Done! Folder moved to !CANONICAL!
+    echo  [AUTO-FIX] Relaunching from correct location...
+    echo.
+    timeout /t 2 >nul
+    start "" "!CANONICAL!\%~nx0"
+    exit
 )
+:: ─────────────────────────────────────────────────────────────────────────────
 
 :: --- Determine ROOT_DIR (Hecos Core) ---
 set "ROOT_DIR=C:\Hecos"
@@ -67,18 +80,7 @@ echo.
 echo [SYSTEM CHECK]
 
 :: Check Tray
-if "!TRAY_NOT_IN_C!"=="1" (
-    echo [-] Tray is NOT in C:\ drive.
-    echo  [-] Please make sure the Hecos-Tray folder is placed directly in C:\
-    echo  [-] It should be at: C:\Hecos-Tray
-    echo  [-] Current location: !TRAY_DIR!
-) else (
-    echo [OK] Tray found at: !TRAY_DIR!
-    if "!TRAY_WARN!"=="1" (
-        echo.
-        echo  [-] WARNING: Tray folder has a version suffix. Rename it to C:\Hecos-Tray
-    )
-)
+echo [OK] Tray found at: !TRAY_DIR!
 
 :: Check Core
 set "CORE_FOUND=0"

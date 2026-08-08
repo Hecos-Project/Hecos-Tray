@@ -4,8 +4,35 @@ cd /d "%~dp0"
 title Hecos - Restart Tray Icon
 color 0B
 
+:: ─── SELF-HEALING FOLDER CHECK ──────────────────────────────────────────────
+set "THIS_DIR=%~dp0"
+if "!THIS_DIR:~-1!"=="\" set "THIS_DIR=!THIS_DIR:~0,-1!"
+set "CANONICAL=C:\Hecos-Tray"
+if /i not "!THIS_DIR!"=="!CANONICAL!" (
+    echo.
+    echo  [AUTO-FIX] Hecos-Tray is in the wrong location:
+    echo  [AUTO-FIX]   Found at: !THIS_DIR!
+    echo  [AUTO-FIX]   Moving to: !CANONICAL! ...
+    echo.
+    robocopy "!THIS_DIR!" "!CANONICAL!" /E /IS /IT /NFL /NDL /NJH /NJS /NC /NS /NP >nul 2>&1
+    if !ERRORLEVEL! GEQ 8 (
+        color 0C
+        echo  [ERROR] Auto-move failed. Please move the folder manually:
+        echo    From: !THIS_DIR!
+        echo    To:   !CANONICAL!
+        pause
+        exit
+    )
+    echo  [AUTO-FIX] Done! Folder moved to !CANONICAL!
+    echo  [AUTO-FIX] Relaunching from correct location...
+    echo.
+    timeout /t 2 >nul
+    start "" "!CANONICAL!\%~nx0"
+    exit
+)
+:: ─────────────────────────────────────────────────────────────────────────────
+
 echo.
-echo  [*] Restoring system tray icon...
 echo.
 
 :: Detect PythonW — try multiple strategies
