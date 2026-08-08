@@ -76,7 +76,7 @@ def start_hecos():
 
         cmd = [python_exe]
         if use_daemon:
-            cmd.extend(["-m", "hecos.core.daemon", "--web"])
+            cmd.extend(["-m", "hecos.monitor", "--script", "hecos.modules.web_ui.server"])
             print("[ORCHESTRATOR] Spawning under new Watchdog Daemon...")
         else:
             cmd.extend(["-m", "hecos.modules.web_ui.server", "--no-gui"])
