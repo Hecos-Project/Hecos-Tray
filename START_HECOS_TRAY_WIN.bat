@@ -113,7 +113,7 @@ exit
 :: Use "start" to detach the process so no console window stays open
 :: Works whether PYTHONW_CMD is pythonw.exe (no window) or python (window hidden by start)
 echo  [+] Launching with: !PYTHONW_CMD!
-start "" /b !PYTHONW_CMD! -c "import sys; sys.path.insert(0, r'%THIS_DIR%'); import runpy; runpy.run_module('tray.tray_app', run_name='__main__')" > "%THIS_DIR%\tray_crash.log" 2>&1
+start "" /b !PYTHONW_CMD! -c "import sys; sys.path.insert(0, r'%THIS_DIR%'); import runpy; runpy.run_module('tray.tray_app', run_name='__main__')" > "%THIS_DIR%\logs\tray_crash.log" 2>&1
 
 echo  [+] Command sent. The icon will appear in the system tray shortly.
 echo  [!] This window will close in 2 seconds...

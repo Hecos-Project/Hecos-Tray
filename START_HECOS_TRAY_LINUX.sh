@@ -51,7 +51,13 @@ if [ -z "$PY_CMD" ]; then
 fi
 
 # ── Launch Tray detached (nohup + background, no console window) ─────────────
-nohup $PY_CMD -m tray.tray_app > /dev/null 2>&1 &
+# ── Create logs dir if needed ─────────────────────────────────────────────────
+mkdir -p "$SCRIPT_DIR/logs"
+
+# ── Launch Tray detached (nohup + background, no console window) ─────────────
+# Stdout/stderr go to logs/tray_crash.log — any Python crash before the
+# internal logger starts will be captured here.
+nohup $PY_CMD -m tray.tray_app >> "$SCRIPT_DIR/logs/tray_crash.log" 2>&1 &
 
 echo " [+] Tray launched with: $PY_CMD"
 echo " [+] The icon will appear in your system tray shortly."
