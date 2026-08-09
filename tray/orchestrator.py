@@ -9,34 +9,52 @@ from tray.utils import is_hecos_online
 
 # Hold a reference to the subprocess so we can terminate it later
 _hecos_process = None
-_daemon_process = None  # Separate reference when running under the Supervisor
 
-def get_platform_python(is_daemon=False):
+# Global lock — prevents two concurrent start_hecos() / restart_hecos() calls
+_start_lock = threading.Lock()
+
+
+def get_platform_python():
     """
     Returns the correct Python executable to run the Hecos Core.
     Priority order (ensures Core is always independent from Tray):
-      1. Core's own portable Python  (C:\Hecos\python_env\python.exe)
-      2. Core's own venv             (C:\Hecos\venv\Scripts\python.exe)
-      3. Tray's Python / system Python (fallback)
+      1. Core's own portable Python  (C:/Hecos/python_env/python.exe)
+      2. Core's own venv             (C:/Hecos/venv/Scripts/python.exe)
+      3. System Python resolved via shutil.which
+      4. Tray's own sys.executable   (last resort)
     """
     import shutil
 
     # Priority 1: Core's portable Python (installed by the Core's own setup wizard)
-    core_portable = os.path.join(_ROOT, "python_env", "python.exe")
-    if os.path.exists(core_portable):
-        return core_portable
+    for name in ("python.exe", "python3", "python"):
+        candidate = os.path.join(_ROOT, "python_env", name)
+        if os.path.exists(candidate):
+            print(f"[ORCHESTRATOR] Using Core portable Python: {candidate}")
+            return candidate
 
     # Priority 2: Core's venv
-    core_venv = os.path.join(_ROOT, "venv", "Scripts", "python.exe")
-    if os.path.exists(core_venv):
-        return core_venv
+    for rel in (
+        os.path.join("venv", "Scripts", "python.exe"),  # Windows venv
+        os.path.join("venv", "bin", "python3"),          # Linux venv
+        os.path.join("venv", "bin", "python"),
+    ):
+        candidate = os.path.join(_ROOT, rel)
+        if os.path.exists(candidate):
+            print(f"[ORCHESTRATOR] Using Core venv Python: {candidate}")
+            return candidate
 
-    # Priority 3: Fall back to Tray's own Python (last resort)
+    # Priority 3: system python (py launcher on Windows, python3 on Linux)
+    for cmd in ("py", "python3", "python"):
+        found = shutil.which(cmd)
+        if found:
+            print(f"[ORCHESTRATOR] Using system Python: {found}")
+            return found
+
+    # Priority 4: Fall back to whatever is running the Tray itself
     base_exe = sys.executable
-    if "hecos_tray.exe" in base_exe.lower() or "hecos_dashboard.exe" in base_exe.lower():
-        base_exe = shutil.which("python") or base_exe
-
+    print(f"[ORCHESTRATOR] Fallback: using Tray Python: {base_exe}")
     return base_exe
+
 
 def _wait_and_respawn(proc):
     """Waits for the subprocess to finish. If exit code is 42, respawns it."""
@@ -58,67 +76,76 @@ def _wait_and_respawn(proc):
             time.sleep(1)
             
         start_hecos()
+    else:
+        code = getattr(proc, 'returncode', '?')
+        print(f"[ORCHESTRATOR] Hecos process ended (exit code {code}).")
 
 
 def start_hecos():
     """
-    Spawns the Hecos system as a background subprocess of the Tray App.
+    Spawns the Hecos WebUI system as a background subprocess of the Tray App.
+    Thread-safe: if already running or another start is in progress, returns immediately.
+    The 'use_daemon' setting controls whether a watchdog monitor wraps the server:
+      - use_daemon=True  → hecos.monitor (watchdog) wraps hecos.modules.web_ui.server
+      - use_daemon=False → hecos.modules.web_ui.server is started directly
     """
     global _hecos_process
-    if is_hecos_running():
-        return  # Already running
 
-    server_script = os.path.join(_ROOT, "hecos", "modules", "web_ui", "server.py")
-    if not os.path.exists(server_script):
-        print(f"[ORCHESTRATOR] Error: Could not find {server_script}")
+    # Prevent concurrent starts — if another thread is already in start_hecos, bail
+    if not _start_lock.acquire(blocking=False):
+        print("[ORCHESTRATOR] Start already in progress, skipping.")
         return
 
     try:
+        if is_hecos_running():
+            return  # Already running
+
+        server_script = os.path.join(_ROOT, "hecos", "modules", "web_ui", "server.py")
+        if not os.path.exists(server_script):
+            print(f"[ORCHESTRATOR] Error: Could not find {server_script}")
+            return
+
         from tray.config import load_settings
         settings = load_settings()
         use_daemon = settings.get("use_daemon", False)
 
-        python_exe = get_platform_python(is_daemon=use_daemon)
-        
+        python_exe = get_platform_python()
+
         boot_log_path = os.path.join(_ROOT, "hecos", "logs", "hecos_boot_trace.log")
         os.makedirs(os.path.dirname(boot_log_path), exist_ok=True)
         boot_log = open(boot_log_path, "a", encoding="utf-8")
-        # Add a visual separator for new boot attempts
-        boot_log.write(f"\n{'='*50}\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] ORCHESTRATOR: Spawning Hecos backend...\n{'='*50}\n")
+        boot_log.write(
+            f"\n{'='*50}\n"
+            f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] ORCHESTRATOR: Spawning Hecos backend...\n"
+            f"  Python: {python_exe}\n"
+            f"  Mode  : {'watchdog (hecos.monitor)' if use_daemon else 'standalone'}\n"
+            f"{'='*50}\n"
+        )
         boot_log.flush()
 
         cmd = [python_exe]
         if use_daemon:
             cmd.extend(["-m", "hecos.monitor", "--script", "hecos.modules.web_ui.server"])
-            print("[ORCHESTRATOR] Spawning under new Watchdog Daemon...")
+            print(f"[ORCHESTRATOR] Spawning with Watchdog... (Python: {python_exe})")
         else:
             cmd.extend(["-m", "hecos.modules.web_ui.server", "--no-gui"])
-            print("[ORCHESTRATOR] Spawning standalone...")
+            print(f"[ORCHESTRATOR] Spawning standalone... (Python: {python_exe})")
 
+        kwargs = dict(cwd=_ROOT, stdout=boot_log, stderr=subprocess.STDOUT)
         if sys.platform == "win32":
-            # creationflags=0x08000000 means CREATE_NO_WINDOW (runs silently in background)
-            _hecos_process = subprocess.Popen(
-                cmd,
-                cwd=_ROOT,
-                stdout=boot_log,
-                stderr=subprocess.STDOUT,
-                creationflags=0x08000000
-            )
-        else:
-            # On Linux/Mac, just run it cleanly in the background
-            _hecos_process = subprocess.Popen(
-                cmd,
-                cwd=_ROOT,
-                stdout=boot_log,
-                stderr=subprocess.STDOUT
-            )
-        
-        # Start a monitor thread to handle automatic reboots (exit code 42)
+            kwargs["creationflags"] = 0x08000000  # CREATE_NO_WINDOW
+
+        _hecos_process = subprocess.Popen(cmd, **kwargs)
+
+        # Background thread handles exit code 42 (self-requested reboot)
         threading.Thread(target=_wait_and_respawn, args=(_hecos_process,), daemon=True).start()
-        
+
         print("[ORCHESTRATOR] Hecos background process spawned successfully.")
     except Exception as e:
         print(f"[ORCHESTRATOR] Failed to spawn Hecos: {e}")
+    finally:
+        _start_lock.release()
+
 
 def stop_hecos():
     """Terminates the background Hecos subprocess."""
@@ -126,7 +153,7 @@ def stop_hecos():
     if _hecos_process is not None:
         try:
             _hecos_process.terminate()
-            _hecos_process.wait(timeout=3)
+            _hecos_process.wait(timeout=5)
         except subprocess.TimeoutExpired:
             _hecos_process.kill()
         except Exception:
@@ -165,25 +192,20 @@ def _kill_by_port():
 def is_hecos_running() -> bool:
     """
     Returns True if we see the process handle is alive, OR if the port is responding.
+    (If the Tray app crashed and was restarted, _hecos_process might be None but
+    is_hecos_online() will return True.)
     """
-    global _hecos_process, _daemon_process
-    
-    # Fast reliable check if we started it
+    global _hecos_process
+
     if _hecos_process is not None:
         if _hecos_process.poll() is None:
             return True
         else:
-            # Process died
             _hecos_process = None
 
-    if _daemon_process is not None:
-        if _daemon_process.poll() is None:
-            return True
-        else:
-            _daemon_process = None
-            
     # Fallback: check if the port is bound
     return is_hecos_online()
+
 
 def restart_hecos():
     """Stops the existing process and spawns a new one."""
@@ -191,109 +213,45 @@ def restart_hecos():
         boot_log_path = os.path.join(_ROOT, "hecos", "logs", "hecos_boot_trace.log")
         os.makedirs(os.path.dirname(boot_log_path), exist_ok=True)
         with open(boot_log_path, "a", encoding="utf-8") as f:
-            f.write(f"\n{'='*50}\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 🔄 ORCHESTRATOR: RESTART TRIGGERED FROM TRAY\n{'='*50}\n")
+            f.write(
+                f"\n{'='*50}\n"
+                f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] RESTART TRIGGERED FROM TRAY\n"
+                f"{'='*50}\n"
+            )
     except Exception:
         pass
 
     stop_hecos()
-    
+
     # Wait up to 5 seconds for the port to release
     for _ in range(10):
         if not is_hecos_online():
             break
         time.sleep(0.5)
-        
+
     if is_hecos_online():
         print("[ORCHESTRATOR] Port still held after stop_hecos, forcing kill...")
         _kill_by_port()
         time.sleep(1)
-        
+
     start_hecos()
 
 
+# ── Compatibility shim ─────────────────────────────────────────────────────────
+# start_hecos_with_daemon() was removed: hecos.core.daemon module doesn't exist.
+# All "daemon/watchdog" functionality is now handled by start_hecos() via
+# the 'use_daemon' setting which uses hecos.monitor as the watchdog wrapper.
 def start_hecos_with_daemon():
-    """
-    Spawns the Hecos Supervisor (hecos.core.daemon) as a background subprocess.
-    Stops any existing standalone Hecos first to avoid port/lock conflicts.
-    """
-    global _daemon_process
-    if is_daemon_running():
-        print("[ORCHESTRATOR] Daemon is already running.")
-        return
-
-    # Stop the existing standalone Hecos before the daemon spawns a new one
-    if is_hecos_running():
-        print("[ORCHESTRATOR] Stopping standalone Hecos before starting Daemon...")
-        stop_hecos()
-        for _ in range(10):
-            if not is_hecos_online():
-                break
-            time.sleep(0.5)
-        if is_hecos_online():
-            _kill_by_port()
-            time.sleep(1)
-
-    python_exe = get_platform_python()
-    try:
-        boot_log_path = os.path.join(_ROOT, "hecos", "logs", "hecos_boot_trace.log")
-        os.makedirs(os.path.dirname(boot_log_path), exist_ok=True)
-        boot_log = open(boot_log_path, "a", encoding="utf-8")
-        boot_log.write(f"\n{'='*50}\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] ORCHESTRATOR: Spawning Hecos via Daemon Supervisor...\n{'='*50}\n")
-        boot_log.flush()
-
-        env = os.environ.copy()
-        env["HECOS_MONITORED_PROCESS"] = "1"
-
-        cmd = [python_exe, "-m", "hecos.core.daemon", "--web"]
-
-        if sys.platform == "win32":
-            _daemon_process = subprocess.Popen(
-                cmd,
-                cwd=_ROOT,
-                stdout=boot_log,
-                stderr=subprocess.STDOUT,
-                creationflags=0x08000000,
-                env=env
-            )
-        else:
-            _daemon_process = subprocess.Popen(
-                cmd,
-                cwd=_ROOT,
-                stdout=boot_log,
-                stderr=subprocess.STDOUT,
-                env=env
-            )
-
-        print("[ORCHESTRATOR] Hecos Supervisor (Daemon) spawned successfully.")
-    except Exception as e:
-        print(f"[ORCHESTRATOR] Failed to spawn Daemon: {e}")
+    """Deprecated: redirects to start_hecos() which handles watchdog mode internally."""
+    print("[ORCHESTRATOR] start_hecos_with_daemon() → redirected to start_hecos()")
+    start_hecos()
 
 
 def stop_daemon():
-    """Terminates the Supervisor process (which will also kill its Hecos child)."""
-    global _daemon_process
-    if _daemon_process is not None:
-        try:
-            _daemon_process.terminate()
-            _daemon_process.wait(timeout=5)
-        except subprocess.TimeoutExpired:
-            _daemon_process.kill()
-        except Exception:
-            pass
-        _daemon_process = None
-        print("[ORCHESTRATOR] Daemon Supervisor stopped.")
-    else:
-        # If we lost the reference, fall back to killing by port
-        _kill_by_port()
+    """Deprecated: redirects to stop_hecos()."""
+    stop_hecos()
 
 
 def is_daemon_running() -> bool:
-    """Returns True if the Daemon Supervisor subprocess is alive."""
-    global _daemon_process
-    if _daemon_process is not None:
-        if _daemon_process.poll() is None:
-            return True
-        _daemon_process = None
+    """Deprecated: always returns False (daemon supervisor was removed)."""
     return False
-
-
