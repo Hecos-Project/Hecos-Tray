@@ -108,21 +108,14 @@ echo [PYTHON DETECTION]
 set "PYTHON_CMD="
 set "PYTHON_LOC="
 
-:: Priority 1: Core portable python_env
-if exist "%ROOT_DIR%\python_env\python.exe" (
-    set PYTHON_CMD="%ROOT_DIR%\python_env\python.exe"
-    set "PYTHON_LOC=Portable Environment (%ROOT_DIR%\python_env)"
+:: Priority 1: Tray's own portable python_env (installed by this wizard on first run)
+if exist "%TRAY_DIR%\python_env\python.exe" (
+    set PYTHON_CMD="%TRAY_DIR%\python_env\python.exe"
+    set "PYTHON_LOC=Tray Portable (%TRAY_DIR%\python_env)"
     goto PYTHON_FOUND
 )
 
-:: Priority 2: Core venv
-if exist "%ROOT_DIR%\venv\Scripts\python.exe" (
-    set PYTHON_CMD="%ROOT_DIR%\venv\Scripts\python.exe"
-    set "PYTHON_LOC=Virtual Environment (%ROOT_DIR%\venv)"
-    goto PYTHON_FOUND
-)
-
-:: Priority 3: py launcher (installed Python on Windows)
+:: Priority 2: py launcher (system Python — correct for Tray)
 py -3 --version >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
     set "PYTHON_CMD=py -3"
@@ -130,7 +123,7 @@ if !ERRORLEVEL! EQU 0 (
     goto PYTHON_FOUND
 )
 
-:: Priority 4: python3 on PATH
+:: Priority 3: python3 on PATH
 python3 --version >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
     set "PYTHON_CMD=python3"
@@ -138,7 +131,7 @@ if !ERRORLEVEL! EQU 0 (
     goto PYTHON_FOUND
 )
 
-:: Priority 5: python on PATH
+:: Priority 4: python on PATH
 python --version >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
     set "PYTHON_CMD=python"

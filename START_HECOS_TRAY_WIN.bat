@@ -48,21 +48,9 @@ echo.
 set "PYTHONW_CMD="
 set "ROOT_DIR=C:\Hecos"
 
-:: Strategy 1: Tray's own portable python_env
+:: Strategy 1: Tray's own portable python_env (ONLY the Tray's own — never use Core's Python)
 if exist "%THIS_DIR%\python_env\pythonw.exe" (
     set PYTHONW_CMD="%THIS_DIR%\python_env\pythonw.exe"
-    goto START_TRAY
-)
-
-:: Strategy 2: Core's portable python_env (fallback)
-if exist "%ROOT_DIR%\python_env\pythonw.exe" (
-    set PYTHONW_CMD="%ROOT_DIR%\python_env\pythonw.exe"
-    goto START_TRAY
-)
-
-:: Strategy 3: Core venv
-if exist "%ROOT_DIR%\venv\Scripts\pythonw.exe" (
-    set PYTHONW_CMD="%ROOT_DIR%\venv\Scripts\pythonw.exe"
     goto START_TRAY
 )
 
