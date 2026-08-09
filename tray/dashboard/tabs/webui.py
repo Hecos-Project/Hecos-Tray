@@ -16,15 +16,7 @@ def build_webui(ctx):
 
     cfg = get_webui_config()
 
-    # ── Status banner ─────────────────────────────────────────────────────────
-    banner = ctk.CTkFrame(sc, fg_color=SURFACE, corner_radius=10, border_width=1, border_color=BORDER)
-    banner.pack(fill="x", pady=(0, 12))
-    banner_lbl = ctk.CTkLabel(banner, text="", fg_color="transparent", font=ctk.CTkFont(size=11), text_color=MUTED)
-    banner_lbl.pack(padx=14, pady=8, anchor="w")
 
-    def _show_banner(msg, color=GREEN):
-        banner_lbl.configure(text=msg, text_color=color)
-        ctx.app.after(4000, lambda: banner_lbl.configure(text=""))
 
     # ── Card: Port & Toggles ──────────────────────────────────────────────────
     card1 = make_card(sc)
@@ -101,14 +93,16 @@ def build_webui(ctx):
     key_var  = _path_row(card2, "key.pem",  cfg.get("key_file", ""))
     ctk.CTkFrame(card2, height=8, fg_color="transparent").pack()
 
-    # ── Save ──────────────────────────────────────────────────────────────────
-    def _save():
+    # ── Auto-Save ─────────────────────────────────────────────────────────────
+    def _save(*args):
         try:
-            port_val = int(port_var.get().strip())
+            port_str = port_var.get().strip()
+            if not port_str:
+                return
+            port_val = int(port_str)
             if not (1 <= port_val <= 65535):
-                raise ValueError("out of range")
+                return
         except ValueError:
-            _show_banner("⚠  Invalid port. Enter a number between 1 and 65535.", RED)
             return
 
         new_cfg = {
@@ -119,8 +113,10 @@ def build_webui(ctx):
             "key_file":      key_var.get().strip(),
         }
         save_webui_config(new_cfg)
-        _show_banner("✅  Saved to plugins.yaml — restart Hecos to apply changes.", GREEN)
 
-    ctk.CTkButton(sc, text="💾  Save Configuration", fg_color=ACCENT, text_color="#000000",
-                  hover_color=ACCENT2, corner_radius=8, font=ctk.CTkFont(size=12, weight="bold"),
-                  height=40, command=_save).pack(fill="x", pady=(8, 0))
+    port_var.trace_add("write", _save)
+    cert_var.trace_add("write", _save)
+    key_var.trace_add("write", _save)
+    
+    for var in toggle_vars.values():
+        var.trace_add("write", _save)
