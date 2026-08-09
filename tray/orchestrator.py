@@ -16,12 +16,14 @@ _start_lock = threading.Lock()
 
 def get_platform_python():
     """
-    Returns the correct Python executable to run the Hecos Core.
+    Returns the correct Python command (as a list) to run the Hecos Core.
     Priority order (ensures Core is always independent from Tray):
       1. Core's own portable Python  (C:/Hecos/python_env/python.exe)
       2. Core's own venv             (C:/Hecos/venv/Scripts/python.exe)
-      3. System Python resolved via shutil.which
-      4. Tray's own sys.executable   (last resort)
+      3. System 'py -3' launcher     (Windows only, matches .bat behaviour)
+      4. System python3 / python     (Linux / fallback)
+      5. Tray's own sys.executable   (last resort)
+    Returns a list, e.g. ["C:\\...\\python.exe"] or ["py", "-3"].
     """
     import shutil
 
@@ -30,7 +32,7 @@ def get_platform_python():
         candidate = os.path.join(_ROOT, "python_env", name)
         if os.path.exists(candidate):
             print(f"[ORCHESTRATOR] Using Core portable Python: {candidate}")
-            return candidate
+            return [candidate]
 
     # Priority 2: Core's venv
     for rel in (
@@ -41,19 +43,27 @@ def get_platform_python():
         candidate = os.path.join(_ROOT, rel)
         if os.path.exists(candidate):
             print(f"[ORCHESTRATOR] Using Core venv Python: {candidate}")
-            return candidate
+            return [candidate]
 
-    # Priority 3: system python (py launcher on Windows, python3 on Linux)
-    for cmd in ("py", "python3", "python"):
+    # Priority 3: py launcher with explicit -3 (Windows — matches the .bat files)
+    if sys.platform == "win32":
+        found = shutil.which("py")
+        if found:
+            print(f"[ORCHESTRATOR] Using system Python: py -3")
+            return ["py", "-3"]
+
+    # Priority 4: system python3 / python (Linux)
+    for cmd in ("python3", "python"):
         found = shutil.which(cmd)
         if found:
             print(f"[ORCHESTRATOR] Using system Python: {found}")
-            return found
+            return [found]
 
-    # Priority 4: Fall back to whatever is running the Tray itself
+    # Priority 5: Fall back to whatever is running the Tray itself
     base_exe = sys.executable
     print(f"[ORCHESTRATOR] Fallback: using Tray Python: {base_exe}")
-    return base_exe
+    return [base_exe]
+
 
 
 def _read_boot_trace_tail(n_lines=30) -> str:
@@ -70,7 +80,9 @@ def _read_boot_trace_tail(n_lines=30) -> str:
 
 def _wait_and_respawn(proc):
     """Waits for the subprocess to finish. If exit code is 42, respawns it."""
+    start_time = time.time()
     proc.wait()
+    elapsed = time.time() - start_time
     code = getattr(proc, 'returncode', '?')
 
     if code == 42:
@@ -91,12 +103,19 @@ def _wait_and_respawn(proc):
         start_hecos()
     elif code != 0:
         # Non-zero, non-42 exit: log the crash trace to help diagnose
-        print(f"[ORCHESTRATOR] Hecos process ended with error (exit code {code}).")
+        print(f"[ORCHESTRATOR] Hecos process ended with error (exit code {code}) after {elapsed:.1f}s.")
+        trace = _read_boot_trace_tail()
+        if trace:
+            print(f"[ORCHESTRATOR] Last boot trace output:\n--- BOOT TRACE ---\n{trace}\n--- END TRACE ---")
+    elif elapsed < 10:
+        # Exit code 0 but suspiciously fast — something crashed silently
+        print(f"[ORCHESTRATOR] WARNING: Hecos exited with code 0 after only {elapsed:.1f}s (expected >10s).")
         trace = _read_boot_trace_tail()
         if trace:
             print(f"[ORCHESTRATOR] Last boot trace output:\n--- BOOT TRACE ---\n{trace}\n--- END TRACE ---")
     else:
-        print("[ORCHESTRATOR] Hecos process ended normally (exit code 0).")
+        print(f"[ORCHESTRATOR] Hecos process ended normally (exit code 0, ran {elapsed:.1f}s).")
+
 
 
 
@@ -105,8 +124,8 @@ def start_hecos():
     Spawns the Hecos WebUI system as a background subprocess of the Tray App.
     Thread-safe: if already running or another start is in progress, returns immediately.
     The 'use_daemon' setting controls whether a watchdog monitor wraps the server:
-      - use_daemon=True  → hecos.monitor (watchdog) wraps hecos.modules.web_ui.server
-      - use_daemon=False → hecos.modules.web_ui.server is started directly
+      - use_daemon=True  → hecos/monitor.py (watchdog) wraps hecos.modules.web_ui.server
+      - use_daemon=False → hecos/modules/web_ui/server.py is started directly
     """
     global _hecos_process
 
@@ -128,7 +147,8 @@ def start_hecos():
         settings = load_settings()
         use_daemon = settings.get("use_daemon", False)
 
-        python_exe = get_platform_python()
+        python_cmd = get_platform_python()
+        # python_cmd is a list, e.g. ["py", "-3"] or ["C:\...\python.exe"]
 
         boot_log_path = os.path.join(_ROOT, "hecos", "logs", "hecos_boot_trace.log")
         os.makedirs(os.path.dirname(boot_log_path), exist_ok=True)
@@ -136,21 +156,32 @@ def start_hecos():
         boot_log.write(
             f"\n{'='*50}\n"
             f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] ORCHESTRATOR: Spawning Hecos backend...\n"
-            f"  Python: {python_exe}\n"
-            f"  Mode  : {'watchdog (hecos.monitor)' if use_daemon else 'standalone'}\n"
+            f"  Python: {' '.join(python_cmd)}\n"
+            f"  Mode  : {'watchdog (hecos/monitor.py)' if use_daemon else 'standalone'}\n"
             f"{'='*50}\n"
         )
         boot_log.flush()
 
-        cmd = [python_exe]
+        # Build the command — run scripts DIRECTLY (like the .bat does), NOT as modules (-m)
         if use_daemon:
-            cmd.extend(["-m", "hecos.monitor", "--script", "hecos.modules.web_ui.server"])
-            print(f"[ORCHESTRATOR] Spawning with Watchdog... (Python: {python_exe})")
+            monitor_script = os.path.join(_ROOT, "hecos", "monitor.py")
+            if not os.path.exists(monitor_script):
+                print(f"[ORCHESTRATOR] Error: Could not find {monitor_script}")
+                return
+            cmd = python_cmd + [monitor_script, "--script", "hecos.modules.web_ui.server"]
+            print(f"[ORCHESTRATOR] Spawning with Watchdog... ({' '.join(python_cmd)})")
         else:
-            cmd.extend(["-m", "hecos.modules.web_ui.server", "--no-gui"])
-            print(f"[ORCHESTRATOR] Spawning standalone... (Python: {python_exe})")
+            cmd = python_cmd + [server_script, "--no-gui"]
+            print(f"[ORCHESTRATOR] Spawning standalone... ({' '.join(python_cmd)})")
 
-        kwargs = dict(cwd=_ROOT, stdout=boot_log, stderr=subprocess.STDOUT)
+        # Set environment — match what the .bat does
+        env = os.environ.copy()
+        env["HECOS_BOOT_MODE"] = "webui"
+        env["PYTHONIOENCODING"] = "utf-8"
+        # Ensure _ROOT is in PYTHONPATH so hecos package is always resolvable
+        env["PYTHONPATH"] = _ROOT + os.pathsep + env.get("PYTHONPATH", "")
+
+        kwargs = dict(cwd=_ROOT, stdout=boot_log, stderr=subprocess.STDOUT, env=env)
         if sys.platform == "win32":
             kwargs["creationflags"] = 0x08000000  # CREATE_NO_WINDOW
 
@@ -164,6 +195,7 @@ def start_hecos():
         print(f"[ORCHESTRATOR] Failed to spawn Hecos: {e}")
     finally:
         _start_lock.release()
+
 
 
 def stop_hecos():
