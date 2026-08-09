@@ -181,20 +181,11 @@ if !ERRORLEVEL! EQU 0 (
     goto READY
 )
 
-echo [!] Some Tray dependencies are missing. Installing from pyproject.toml...
+echo [!] Some Tray dependencies are missing. Installing...
 echo.
 
-:: Use pyproject.toml if present, else fallback to hard-coded list
-if exist "%TRAY_DIR%\pyproject.toml" (
-    !PYTHON_CMD! -m pip install --quiet --upgrade pip >nul 2>&1
-    !PYTHON_CMD! -m pip install "%TRAY_DIR%[.]" --quiet
-    if !ERRORLEVEL! NEQ 0 (
-        :: Fallback: install deps individually
-        !PYTHON_CMD! -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml customtkinter
-    )
-) else (
-    !PYTHON_CMD! -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml customtkinter
-)
+!PYTHON_CMD! -m pip install --quiet --upgrade pip >nul 2>&1
+!PYTHON_CMD! -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml customtkinter qrcode pywin32
 
 :: Verify install succeeded
 !PYTHON_CMD! -c "import tomli_w, pystray, PIL" >nul 2>&1

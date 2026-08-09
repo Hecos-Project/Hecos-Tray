@@ -543,17 +543,38 @@ def build_update(ctx):
         tmp_dir = tempfile.gettempdir()
         bat_path = os.path.join(tmp_dir, "hecos_suicide.bat")
         with open(bat_path, "w") as f:
-            f.write(f"@echo off\ntimeout /t 4 /nobreak >nul\nrmdir /s /q \"{tray_root}\"\ndel \"%~f0\"\n")
+            f.write(
+                f"@echo off\n"
+                f"timeout /t 5 /nobreak >nul\n"
+                f"rmdir /s /q \"{tray_root}\" >nul 2>&1\n"
+                f"del \"%~f0\" >nul 2>&1\n"
+            )
 
-        subprocess.Popen(
-            ["cmd.exe", "/c", bat_path],
-            creationflags=subprocess.CREATE_NEW_CONSOLE | subprocess.DETACHED_PROCESS,
-            close_fds=True
-        )
+        try:
+            subprocess.Popen(
+                ["cmd.exe", "/c", bat_path],
+                creationflags=subprocess.DETACHED_PROCESS,
+                close_fds=True,
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+        except Exception as e:
+            _append_log(f"[!] Could not launch cleanup script: {e}\n")
 
         import time
         time.sleep(3)
-        os._exit(0)
+        try:
+            os._exit(0)
+        except Exception:
+            pass
+
+        # Fallback: if still running, tell the user to close manually
+        log_box.after(0, lambda: _append_log(
+            "\n[!] Window did not close automatically.\n"
+            "    You can safely close this window manually.\n"
+            "    The cleanup will continue in the background.\n"
+        ))
 
     def _run_terminator_thread(mode, dest):
         try:
