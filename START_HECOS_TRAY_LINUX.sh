@@ -44,14 +44,20 @@ if [ -z "$PY_CMD" ]; then
     echo "   Fedora:         sudo dnf install python3"
     echo "   Arch:           sudo pacman -S python"
     echo ""
-    echo " Or run HECOS_SETUP_WIZARD.sh to configure the environment."
+    echo " Or run HECOS_TRAY_SETUP.sh to configure the environment."
     echo ""
     read -p "Press Enter to exit..."
     exit 1
 fi
 
 # ── Launch Tray detached (nohup + background, no console window) ─────────────
-nohup $PY_CMD -m tray.tray_app > /dev/null 2>&1 &
+# ── Create logs dir if needed ─────────────────────────────────────────────────
+mkdir -p "$SCRIPT_DIR/logs"
+
+# ── Launch Tray detached (nohup + background, no console window) ─────────────
+# Stdout/stderr go to logs/tray_crash.log — any Python crash before the
+# internal logger starts will be captured here.
+nohup $PY_CMD -m tray.tray_app >> "$SCRIPT_DIR/logs/tray_crash.log" 2>&1 &
 
 echo " [+] Tray launched with: $PY_CMD"
 echo " [+] The icon will appear in your system tray shortly."

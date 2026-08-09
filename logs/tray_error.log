@@ -1,0 +1,35 @@
+[2026-08-09 14:58:51] [INFO] ============================================================
+[2026-08-09 14:58:51] [INFO] === TRAY SESSION STARTED ===
+[2026-08-09 14:58:51] [INFO] ============================================================
+[2026-08-09 14:58:51] [INFO]   Timestamp : 2026-08-09 14:58:51
+[2026-08-09 14:58:51] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-09 14:58:51] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-09 14:58:51] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-09 14:58:51] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-09 14:58:51] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-09 14:58:51] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-09 14:58:51] [INFO] ============================================================
+[2026-08-09 14:58:53] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-09 14:58:58] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-09 14:58:58] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-09 15:03:39] [STDOUT] [ORCHESTRATOR] Killed process 9228 on port 7070.
+[2026-08-09 15:03:46] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-09 15:03:46] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-09 15:04:22] [INFO] ============================================================
+[2026-08-09 15:04:22] [INFO] === TRAY SESSION STARTED ===
+[2026-08-09 15:04:22] [INFO] ============================================================
+[2026-08-09 15:04:22] [INFO]   Timestamp : 2026-08-09 15:04:22
+[2026-08-09 15:04:22] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-09 15:04:22] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-09 15:04:22] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-09 15:04:22] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-09 15:04:22] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-09 15:04:22] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-09 15:04:22] [INFO] ============================================================
+[2026-08-09 15:04:22] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-09 15:04:30] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-09 15:04:30] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-09 15:04:40] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-09 15:04:44] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-09 15:04:44] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-09 15:04:44] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.

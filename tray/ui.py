@@ -23,8 +23,7 @@ from tray.browser_manager import (
     intelligent_open_webui, intelligent_open_ai_browser,
     open_ai_browser, close_ai_browser
 )
-from tray.orchestrator import start_hecos, stop_hecos, restart_hecos, start_hecos_with_daemon, stop_daemon, is_daemon_running
-from tray.control_center import show_control_center
+from tray.orchestrator import start_hecos, stop_hecos, restart_hecos, is_hecos_running
 
 
 def load_icon(online: bool) -> "Image.Image":
@@ -76,8 +75,14 @@ def build_menu(icon_ref: list):
 
     icon = icon_ref[0]
 
-    def open_cc(i, it):
-        show_control_center(i, it)
+    def _open_dashboard(i, it):
+        try:
+            from tray.control_center import show_control_center
+            show_control_center(i, it)
+        except ImportError:
+            import ctypes
+            msg = "Hecos Dashboard requires a full Python installation (with tkinter).\n\nThe portable Python environment is limited. Please install Python from python.org to use the Dashboard."
+            ctypes.windll.user32.MessageBoxW(0, msg, "Hecos Tray - Missing Dependency", 0x10)
 
     def open_chat(i, it):
         intelligent_open_webui(i, it)
@@ -89,11 +94,7 @@ def build_menu(icon_ref: list):
     def start_core_btn(i, it):
         def _do():
             play_beep(400, 100)
-            # Respect the use_daemon setting
-            if load_settings().get("use_daemon", False):
-                start_hecos_with_daemon()
-            else:
-                start_hecos()
+            start_hecos()
             time.sleep(2)
             refresh_ui(icon)
         threading.Thread(target=_do, daemon=True).start()
@@ -156,38 +157,18 @@ def build_menu(icon_ref: list):
         save_settings(s)
         icon.menu = build_menu([icon])
 
-    daemon_active = is_daemon_running()
-    daemon_status_label = "🛡️ Daemon: Active" if daemon_active else "🛡️ Daemon: Inactive"
-
     def toggle_use_daemon(i, it):
         s = load_settings()
         s["use_daemon"] = not s.get("use_daemon", False)
         save_settings(s)
         icon.menu = build_menu([icon])
 
-    def start_daemon_btn(i, it):
-        def _do():
-            start_hecos_with_daemon()
-            time.sleep(2)
-            refresh_ui(icon)
-        threading.Thread(target=_do, daemon=True).start()
-
-    def stop_daemon_btn(i, it):
-        def _do():
-            stop_daemon()
-            time.sleep(1)
-            refresh_ui(icon)
-        threading.Thread(target=_do, daemon=True).start()
-
     technical_submenu = pystray.Menu(
         pystray.MenuItem("📟  Launch Console", open_console),
         pystray.MenuItem("📟  Launch Console (Headless)", open_console_headless),
         pystray.Menu.SEPARATOR,
-        pystray.MenuItem(daemon_status_label, None, enabled=False),
-        pystray.MenuItem("Use Watchdog Daemon on Start", toggle_use_daemon,
+        pystray.MenuItem("Use Watchdog on Start", toggle_use_daemon,
                          checked=lambda it: load_settings().get("use_daemon", False)),
-        pystray.MenuItem("🛡️ Start Daemon Now", start_daemon_btn, enabled=not daemon_active),
-        pystray.MenuItem("🛡️ Stop Daemon", stop_daemon_btn, enabled=daemon_active),
         pystray.Menu.SEPARATOR,
         pystray.MenuItem("Show Technical Menu", toggle_technical_menu,
                          checked=lambda it: load_settings().get("show_technical_menu", True)),
@@ -198,7 +179,7 @@ def build_menu(icon_ref: list):
         pystray.MenuItem(status_label, None, enabled=False),
         pystray.Menu.SEPARATOR,
         # ── Main entry points
-        pystray.MenuItem("🎛️  Tray Dashboard", open_cc),
+        pystray.MenuItem("🎛️  Tray Dashboard", _open_dashboard),
         pystray.MenuItem("🌐 Open Chat", open_chat),
         pystray.MenuItem("⚙️  Central Hub", open_config),
         pystray.Menu.SEPARATOR,

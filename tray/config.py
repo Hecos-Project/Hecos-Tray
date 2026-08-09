@@ -38,7 +38,8 @@ _ROOT = _get_core_path_from_settings()
 HECOS_PORT          = 7070
 STATUS_POLL_INTERVAL = 3  # seconds
 
-LOGO_PATH           = os.path.join(_ROOT, "hecos", "assets", "Hecos_Logo_SQR_NBG_LogoOnly_Mask_001.ico")
+# Point to the Tray's own assets folder to be completely standalone
+LOGO_PATH           = os.path.abspath(os.path.join(_TRAY_DIR, "..", "assets", "Hecos_Logo_SQR_NBG_LogoOnly_Mask_001.ico"))
 VERSION_FILE        = os.path.join(_ROOT, "hecos", "core", "version")
 SYSTEM_YAML         = os.path.join(_ROOT, "hecos", "config", "data", "system.yaml")
 PLUGINS_YAML        = os.path.join(_ROOT, "hecos", "config", "data", "plugins.yaml")

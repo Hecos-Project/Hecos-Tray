@@ -22,7 +22,7 @@ The application is composed of two main elements:
    *(Important: The folder must be named exactly `Hecos-Tray` and placed in `C:\Hecos-Tray`)*.
 
 2. **Initial Setup**:
-   Open the **`HECOS_SETUP_WIZARD`** script inside the folder to easily install (or completely uninstall) the Hecos Core engine and all its dependencies.
+   Open the **`HECOS_TRAY_SETUP`** script inside the folder to easily install (or completely uninstall) the Hecos Core engine and all its dependencies.
 
 3. **Management and Updates**:
    Once installed, you can double-click the Tray Icon to open the **Tray Dashboard**. From there, navigate to the **Manage Core** section to easily update Hecos to the latest version, uninstall components, or troubleshoot your installation.

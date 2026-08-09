@@ -3,13 +3,15 @@ import sys
 import datetime as _dt
 import threading
 import subprocess
+import shutil
+import tempfile
 import customtkinter as ctk
 
 from tray.dashboard.theme import TEXT, MUTED, ACCENT, SURFACE, BORDER, RED, BG
 from tray.update_sources import load_sources, set_active_source, add_source, remove_source, import_source_list, import_source_list_from_file
 from tray.updater import check_for_updates, download_asset, apply_update_and_restart, get_tray_version, get_current_version
 from tray.core_installer import install_core_from_scratch, run_setup_wizard
-from tray.config import _ROOT, VERSION_FILE
+from tray.config import _ROOT, VERSION_FILE, _TRAY_DIR
 
 
 def _card(parent, title):
@@ -25,8 +27,77 @@ def _card(parent, title):
 
 
 def _is_core_installed() -> bool:
-    """Detects whether Hecos Core is installed by checking the version file."""
     return os.path.exists(VERSION_FILE)
+
+
+def _get_python_info():
+    """Returns a dict with python info for system, core, and tray environments."""
+    results = {}
+
+    # --- System Python ---
+    sys_exe = ""
+    for cmd in [["py", "-3", "--version"], ["python3", "--version"], ["python", "--version"]]:
+        try:
+            out = subprocess.check_output(cmd, stderr=subprocess.STDOUT, timeout=5, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0x08000000)).decode().strip()
+            path_cmd = cmd[:-1] + ["-c", "import sys; print(sys.executable)"]
+            sys_exe = subprocess.check_output(path_cmd, stderr=subprocess.STDOUT, timeout=5, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0x08000000)).decode().strip()
+            results["system"] = {"version": out, "path": sys_exe, "ok": True}
+            break
+        except Exception:
+            continue
+    if "system" not in results:
+        results["system"] = {"version": "Not found", "path": "", "ok": False}
+
+    # --- Core Python ---
+    core_py = os.path.join(_ROOT, "python_env", "python.exe")
+    core_venv = os.path.join(_ROOT, "venv", "Scripts", "python.exe")
+    core_type = "Portable"
+    if os.path.exists(core_py):
+        core_exe = core_py
+    elif os.path.exists(core_venv):
+        core_exe = core_venv
+        core_type = "Venv"
+    else:
+        core_exe = sys_exe if sys_exe else "python"
+        core_type = "System Fallback"
+
+    try:
+        out = subprocess.check_output([core_exe, "--version"], stderr=subprocess.STDOUT, timeout=5, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0x08000000)).decode().strip()
+        results["core"] = {"version": out, "path": core_exe if core_exe != "python" else "", "ok": True, "type": core_type}
+    except Exception as e:
+        results["core"] = {"version": f"Not found \u2014 install Python or run Core Setup Wizard", "path": "", "ok": False, "type": core_type}
+
+    # --- Tray Python ---
+    tray_root_dir = os.path.abspath(os.path.join(_TRAY_DIR, ".."))
+    tray_py = os.path.join(tray_root_dir, "python_env", "python.exe")
+    tray_type = "Portable"
+    if os.path.exists(tray_py):
+        tray_exe = tray_py
+    else:
+        tray_exe = sys.executable
+        tray_type = "System Fallback"
+        
+    try:
+        out = subprocess.check_output([tray_exe, "--version"], stderr=subprocess.STDOUT, timeout=5, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0x08000000)).decode().strip()
+        results["tray"] = {"version": out, "path": tray_exe, "ok": True, "type": tray_type}
+    except Exception as e:
+        results["tray"] = {"version": f"Error: {e}", "path": tray_exe, "ok": False, "type": tray_type}
+
+    return results
+
+
+def _check_packages(python_exe, packages):
+    result = {}
+    for pkg in packages:
+        try:
+            out = subprocess.check_output(
+                [python_exe, "-c", f"import importlib.metadata; print(importlib.metadata.version('{pkg}'))"],
+                stderr=subprocess.DEVNULL, timeout=5, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0x08000000)
+            ).decode().strip()
+            result[pkg] = out
+        except Exception:
+            result[pkg] = None
+    return result
 
 
 def build_update(ctx):
@@ -34,121 +105,29 @@ def build_update(ctx):
     container.pack(fill="both", expand=True, padx=20, pady=16)
     ctx.content_widgets.append(container)
 
-    # ── Page Header ────────────────────────────────────────────────────────────
     ctk.CTkLabel(
-        container, text="Manage Core",
+        container, text="Install",
         font=ctk.CTkFont(size=22, weight="bold"), text_color=TEXT
     ).pack(anchor="w", pady=(0, 2))
     ctk.CTkLabel(
         container,
-        text="Install, set up, and keep your Hecos Core up to date.",
+        text="Manage update sources, install or update Hecos Core, and clean up your system.",
         font=ctk.CTkFont(size=12), text_color=MUTED
     ).pack(anchor="w", pady=(0, 18))
 
-    # ── Detect Core ───────────────────────────────────────────────────────────
     core_ok = _is_core_installed()
 
     # ══════════════════════════════════════════════════════════════════════════
-    # SECTION 1 — Install & Setup
+    # SECTION 1 — Update Sources
     # ══════════════════════════════════════════════════════════════════════════
-    install_card = _card(container, "📥  Install & Setup")
-
-    # Status badge
-    if core_ok:
-        try:
-            core_ver = open(VERSION_FILE, encoding="utf-8").read().strip()
-        except Exception:
-            core_ver = "?"
-        badge_text  = f"✅  Hecos Core installed  —  v{core_ver}  at  {_ROOT}"
-        badge_color = "#4ade80"
-    else:
-        badge_text  = f"⚠  Core not found at: {_ROOT}  —  Download it to get started."
-        badge_color = ACCENT
-
-    ctk.CTkLabel(
-        install_card, text=badge_text,
-        font=ctk.CTkFont(size=11), text_color=badge_color,
-        justify="left", wraplength=640
-    ).pack(anchor="w", padx=16, pady=(0, 10))
-
-    install_status = ctk.CTkLabel(install_card, text="", text_color=MUTED, font=ctk.CTkFont(size=11))
-    install_status.pack(anchor="w", padx=16)
-
-    install_progress = ctk.CTkProgressBar(install_card, fg_color=BORDER, progress_color=ACCENT)
-    install_progress.set(0)
-
-    # Buttons row
-    btn_row = ctk.CTkFrame(install_card, fg_color="transparent")
-    btn_row.pack(fill="x", padx=16, pady=(10, 14))
-    btn_row.columnconfigure((0, 1), weight=1, uniform="ibtn")
-
-    btn_cfg = dict(height=34, corner_radius=8, font=ctk.CTkFont(size=12))
-
-    dl_btn_text = "📥  Re-Download Core" if core_ok else "📥  Download Core"
-    dl_btn = ctk.CTkButton(
-        btn_row, text=dl_btn_text,
-        fg_color=BORDER if core_ok else ACCENT,
-        text_color=TEXT if core_ok else "#000",
-        hover_color=ACCENT, **btn_cfg
-    )
-    dl_btn.grid(row=0, column=0, padx=(0, 6), sticky="ew")
-
-    setup_btn = ctk.CTkButton(
-        btn_row, text="⚙  Run Setup Wizard",
-        fg_color=BORDER, text_color=TEXT, hover_color=ACCENT,
-        state="normal" if core_ok else "disabled",
-        **btn_cfg
-    )
-    setup_btn.grid(row=0, column=1, padx=(6, 0), sticky="ew")
-
-    def do_download():
-        dl_btn.configure(state="disabled", text="Downloading…")
-        setup_btn.configure(state="disabled")
-        install_progress.pack(fill="x", padx=16, pady=(0, 8))
-        install_progress.set(0)
-
-        def _task():
-            def prog(p): install_progress.set(p)
-            def stat(msg):
-                color = RED if "⚠" in msg else MUTED
-                install_status.configure(text=msg, text_color=color)
-
-            success = install_core_from_scratch(prog, stat)
-            install_progress.pack_forget()
-            if success:
-                install_status.configure(text="✅ Core downloaded. Click 'Run Setup Wizard' to continue.", text_color="#4ade80")
-                dl_btn.configure(state="normal", text="📥  Re-Download Core", fg_color=BORDER, text_color=TEXT)
-                setup_btn.configure(state="normal")
-            else:
-                dl_btn.configure(state="normal", text=dl_btn_text)
-                setup_btn.configure(state="disabled" if not core_ok else "normal")
-
-        threading.Thread(target=_task, daemon=True).start()
-
-    def do_setup():
-        setup_btn.configure(state="disabled", text="Launching…")
-        def stat(msg):
-            color = RED if "⚠" in msg else "#4ade80"
-            install_status.configure(text=msg, text_color=color)
-        run_setup_wizard(status_callback=stat)
-        setup_btn.configure(state="normal", text="⚙  Run Setup Wizard")
-
-    dl_btn.configure(command=do_download)
-    setup_btn.configure(command=do_setup)
-
-    # ══════════════════════════════════════════════════════════════════════════
-    # SECTION 2 — Update Sources
-    # ══════════════════════════════════════════════════════════════════════════
-    src_card = _card(container, "🔗  Update Sources")
+    src_card = _card(container, "\U0001f517  Update Sources")
 
     sources_data = load_sources()
     active_src   = sources_data.get("active_source", "")
     all_sources  = sources_data.get("sources", [])
     source_names = [s["name"] for s in all_sources] or ["(No sources configured)"]
-
     src_var = ctk.StringVar(value=active_src if active_src in source_names else source_names[0])
 
-    # Log box
     log_frame = ctk.CTkFrame(src_card, fg_color=BG, corner_radius=6)
     log_frame.pack(fill="x", padx=16, pady=(4, 10))
     src_log = ctk.CTkTextbox(
@@ -157,21 +136,21 @@ def build_update(ctx):
     )
     src_log.pack(fill="x", padx=4, pady=4)
 
-    def _src_log(msg: str):
+    def _src_log(msg):
         ts = _dt.datetime.now().strftime("%H:%M:%S")
-        src_log.configure(state="normal")
-        src_log.insert("end", f"[{ts}] {msg}\n")
-        src_log.see("end")
-        src_log.configure(state="disabled")
+        def _do():
+            src_log.configure(state="normal")
+            src_log.insert("end", f"[{ts}] {msg}\n")
+            src_log.see("end")
+            src_log.configure(state="disabled")
+        src_log.after(0, _do)
 
     active_url = next((s.get("url", "") for s in all_sources if s["name"] == src_var.get()), "")
     _src_log(f"Active: {src_var.get()}")
     _src_log(f"URL:    {active_url}")
     src_log.configure(state="disabled")
 
-    # Active source dropdown
-    ctk.CTkLabel(src_card, text="Active source:", text_color=MUTED,
-                 font=ctk.CTkFont(size=11)).pack(anchor="w", padx=16)
+    ctk.CTkLabel(src_card, text="Active source:", text_color=MUTED, font=ctk.CTkFont(size=11)).pack(anchor="w", padx=16)
 
     def on_source_change(val):
         set_active_source(val)
@@ -179,16 +158,15 @@ def build_update(ctx):
         _src_log(f"Switched to: {val}")
         _src_log(f"URL: {new_url}")
 
+    src_action_row = ctk.CTkFrame(src_card, fg_color="transparent")
+    src_action_row.pack(fill="x", padx=16, pady=(4, 8))
+    src_action_row.columnconfigure(0, weight=1)
+
     ctk.CTkOptionMenu(
-        src_card, values=source_names, variable=src_var, command=on_source_change,
+        src_action_row, values=source_names, variable=src_var, command=on_source_change,
         fg_color=BORDER, button_color=BORDER, button_hover_color=ACCENT,
         dropdown_fg_color=SURFACE, text_color=TEXT, height=32
-    ).pack(fill="x", padx=16, pady=(4, 8))
-
-    # Add / Remove buttons
-    src_btn_row = ctk.CTkFrame(src_card, fg_color="transparent")
-    src_btn_row.pack(fill="x", padx=16, pady=(0, 8))
-    src_btn_row.columnconfigure((0, 1), weight=1, uniform="sbtn")
+    ).grid(row=0, column=0, sticky="ew", padx=(0, 6))
 
     def remove_selected():
         remove_source(src_var.get())
@@ -203,23 +181,22 @@ def build_update(ctx):
             add_btn.configure(text="+ Add Source")
         else:
             add_panel.pack(fill="x", padx=16, pady=(4, 4))
-            add_btn.configure(text="▲ Hide")
+            add_btn.configure(text="\u25b2 Hide")
 
     ctk.CTkButton(
-        src_btn_row, text="✕  Remove Selected",
+        src_action_row, text="\u2715  Remove",
         fg_color="transparent", border_width=1, border_color=RED,
-        text_color=RED, hover_color="#3a1a1a", height=32,
+        text_color=RED, hover_color="#3a1a1a", height=28, width=70, corner_radius=8,
         command=remove_selected
-    ).grid(row=0, column=0, padx=(0, 6), sticky="ew")
+    ).grid(row=0, column=1, padx=(0, 6))
 
     add_btn = ctk.CTkButton(
-        src_btn_row, text="+ Add Source",
-        fg_color=BORDER, text_color=TEXT, hover_color=ACCENT, height=32,
+        src_action_row, text="+ Add Source",
+        fg_color=BORDER, text_color=TEXT, hover_color=ACCENT, height=28, width=80, corner_radius=8,
         command=toggle_add_panel
     )
-    add_btn.grid(row=0, column=1, sticky="ew")
+    add_btn.grid(row=0, column=2)
 
-    # Add source panel (hidden by default)
     name_entry = ctk.CTkEntry(add_panel, placeholder_text="Source name  (e.g. My Mirror)")
     name_entry.pack(fill="x", pady=3)
     url_entry_add = ctk.CTkEntry(add_panel, placeholder_text="URL  (GitHub API releases/latest or custom JSON)")
@@ -238,248 +215,465 @@ def build_update(ctx):
             _src_log(f"Added: {n}  [{t}]  {u}")
             ctx.switch_tab_fn("update")
         else:
-            _src_log("⚠ Please fill in both name and URL.")
+            _src_log("\u26a0 Please fill in both name and URL.")
 
     ctk.CTkButton(
         add_panel, text="Save Source", fg_color=ACCENT,
-        text_color="#000", hover_color=ACCENT, height=32,
-        command=save_new_source
+        text_color="#000", hover_color=ACCENT, height=32, command=save_new_source
     ).pack(anchor="e", pady=(6, 0))
 
-    # Import row
     ctk.CTkFrame(src_card, height=1, fg_color=BORDER).pack(fill="x", padx=16, pady=(4, 10))
-    ctk.CTkLabel(src_card, text="📥  Import source list:", text_color=MUTED,
-                 font=ctk.CTkFont(size=11)).pack(anchor="w", padx=16)
+    ctk.CTkLabel(src_card, text="\U0001f4e5  Import source list:", text_color=MUTED, font=ctk.CTkFont(size=11)).pack(anchor="w", padx=16)
 
     import_row = ctk.CTkFrame(src_card, fg_color="transparent")
     import_row.pack(fill="x", padx=16, pady=(4, 14))
     import_row.columnconfigure(0, weight=1)
 
     import_url_entry = ctk.CTkEntry(
-        import_row,
-        placeholder_text="Paste URL (Pastebin, GitHub raw, etc.)  or  load from file →",
-        height=32
+        import_row, placeholder_text="Paste URL (Pastebin, GitHub raw, etc.)  or  load from file \u2192", height=32
     )
     import_url_entry.grid(row=0, column=0, sticky="ew", padx=(0, 6))
 
     def do_import():
         url = import_url_entry.get().strip()
         if not url:
-            _src_log("⚠ Enter a URL or use the file button.")
+            _src_log("\u26a0 Enter a URL or use the file button.")
             return
         _src_log(f"Fetching: {url}")
         def _task():
             added, err = import_source_list(url)
             if err:
-                _src_log(f"⚠ {err}")
+                _src_log(f"\u26a0 {err}")
             else:
-                _src_log(f"✅ {added} new source(s) added.")
+                _src_log(f"\u2705 {added} new source(s) added.")
                 if added > 0:
                     ctx.switch_tab_fn("update")
         threading.Thread(target=_task, daemon=True).start()
 
     ctk.CTkButton(
-        import_row, text="⬇ URL",
-        fg_color=BORDER, text_color=TEXT, hover_color=ACCENT, height=32, width=70,
-        command=do_import
+        import_row, text="\u2b07 URL", fg_color=BORDER, text_color=TEXT, hover_color=ACCENT, height=32, width=70, command=do_import
     ).grid(row=0, column=1, padx=(0, 6))
 
     def do_import_file():
         from tkinter import filedialog
-        path = filedialog.askopenfilename(
-            title="Select Hecos Sources List (.toml)",
-            filetypes=[("TOML files", "*.toml"), ("All files", "*.*")]
-        )
+        path = filedialog.askopenfilename(title="Select Hecos Sources List (.toml)", filetypes=[("TOML files", "*.toml"), ("All files", "*.*")])
         if not path:
             return
         _src_log(f"Loading file: {os.path.basename(path)}")
         def _task():
             added, err = import_source_list_from_file(path)
             if err:
-                _src_log(f"⚠ {err}")
+                _src_log(f"\u26a0 {err}")
             else:
-                _src_log(f"✅ {added} new source(s) added.")
+                _src_log(f"\u2705 {added} new source(s) added.")
                 if added > 0:
                     ctx.switch_tab_fn("update")
         threading.Thread(target=_task, daemon=True).start()
 
     ctk.CTkButton(
-        import_row, text="📂 File",
-        fg_color=BORDER, text_color=TEXT, hover_color=ACCENT, height=32, width=70,
-        command=do_import_file
+        import_row, text="\U0001f4c2 File", fg_color=BORDER, text_color=TEXT, hover_color=ACCENT, height=32, width=70, command=do_import_file
     ).grid(row=0, column=2)
 
     # ══════════════════════════════════════════════════════════════════════════
-    # SECTION 3 — Check & Install Updates
-    # (disabled if Core is not installed)
+    # SECTION 2 — Core Installation & Updates
     # ══════════════════════════════════════════════════════════════════════════
-    upd_card = _card(container, "🔄  Check & Install Updates")
+    install_card = _card(container, "\U0001f4e5  Core Installation & Updates")
 
-    if not core_ok:
-        ctk.CTkLabel(
-            upd_card,
-            text="⚠  Install Hecos Core first to enable updates.",
-            font=ctk.CTkFont(size=11), text_color=MUTED
-        ).pack(anchor="w", padx=16, pady=(0, 14))
-    else:
-        curr_core_v = get_current_version()
+    info_frame = ctk.CTkFrame(install_card, fg_color="transparent")
+    info_frame.pack(fill="x", padx=16, pady=(0, 10))
+
+    info_frame.columnconfigure(0, weight=1)
+
+    if core_ok:
+        try:
+            core_ver = open(VERSION_FILE, encoding="utf-8").read().strip()
+        except Exception:
+            core_ver = "?"
         curr_tray_v = get_tray_version()
+        
+        v_lbl = ctk.CTkLabel(info_frame, text=f"✅ Core v{core_ver}   •   ✅ Tray v{curr_tray_v}\nInstalled at: {_ROOT}", 
+                             font=ctk.CTkFont(size=11), text_color="#4ade80", justify="left")
+        v_lbl.grid(row=0, column=0, sticky="w")
+    else:
+        v_lbl = ctk.CTkLabel(info_frame, text=f"⚠ Core not found at: {_ROOT}\nDownload it to get started.", 
+                             font=ctk.CTkFont(size=11), text_color=ACCENT, justify="left")
+        v_lbl.grid(row=0, column=0, sticky="w")
 
-        ver_frame = ctk.CTkFrame(upd_card, fg_color="transparent")
-        ver_frame.pack(fill="x", padx=16, pady=(0, 8))
-        ctk.CTkLabel(ver_frame, text="• Core:", text_color=MUTED, font=ctk.CTkFont(size=12, weight="bold")).grid(row=0, column=0, sticky="w", padx=(0, 10))
-        ctk.CTkLabel(ver_frame, text=f"v{curr_core_v}", text_color=TEXT, font=ctk.CTkFont(size=12)).grid(row=0, column=1, sticky="w")
-        ctk.CTkLabel(ver_frame, text="• Tray:", text_color=MUTED, font=ctk.CTkFont(size=12, weight="bold")).grid(row=1, column=0, sticky="w", padx=(0, 10))
-        ctk.CTkLabel(ver_frame, text=f"v{curr_tray_v}", text_color=TEXT, font=ctk.CTkFont(size=12)).grid(row=1, column=1, sticky="w")
+    btn_row = ctk.CTkFrame(info_frame, fg_color="transparent")
+    btn_row.grid(row=0, column=1, sticky="e")
+    
+    btn_cfg = dict(height=28, width=70, corner_radius=8, font=ctk.CTkFont(size=12))
+    
+    setup_btn = ctk.CTkButton(
+        btn_row, text="Setup", fg_color=BORDER, text_color=TEXT if core_ok else MUTED,
+        hover_color=ACCENT, state="normal" if core_ok else "disabled", **btn_cfg
+    )
+    setup_btn.pack(side="left", padx=(0, 6))
+    
+    dl_btn = ctk.CTkButton(
+        btn_row, text="Download", fg_color=BORDER, text_color=TEXT, hover_color=ACCENT, **btn_cfg
+    )
+    dl_btn.pack(side="left", padx=(0, 6))
+    
+    upd_btn = ctk.CTkButton(
+        btn_row, text="Update", fg_color=ACCENT if core_ok else BORDER,
+        text_color="#000" if core_ok else MUTED, hover_color=ACCENT,
+        state="normal" if core_ok else "disabled", **btn_cfg
+    )
+    upd_btn.pack(side="left")
 
-        upd_status = ctk.CTkLabel(upd_card, text="", text_color=TEXT, font=ctk.CTkFont(size=11))
-        upd_status.pack(anchor="w", padx=16)
+    status_lbl = ctk.CTkLabel(install_card, text="", text_color=MUTED, font=ctk.CTkFont(size=11))
+    status_lbl.pack(anchor="w", padx=16)
+    prog_bar = ctk.CTkProgressBar(install_card, fg_color=BORDER, progress_color=ACCENT)
+    prog_bar.set(0)
 
-        upd_progress = ctk.CTkProgressBar(upd_card, fg_color=BORDER, progress_color=ACCENT)
-        upd_progress.set(0)
+    _dl_files = {}
 
-        upd_btn = ctk.CTkButton(
-            upd_card, text="🔄  Check for Updates",
-            fg_color=ACCENT, text_color="#000", hover_color=ACCENT, height=34
-        )
-        upd_btn.pack(anchor="w", padx=16, pady=(10, 14))
+    def do_download():
+        dl_btn.configure(state="disabled", text="Downloading\u2026")
+        if setup_btn: setup_btn.configure(state="disabled")
+        if upd_btn: upd_btn.configure(state="disabled")
+        prog_bar.pack(fill="x", padx=16, pady=(0, 8))
+        prog_bar.set(0)
+        def _task():
+            def prog(p): prog_bar.set(p)
+            def stat(msg): status_lbl.configure(text=msg, text_color=RED if "\u26a0" in msg else MUTED)
+            success = install_core_from_scratch(prog, stat)
+            prog_bar.pack_forget()
+            if success:
+                install_card.after(0, lambda: ctx.switch_tab_fn("update"))
+            else:
+                dl_btn.configure(state="normal", text="\U0001f4e5 Download Core" if not core_ok else "Download")
+                if setup_btn: setup_btn.configure(state="disabled" if not core_ok else "normal")
+                if upd_btn: upd_btn.configure(state="normal")
+        threading.Thread(target=_task, daemon=True).start()
 
-        _dl_files = {}
+    def do_setup():
+        setup_btn.configure(state="disabled", text="Launching\u2026")
+        def stat(msg): status_lbl.configure(text=msg, text_color=RED if "\u26a0" in msg else "#4ade80")
+        run_setup_wizard(status_callback=stat)
+        setup_btn.configure(state="normal", text="\u2699 Setup Wizard")
 
-        def do_check():
-            src = src_var.get()
-            if not src or src == "(No sources configured)":
-                upd_status.configure(text="⚠ No update source selected.", text_color=RED)
-                return
-            upd_btn.configure(state="disabled", text="Checking…")
-            upd_status.configure(text="Contacting update server…", text_color=MUTED)
+    def do_check():
+        src = src_var.get()
+        if not src or src == "(No sources configured)":
+            status_lbl.configure(text="\u26a0 No update source selected.", text_color=RED)
+            return
+        upd_btn.configure(state="disabled", text="Checking\u2026")
+        status_lbl.configure(text="Contacting update server\u2026", text_color=MUTED)
+        def _task():
+            res = check_for_updates()
+            err = res.get("error")
+            if err:
+                status_lbl.configure(text=f"\u26a0 {err}", text_color=RED)
+                upd_btn.configure(state="normal", text="\U0001f504 Check Updates", command=do_check)
+            elif res.get("update_available"):
+                lv = res["latest_version"]
+                status_lbl.configure(text=f"\u2705 Update available: v{lv}", text_color="#4ade80")
+                upd_btn.configure(state="normal", text=f"\u2b07 Download v{lv}", command=lambda: do_download_update(res["assets"]))
+            else:
+                status_lbl.configure(text="\u2713 You are on the latest version.", text_color="#4ade80")
+                upd_btn.configure(state="normal", text="\U0001f504 Check Updates", command=do_check)
+        threading.Thread(target=_task, daemon=True).start()
 
-            def _task():
-                res = check_for_updates()
-                err = res.get("error")
-                if err:
-                    upd_status.configure(text=f"⚠ {err}", text_color=RED)
-                    upd_btn.configure(state="normal", text="🔄  Check for Updates", command=do_check)
-                elif res.get("update_available"):
-                    lv = res["latest_version"]
-                    upd_status.configure(text=f"✅ Update available: v{lv}", text_color="#4ade80")
-                    upd_btn.configure(
-                        state="normal", text=f"⬇  Download v{lv}",
-                        command=lambda: do_download(res["assets"])
-                    )
-                else:
-                    upd_status.configure(text="✓ You are on the latest version.", text_color="#4ade80")
-                    upd_btn.configure(state="normal", text="🔄  Check for Updates", command=do_check)
+    def do_download_update(assets):
+        upd_btn.configure(state="disabled", text="Downloading\u2026")
+        if setup_btn: setup_btn.configure(state="disabled")
+        dl_btn.configure(state="disabled")
+        prog_bar.pack(fill="x", padx=16, pady=(0, 8))
+        def _task():
+            try:
+                temp_dir = os.path.join(_ROOT, "bin", "update_temp")
+                os.makedirs(temp_dir, exist_ok=True)
+                target_assets = [a for a in assets if (sys.platform == "win32" and a["name"].lower().endswith(".exe")) or (sys.platform != "win32" and not a["name"].lower().endswith(".exe") and any(k in a["name"].lower() for k in ("linux", "darwin", "mac")))]
+                if not target_assets:
+                    status_lbl.configure(text="\u26a0 No compatible assets found for this OS.", text_color=RED)
+                    prog_bar.pack_forget()
+                    upd_btn.configure(state="normal", text="\U0001f504 Check Updates", command=do_check)
+                    if setup_btn: setup_btn.configure(state="normal")
+                    dl_btn.configure(state="normal")
+                    return
+                for i, asset in enumerate(target_assets):
+                    status_lbl.configure(text=f"Downloading {asset['name']} ({i+1}/{len(target_assets)})\u2026", text_color=MUTED)
+                    def cb(done, total, bar=prog_bar):
+                        if total > 0: bar.set(done / total)
+                    dest = os.path.join(temp_dir, asset["name"])
+                    download_asset(asset["url"], dest, cb)
+                    nl = asset["name"].lower()
+                    if "tray" in nl: _dl_files["tray"] = dest
+                    elif "dashboard" in nl or "control" in nl: _dl_files["dashboard"] = dest
+                status_lbl.configure(text="\u2705 Download complete \u2014 ready to apply.", text_color="#4ade80")
+                prog_bar.pack_forget()
+                upd_btn.configure(state="normal", text="\u26a1 Restart & Apply", command=do_apply)
+            except Exception as e:
+                status_lbl.configure(text=f"\u26a0 Download failed: {e}", text_color=RED)
+                prog_bar.pack_forget()
+                upd_btn.configure(state="normal", text="\U0001f504 Check Updates", command=do_check)
+                if setup_btn: setup_btn.configure(state="normal")
+                dl_btn.configure(state="normal")
+        threading.Thread(target=_task, daemon=True).start()
 
-            threading.Thread(target=_task, daemon=True).start()
+    def do_apply():
+        upd_btn.configure(state="disabled", text="Applying\u2026")
+        status_lbl.configure(text="Launching updater and restarting\u2026", text_color=MUTED)
+        apply_update_and_restart(_dl_files.get("tray", ""), _dl_files.get("dashboard", ""))
 
-        def do_download(assets):
-            upd_btn.configure(state="disabled", text="Downloading…")
-            upd_progress.pack(fill="x", padx=16, pady=(0, 8))
-
-            def _task():
-                try:
-                    temp_dir = os.path.join(_ROOT, "bin", "update_temp")
-                    os.makedirs(temp_dir, exist_ok=True)
-
-                    target_assets = []
-                    for a in assets:
-                        nl = a["name"].lower()
-                        if sys.platform == "win32" and nl.endswith(".exe"):
-                            target_assets.append(a)
-                        elif sys.platform != "win32" and not nl.endswith(".exe"):
-                            if any(k in nl for k in ("linux", "darwin", "mac")):
-                                target_assets.append(a)
-
-                    if not target_assets:
-                        upd_status.configure(text="⚠ No compatible assets found for this OS.", text_color=RED)
-                        upd_progress.pack_forget()
-                        upd_btn.configure(state="normal", text="🔄  Check for Updates", command=do_check)
-                        return
-
-                    for i, asset in enumerate(target_assets):
-                        upd_status.configure(
-                            text=f"Downloading {asset['name']} ({i+1}/{len(target_assets)})…",
-                            text_color=MUTED
-                        )
-                        def cb(done, total, bar=upd_progress):
-                            if total > 0:
-                                bar.set(done / total)
-
-                        dest = os.path.join(temp_dir, asset["name"])
-                        download_asset(asset["url"], dest, cb)
-                        nl = asset["name"].lower()
-                        if "tray" in nl:
-                            _dl_files["tray"] = dest
-                        elif "dashboard" in nl or "control" in nl:
-                            _dl_files["dashboard"] = dest
-
-                    upd_status.configure(text="✅ Download complete — ready to apply.", text_color="#4ade80")
-                    upd_progress.pack_forget()
-                    upd_btn.configure(state="normal", text="⚡  Restart & Apply", command=do_apply)
-
-                except Exception as e:
-                    upd_status.configure(text=f"⚠ {e}", text_color=RED)
-                    upd_progress.pack_forget()
-                    upd_btn.configure(state="normal", text="Retry", command=lambda: do_download(assets))
-
-            threading.Thread(target=_task, daemon=True).start()
-
-        def do_apply():
-            upd_btn.configure(state="disabled", text="Applying…")
-            upd_status.configure(text="Launching updater and restarting…", text_color=MUTED)
-            apply_update_and_restart(
-                _dl_files.get("tray", ""),
-                _dl_files.get("dashboard", "")
-            )
-
-        upd_btn.configure(command=do_check)
+    dl_btn.configure(command=do_download)
+    if setup_btn: setup_btn.configure(command=do_setup)
+    if upd_btn: upd_btn.configure(command=do_check)
 
     # ══════════════════════════════════════════════════════════════════════════
-    # SECTION 4 — Uninstall & Cleanup
+    # SECTION 4 — Environment Inspector
     # ══════════════════════════════════════════════════════════════════════════
-    uni_card = _card(container, "🗑  Uninstall & Cleanup")
+    env_card = _card(container, "\U0001f50d  Environment Inspector")
 
     ctk.CTkLabel(
-        uni_card,
-        text="Remove Hecos Core and its dependencies from your system.",
+        env_card,
+        text="Verifies the Python environments and key packages for each Hecos component.",
+        font=ctk.CTkFont(size=11), text_color=MUTED
+    ).pack(anchor="w", padx=16, pady=(0, 8))
+
+    env_box = ctk.CTkTextbox(
+        env_card, height=200, fg_color="#1e1e1e", text_color="#a3e4a3",
+        font=ctk.CTkFont(family="Consolas", size=10), wrap="word"
+    )
+    env_box.pack(fill="x", padx=16, pady=(0, 8))
+    env_box.configure(state="disabled")
+
+    def _env_log(msg):
+        def _do():
+            env_box.configure(state="normal")
+            env_box.insert("end", msg + "\n")
+            env_box.see("end")
+            env_box.configure(state="disabled")
+        env_box.after(0, _do)
+
+    def run_env_check():
+        env_scan_btn.configure(state="disabled", text="Scanning\u2026")
+        env_box.configure(state="normal")
+        env_box.delete("1.0", "end")
+        env_box.configure(state="disabled")
+
+        def _task():
+            info = _get_python_info()
+            _env_log("\u2500\u2500\u2500 PYTHON ENVIRONMENTS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500")
+
+            sys_i = info["system"]
+            _env_log(f"{'✅' if sys_i['ok'] else '❌'} System Python: {sys_i['version']}")
+            if sys_i["path"]:
+                _env_log(f"   Path: {sys_i['path']}")
+
+            core_i = info["core"]
+            core_status = '✅' if core_i['ok'] else '❌'
+            _env_log(f"{core_status} Core  Python:  [{core_i.get('type', 'Unknown')}] {core_i['version']}")
+            if core_i["path"]:
+                _env_log(f"   Path: {core_i['path']}")
+                pkgs = _check_packages(core_i["path"], ["flask", "dotenv", "pydantic", "litellm", "yaml"])
+                ok_p = [f"{k} ({v})" for k, v in pkgs.items() if v]
+                miss = [k for k, v in pkgs.items() if not v]
+                if ok_p:   _env_log(f"   Packages: {', '.join(ok_p)}")
+                if miss:   _env_log(f"   \u26a0 Missing: {', '.join(miss)}")
+
+            tray_i = info["tray"]
+            tray_status = '✅' if tray_i['ok'] else '❌'
+            _env_log(f"{tray_status} Tray  Python:  [{tray_i.get('type', 'Unknown')}] {tray_i['version']}")
+            if tray_i["path"]:
+                _env_log(f"   Path: {tray_i['path']}")
+                pkgs = _check_packages(tray_i["path"], ["pystray", "PIL", "customtkinter", "psutil", "tomli_w"])
+                ok_p = [f"{k} ({v})" for k, v in pkgs.items() if v]
+                miss = [k for k, v in pkgs.items() if not v]
+                if ok_p:   _env_log(f"   Packages: {', '.join(ok_p)}")
+                if miss:   _env_log(f"   \u26a0 Missing: {', '.join(miss)}")
+
+            _env_log("\u2500\u2500\u2500 DISK PATHS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500")
+            _env_log(f"Core root: {_ROOT}  {'✅' if os.path.isdir(_ROOT) else '❌ Not found'}")
+            tray_rp = os.path.abspath(os.path.join(_TRAY_DIR, ".."))
+            _env_log(f"Tray root: {tray_rp}  {'✅' if os.path.isdir(tray_rp) else '❌ Not found'}")
+            _env_log("\u2500" * 50)
+            _env_log("Scan complete.")
+            
+            def _reset_btn():
+                env_scan_btn.configure(state="normal", text="\U0001f50d  Scan Environment")
+            env_scan_btn.after(0, _reset_btn)
+
+        threading.Thread(target=_task, daemon=True).start()
+
+    env_scan_btn = ctk.CTkButton(
+        env_card, text="\U0001f50d  Scan Environment",
+        fg_color=BORDER, text_color=TEXT, hover_color=ACCENT,
+        height=32, corner_radius=8, command=run_env_check
+    )
+    env_scan_btn.pack(anchor="e", padx=16, pady=(0, 14))
+
+    # ══════════════════════════════════════════════════════════════════════════
+    # SECTION 5 — Uninstall & Cleanup
+    # ══════════════════════════════════════════════════════════════════════════
+    uni_card = _card(container, "\U0001f5d1  Uninstall & Cleanup")
+
+    uni_info_frame = ctk.CTkFrame(uni_card, fg_color="transparent")
+    uni_info_frame.pack(fill="x", padx=16, pady=(0, 8))
+    ctk.CTkLabel(
+        uni_info_frame,
+        text="Permanently remove Hecos from your system.\nThe selected components will be uninstalled while you watch.",
         font=ctk.CTkFont(size=11), text_color=MUTED, justify="left"
-    ).pack(anchor="w", padx=16, pady=(0, 10))
+    ).pack(anchor="w", pady=(0, 10))
 
-    uni_status = ctk.CTkLabel(uni_card, text="", text_color=MUTED, font=ctk.CTkFont(size=11))
-    uni_status.pack(anchor="w", padx=16)
+    uni_buttons = ctk.CTkFrame(uni_info_frame, fg_color="transparent")
+    uni_buttons.pack(anchor="e")
 
-    def run_uninstall(mode):
-        uni_status.configure(text=f"Opening Uninstaller ({mode})…", text_color=MUTED)
-        uninstaller = os.path.join(_ROOT, "scripts", "windows", "setup", "UNINSTALL_HECOS_WIN.bat")
-        if not os.path.exists(uninstaller):
-            uni_status.configure(text="⚠ Uninstaller not found.", text_color=RED)
-            return
+    log_box = ctk.CTkTextbox(
+        uni_card, height=180, fg_color="#1e1e1e", text_color="#a3a3a3",
+        font=ctk.CTkFont(family="Consolas", size=10), wrap="word"
+    )
+
+    _TRAY_PKG_DIR = os.path.dirname(os.path.abspath(__file__))
+    _TERMINATOR_SRC = os.path.normpath(os.path.join(_TRAY_PKG_DIR, "..", "..", "uninstall_terminator.py"))
+
+    def _append_log(text):
+        log_box.insert("end", text)
+        log_box.see("end")
+
+    def _suicide_and_quit():
+        _append_log("\n[!] Tray self-destruct initiated. Closing in 3 seconds...\n")
+        log_box.update()
+
+        # __file__ is: C:\Hecos-Tray\tray\dashboard\tabs\update.py
+        # So 3 levels up -> C:\Hecos-Tray
+        tray_root = os.path.abspath(os.path.join(_TRAY_PKG_DIR, "..", "..", ".."))
+        _append_log(f"[i] Will delete: {tray_root}\n")
+        log_box.update()
+
+        tmp_dir = tempfile.gettempdir()
+        bat_path = os.path.join(tmp_dir, "hecos_suicide.bat")
+        with open(bat_path, "w") as f:
+            f.write(
+                f"@echo off\n"
+                f":: Wait for the Python process to fully exit\n"
+                f"timeout /t 6 /nobreak >nul\n"
+                f":: Retry loop: try up to 5 times with 2s gaps\n"
+                f"set RETRIES=5\n"
+                f":RETRY\n"
+                f"rmdir /s /q \"{tray_root}\" >nul 2>&1\n"
+                f"if exist \"{tray_root}\" (\n"
+                f"    if !RETRIES! GTR 0 (\n"
+                f"        set /a RETRIES-=1\n"
+                f"        timeout /t 2 /nobreak >nul\n"
+                f"        goto RETRY\n"
+                f"    )\n"
+                f")\n"
+                f"del \"%~f0\" >nul 2>&1\n"
+            )
+
         try:
-            subprocess.Popen(["cmd.exe", "/c", uninstaller, mode], creationflags=0x00000010, cwd=_ROOT)
+            subprocess.Popen(
+                ["cmd.exe", "/c", bat_path],
+                creationflags=subprocess.DETACHED_PROCESS,
+                close_fds=True,
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
         except Exception as e:
-            uni_status.configure(text=f"⚠ {e}", text_color=RED)
+            _append_log(f"[!] Could not launch cleanup script: {e}\n")
 
-    uni_cfg = dict(height=32, corner_radius=8, font=ctk.CTkFont(size=11))
-    uni_buttons = ctk.CTkFrame(uni_card, fg_color="transparent")
-    uni_buttons.pack(fill="x", padx=16, pady=(6, 14))
-    uni_buttons.columnconfigure((0, 1, 2), weight=1, uniform="ubtn")
+        import time
+        time.sleep(3)
+        try:
+            os._exit(0)
+        except Exception:
+            pass
 
-    ctk.CTkButton(
+        # Fallback: if still running, tell the user to close manually
+        log_box.after(0, lambda: _append_log(
+            "\n[!] Window did not close automatically.\n"
+            "    You can safely close this window manually.\n"
+            "    The cleanup will continue in the background.\n"
+        ))
+
+    def _run_terminator_thread(mode, dest):
+        try:
+            exe_cmd = sys.executable
+            if exe_cmd.lower().endswith("pythonw.exe"):
+                exe_cmd = exe_cmd[:-len("pythonw.exe")] + "python.exe"
+
+            proc = subprocess.Popen(
+                [exe_cmd, dest, "--mode", mode, "--wait", "4", "--skip-tray-delete"],
+                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1,
+                creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
+            )
+            for line in proc.stdout:
+                log_box.after(0, _append_log, line)
+            proc.wait()
+
+            if proc.returncode == 0:
+                log_box.after(0, _append_log, "\n✅ Phase 1 Cleanup Complete.\n")
+                if mode in ("full", "tray"):
+                    threading.Thread(target=_suicide_and_quit, daemon=True).start()
+                else:
+                    log_box.after(0, _append_log, "\n[!] Core has been removed. The Tray is still installed.\n    You may safely close this window.")
+            else:
+                log_box.after(0, _append_log, f"\n❌ Terminator exited with error code {proc.returncode}\n")
+        except Exception as e:
+            log_box.after(0, _append_log, f"\n❌ Error launching terminator: {e}\n")
+
+    def _launch_live_terminator(mode):
+        try:
+            uni_buttons.pack_forget()
+            uni_info_frame.pack_forget()
+            confirm_btn.pack_forget()
+            log_box.pack(fill="x", padx=16, pady=(10, 14))
+            _append_log(f"Initializing {mode.upper()} wipe...\n")
+            
+            # CRITICAL: Stop Hecos Core backend BEFORE wipe to release file locks!
+            try:
+                from tray.orchestrator import stop_hecos
+                _append_log("Stopping background processes...\n")
+                stop_hecos()
+            except Exception as e:
+                _append_log(f"⚠ Could not stop Hecos processes: {e}\n")
+
+            dest = os.path.join(tempfile.gettempdir(), "hecos_uninstall_terminator.py")
+            shutil.copy2(_TERMINATOR_SRC, dest)
+            threading.Thread(target=_run_terminator_thread, args=(mode, dest), daemon=True).start()
+        except Exception as e:
+            _append_log(f"⚠ Failed to initialize: {e}\n")
+
+    def _confirm_and_run(mode, label):
+        for btn in _uninstall_buttons:
+            btn.configure(state="disabled")
+        confirm_btn.pack(fill="x", padx=16, pady=(4, 14))
+        confirm_btn.configure(state="normal", text=f"CONFIRM: {label}", command=lambda: _launch_live_terminator(mode))
+
+    _uninstall_buttons = []
+    uni_cfg = dict(height=28, width=80, corner_radius=8, font=ctk.CTkFont(size=11))
+
+    b1 = ctk.CTkButton(
         uni_buttons, text="Remove Core",
-        fg_color=BORDER, text_color=TEXT, hover_color="#8b5cf6",
-        command=lambda: run_uninstall("--core"), **uni_cfg
-    ).grid(row=0, column=0, padx=(0, 6), sticky="ew")
+        fg_color=BORDER, text_color=TEXT if core_ok else MUTED,
+        hover_color="#8b5cf6",
+        state="normal" if core_ok else "disabled",
+        command=lambda: _confirm_and_run("core", "Remove Core"), **uni_cfg
+    )
+    b1.pack(side="left", padx=(0, 6))
 
-    ctk.CTkButton(
-        uni_buttons, text="Remove Core + Deps",
+    b2 = ctk.CTkButton(
+        uni_buttons, text="Remove Tray",
         fg_color=BORDER, text_color=TEXT, hover_color="#f97316",
-        command=lambda: run_uninstall("--deps"), **uni_cfg
-    ).grid(row=0, column=1, padx=6, sticky="ew")
+        command=lambda: _confirm_and_run("tray", "Remove Tray"), **uni_cfg
+    )
+    b2.pack(side="left", padx=(0, 6))
 
-    ctk.CTkButton(
-        uni_buttons, text="🔴  Full Nuke",
+    b3 = ctk.CTkButton(
+        uni_buttons, text="Full Wipe",
         fg_color="transparent", border_width=1, border_color=RED,
         text_color=RED, hover_color="#3a1a1a",
-        command=lambda: run_uninstall("--full"), **uni_cfg
-    ).grid(row=0, column=2, padx=(6, 0), sticky="ew")
+        command=lambda: _confirm_and_run("full", "Full Wipe"), **uni_cfg
+    )
+    b3.pack(side="left")
+    _uninstall_buttons.extend([b1, b2, b3])
+
+    confirm_btn = ctk.CTkButton(
+        uni_card, text="", state="disabled",
+        fg_color=RED, hover_color="#7f1d1d", text_color="white",
+        height=32, corner_radius=8, font=ctk.CTkFont(size=11, weight="bold")
+    )

@@ -78,8 +78,8 @@ def run_dashboard():
     app.resizable(True, True)
     
     # ── Native Splash Screen (Toplevel, safe for Tkinter) ──────────
-    from tray.config import _ROOT
-    logo_path = os.path.join(_ROOT, "hecos", "assets", "Hecos_Logo_SQR_NBG_LogoOnly.png")
+    from tray.config import _TRAY_DIR
+    logo_path = os.path.abspath(os.path.join(_TRAY_DIR, "..", "assets", "Hecos_Logo_SQR_NBG_LogoOnly.png"))
 
     import tkinter as tk
     _splash_root = [None]
@@ -120,7 +120,8 @@ def run_dashboard():
         pass
 
     try:
-        ico = os.path.join(_ROOT, "hecos", "assets", "Hecos_Logo_SQR_NBG_LogoOnly.ico")
+        from tray.config import _TRAY_DIR
+        ico = os.path.abspath(os.path.join(_TRAY_DIR, "..", "assets", "Hecos_Logo_SQR_NBG_LogoOnly.ico"))
         if os.path.exists(ico):
             app.iconbitmap(ico)
     except Exception:
@@ -153,7 +154,7 @@ def run_dashboard():
         ("mobile",   "📱  Remote Access"),
         ("logs",     "📋  Live Logs"),
         ("processes","🛠  Processes"),
-        ("update",   "📦  Manage Core"),
+        ("update",   "📦  Install"),
         ("guide",    "📖  Guide & Help"),
         ("about",    "ℹ  About"),
     ]

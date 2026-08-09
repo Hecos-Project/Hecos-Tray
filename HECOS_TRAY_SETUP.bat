@@ -8,11 +8,11 @@ color 0B
 :: All wizard output is mirrored to logs\wizard.log for debugging
 if not exist "logs" mkdir "logs"
 set "WIZARD_LOG=%~dp0logs\wizard.log"
-echo [%DATE% %TIME%] HECOS SETUP WIZARD STARTED >> "!WIZARD_LOG!"
+echo [%DATE% %TIME%] HECOS TRAY SETUP STARTED >> "!WIZARD_LOG!"
 echo [%DATE% %TIME%] Tray dir: %~dp0 >> "!WIZARD_LOG!"
 
 :: ─────────────────────────────────────────────────────────────────────────────
-::  HECOS SETUP WIZARD  (launched from C:\Hecos-Tray)
+::  HECOS TRAY SETUP  (launched from C:\Hecos-Tray)
 ::  This script handles:
 ::    1. Detecting the Hecos Core directory
 ::    2. Detecting ANY available Python (no re-download if already present)
@@ -25,18 +25,40 @@ echo [%DATE% %TIME%] Tray dir: %~dp0 >> "!WIZARD_LOG!"
 set "TRAY_DIR=%~dp0"
 if "!TRAY_DIR:~-1!"=="\" set "TRAY_DIR=!TRAY_DIR:~0,-1!"
 
-set "TRAY_WARN=0"
-set "TRAY_NOT_IN_C=0"
-
-:: Check if the path starts with C:\Hecos-Tray
-echo !TRAY_DIR! | findstr /I /B "C:\\Hecos-Tray" >nul
-if !ERRORLEVEL! NEQ 0 (
-    set "TRAY_NOT_IN_C=1"
-) else (
-    if /I NOT "!TRAY_DIR!"=="C:\Hecos-Tray" (
-        set "TRAY_WARN=1"
+:: ─── SELF-HEALING FOLDER CHECK ──────────────────────────────────────────────
+set "CANONICAL=C:\Hecos-Tray"
+if /i not "!TRAY_DIR!"=="!CANONICAL!" (
+    echo.
+    echo  [AUTO-FIX] Hecos-Tray is in the wrong location:
+    echo  [AUTO-FIX]   Found at: !TRAY_DIR!
+    echo  [AUTO-FIX]   Moving to: !CANONICAL! ...
+    echo.
+    robocopy "!TRAY_DIR!" "!CANONICAL!" /E /IS /IT /NFL /NDL /NJH /NJS /NC /NS /NP >nul 2>&1
+    if !ERRORLEVEL! GEQ 8 (
+        color 0C
+        echo  [ERROR] Auto-move failed. Please move the folder manually:
+        echo    From: !TRAY_DIR!
+        echo    To:   !CANONICAL!
+        pause
+        exit
     )
+    echo.
+    echo ========================================================================
+    echo  [!] IMPORTANT: FOLDER HAS BEEN RELOCATED
+    echo ========================================================================
+    echo  Hecos requires its folders to be in a specific location to work.
+    echo  Your Tray folder has been automatically moved to:
+    echo    -^> !CANONICAL!
+    echo.
+    echo  Please remember this new location for the future!
+    echo  The application will now restart automatically.
+    echo ========================================================================
+    echo.
+    pause
+    start "" "!CANONICAL!\%~nx0"
+    exit
 )
+:: ─────────────────────────────────────────────────────────────────────────────
 
 :: --- Determine ROOT_DIR (Hecos Core) ---
 set "ROOT_DIR=C:\Hecos"
@@ -57,7 +79,7 @@ if exist "%~dp0..\..\hecos\core\version" (
 )
 
 echo ==============================================================================
-echo                          HECOS SETUP WIZARD
+echo                          HECOS TRAY SETUP
 echo ==============================================================================
 echo.
 
@@ -67,18 +89,7 @@ echo.
 echo [SYSTEM CHECK]
 
 :: Check Tray
-if "!TRAY_NOT_IN_C!"=="1" (
-    echo [-] Tray is NOT in C:\ drive.
-    echo  [-] Please make sure the Hecos-Tray folder is placed directly in C:\
-    echo  [-] It should be at: C:\Hecos-Tray
-    echo  [-] Current location: !TRAY_DIR!
-) else (
-    echo [OK] Tray found at: !TRAY_DIR!
-    if "!TRAY_WARN!"=="1" (
-        echo.
-        echo  [-] WARNING: Tray folder has a version suffix. Rename it to C:\Hecos-Tray
-    )
-)
+echo [OK] Tray found at: !TRAY_DIR!
 
 :: Check Core
 set "CORE_FOUND=0"
@@ -86,32 +97,25 @@ if exist "%ROOT_DIR%\hecos\core\version" (
     echo [OK] Core found at: %ROOT_DIR%
     set "CORE_FOUND=1"
 ) else (
-    echo [-] Core NOT found — will offer download below.
+    echo [-] Core NOT found - will offer download below.
 )
 echo.
 
 :: ─────────────────────────────────────────────────────────────────────────────
-:: 2. PYTHON DETECTION — find ANY python, never re-download if already present
+:: 2. PYTHON DETECTION - find ANY python, never re-download if already present
 :: ─────────────────────────────────────────────────────────────────────────────
 echo [PYTHON DETECTION]
 set "PYTHON_CMD="
 set "PYTHON_LOC="
 
-:: Priority 1: Core portable python_env
-if exist "%ROOT_DIR%\python_env\python.exe" (
-    set PYTHON_CMD="%ROOT_DIR%\python_env\python.exe"
-    set "PYTHON_LOC=Portable Environment (%ROOT_DIR%\python_env)"
+:: Priority 1: Tray's own portable python_env (installed by this wizard on first run)
+if exist "%TRAY_DIR%\python_env\python.exe" (
+    set PYTHON_CMD="%TRAY_DIR%\python_env\python.exe"
+    set "PYTHON_LOC=Tray Portable (%TRAY_DIR%\python_env)"
     goto PYTHON_FOUND
 )
 
-:: Priority 2: Core venv
-if exist "%ROOT_DIR%\venv\Scripts\python.exe" (
-    set PYTHON_CMD="%ROOT_DIR%\venv\Scripts\python.exe"
-    set "PYTHON_LOC=Virtual Environment (%ROOT_DIR%\venv)"
-    goto PYTHON_FOUND
-)
-
-:: Priority 3: py launcher (installed Python on Windows)
+:: Priority 2: py launcher (system Python — correct for Tray)
 py -3 --version >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
     set "PYTHON_CMD=py -3"
@@ -119,7 +123,7 @@ if !ERRORLEVEL! EQU 0 (
     goto PYTHON_FOUND
 )
 
-:: Priority 4: python3 on PATH
+:: Priority 3: python3 on PATH
 python3 --version >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
     set "PYTHON_CMD=python3"
@@ -127,7 +131,7 @@ if !ERRORLEVEL! EQU 0 (
     goto PYTHON_FOUND
 )
 
-:: Priority 5: python on PATH
+:: Priority 4: python on PATH
 python --version >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
     set "PYTHON_CMD=python"
@@ -135,7 +139,7 @@ if !ERRORLEVEL! EQU 0 (
     goto PYTHON_FOUND
 )
 
-:: No Python found at all — must install
+:: No Python found at all - must install
 echo [!] Python is NOT installed or not found anywhere on this system.
 echo.
 echo  Hecos Tray requires Python 3.10 or later.
@@ -156,7 +160,7 @@ echo [%DATE% %TIME%] Python found: !PYTHON_LOC! with cmd: !PYTHON_CMD! >> "!WIZA
 echo.
 
 :: ─────────────────────────────────────────────────────────────────────────────
-:: 3. TRAY DEPENDENCY CHECK — install from pyproject.toml if missing
+:: 3. TRAY DEPENDENCY CHECK - install from pyproject.toml if missing
 :: ─────────────────────────────────────────────────────────────────────────────
 echo [DEPENDENCY CHECK]
 echo [%DATE% %TIME%] Running dependency check... >> "!WIZARD_LOG!"
@@ -170,20 +174,11 @@ if !ERRORLEVEL! EQU 0 (
     goto READY
 )
 
-echo [!] Some Tray dependencies are missing. Installing from pyproject.toml...
+echo [!] Some Tray dependencies are missing. Installing...
 echo.
 
-:: Use pyproject.toml if present, else fallback to hard-coded list
-if exist "%TRAY_DIR%\pyproject.toml" (
-    !PYTHON_CMD! -m pip install --quiet --upgrade pip >nul 2>&1
-    !PYTHON_CMD! -m pip install "%TRAY_DIR%[.]" --quiet
-    if !ERRORLEVEL! NEQ 0 (
-        :: Fallback: install deps individually
-        !PYTHON_CMD! -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml customtkinter
-    )
-) else (
-    !PYTHON_CMD! -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml customtkinter
-)
+!PYTHON_CMD! -m pip install --quiet --upgrade pip >nul 2>&1
+!PYTHON_CMD! -m pip install --quiet pystray pillow tomli-w packaging psutil pyyaml customtkinter qrcode pywin32
 
 :: Verify install succeeded
 !PYTHON_CMD! -c "import tomli_w, pystray, PIL" >nul 2>&1
@@ -198,7 +193,7 @@ echo [+] Tray dependencies installed successfully.
 echo.
 
 :: ─────────────────────────────────────────────────────────────────────────────
-:: 4. READY — let the user choose what to do
+:: 4. READY - let the user choose what to do
 :: ─────────────────────────────────────────────────────────────────────────────
 :READY
 echo [%DATE% %TIME%] Reached READY block. CORE_FOUND=!CORE_FOUND! >> "!WIZARD_LOG!"
@@ -273,7 +268,7 @@ echo              DOWNLOADING PORTABLE PYTHON ENVIRONMENT
 echo ==============================================================================
 set "PYTHON_VERSION=3.11.9"
 set "PYTHON_URL=https://www.python.org/ftp/python/%PYTHON_VERSION%/python-%PYTHON_VERSION%-embed-amd64.zip"
-set "PYTHON_DIR=%ROOT_DIR%\python_env"
+set "PYTHON_DIR=%TRAY_DIR%\python_env"
 
 echo [*] Downloading Portable Python %PYTHON_VERSION%...
 mkdir "%PYTHON_DIR%" >nul 2>&1
@@ -367,8 +362,20 @@ if exist "%ROOT_DIR%\hecos\core\version" (
     echo  [+] Hecos Core installed successfully!
     set "CORE_FOUND=1"
     echo.
+    echo  [*] Now running the Core self-installer to set up Python and dependencies...
+    echo  [*] This may take a few minutes on first run. Please wait.
+    echo.
+    :: Run the Core's own setup bat which installs portable Python + all Core pip deps
+    if exist "%ROOT_DIR%\scripts\windows\setup\HECOS_SETUP_WIZARD.bat" (
+        call "%ROOT_DIR%\scripts\windows\setup\HECOS_SETUP_WIZARD.bat" --silent
+    ) else (
+        echo  [!] Warning: Core setup script not found. Dependencies may be missing.
+        echo  [!] Run %ROOT_DIR%\scripts\windows\setup\HECOS_SETUP_WIZARD.bat manually if Hecos fails to start.
+    )
+    echo.
+    echo  [+] Core setup complete! Returning to menu.
     timeout /t 2 >nul
-    goto LAUNCH_SETUP_WIZARD
+    goto READY
 ) else (
     echo  [!] Extraction done but Core files not found. Extract the ZIP manually.
     pause
