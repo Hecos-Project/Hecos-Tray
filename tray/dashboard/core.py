@@ -121,7 +121,7 @@ def run_dashboard():
 
     try:
         from tray.config import _TRAY_DIR
-        ico = os.path.abspath(os.path.join(_TRAY_DIR, "..", "assets", "Hecos_Logo_SQR_NBG_LogoOnly_Mask_001.ico"))
+        ico = os.path.abspath(os.path.join(_TRAY_DIR, "..", "assets", "Hecos_Logo_SQR_NBG_LogoOnly.ico"))
         if os.path.exists(ico):
             app.iconbitmap(ico)
     except Exception:

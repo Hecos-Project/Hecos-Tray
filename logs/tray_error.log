@@ -55,3 +55,51 @@
 [2026-08-09 05:34:03] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
 [2026-08-09 05:34:05] [STDOUT] [ORCHESTRATOR] Killed process 1260 on port 7070.
 [2026-08-09 05:34:05] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-09 05:59:58] [INFO] === TRAY APPLICATION STARTED ===
+[2026-08-09 05:59:59] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-09 06:00:07] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-09 06:00:07] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-09 06:00:17] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-09 06:00:21] [STDOUT] [ORCHESTRATOR] Spawning under new Watchdog Daemon...
+[2026-08-09 06:00:21] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-09 06:02:32] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-09 06:02:32] [STDOUT] [ORCHESTRATOR] Killed process 1572 on port 7070.
+[2026-08-09 06:03:44] [INFO] === TRAY APPLICATION STARTED ===
+[2026-08-09 06:03:45] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-09 06:03:53] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-09 06:03:53] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-09 06:04:03] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-09 06:04:07] [STDOUT] [ORCHESTRATOR] Spawning under new Watchdog Daemon...
+[2026-08-09 06:04:07] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-09 06:16:57] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-09 06:17:00] [STDOUT] [ORCHESTRATOR] Killed process 9428 on port 7070.
+[2026-08-09 06:17:00] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-09 06:21:52] [INFO] === TRAY APPLICATION STARTED ===
+[2026-08-09 06:21:52] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-09 06:22:01] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-09 06:22:01] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-09 06:22:11] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-09 06:22:15] [STDOUT] [ORCHESTRATOR] Spawning under new Watchdog Daemon...
+[2026-08-09 06:22:15] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-09 06:26:18] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-09 06:26:21] [STDOUT] [ORCHESTRATOR] Killed process 9424 on port 7070.
+[2026-08-09 06:26:21] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-09 06:26:31] [INFO] === TRAY APPLICATION STARTED ===
+[2026-08-09 06:26:31] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-09 06:26:40] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-09 06:26:40] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-09 06:26:50] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-09 06:26:54] [STDOUT] [ORCHESTRATOR] Spawning under new Watchdog Daemon...
+[2026-08-09 06:26:54] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-09 06:27:17] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-09 06:27:17] [STDOUT] [ORCHESTRATOR] Killed process 6644 on port 7070.
+[2026-08-09 06:36:26] [INFO] === TRAY APPLICATION STARTED ===
+[2026-08-09 06:36:27] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-09 06:36:35] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-09 06:36:35] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-09 06:36:45] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-09 06:36:49] [STDOUT] [ORCHESTRATOR] Spawning under new Watchdog Daemon...
+[2026-08-09 06:36:49] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-09 06:48:34] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-09 06:48:37] [STDOUT] [ORCHESTRATOR] Killed process 5184 on port 7070.
+[2026-08-09 06:48:38] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
