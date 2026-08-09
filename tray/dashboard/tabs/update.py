@@ -503,7 +503,7 @@ def build_update(ctx):
         fg_color=BORDER, text_color=TEXT, hover_color=ACCENT,
         height=32, corner_radius=8, command=run_env_check
     )
-    env_scan_btn.pack(anchor="w", padx=16, pady=(0, 14))
+    env_scan_btn.pack(anchor="e", padx=16, pady=(0, 14))
 
     # ══════════════════════════════════════════════════════════════════════════
     # SECTION 5 — Uninstall & Cleanup
@@ -512,16 +512,14 @@ def build_update(ctx):
 
     uni_info_frame = ctk.CTkFrame(uni_card, fg_color="transparent")
     uni_info_frame.pack(fill="x", padx=16, pady=(0, 8))
-    uni_info_frame.columnconfigure(0, weight=1)
-
     ctk.CTkLabel(
         uni_info_frame,
         text="Permanently remove Hecos from your system.\nThe selected components will be uninstalled while you watch.",
         font=ctk.CTkFont(size=11), text_color=MUTED, justify="left"
-    ).grid(row=0, column=0, sticky="w")
+    ).pack(anchor="w", pady=(0, 10))
 
     uni_buttons = ctk.CTkFrame(uni_info_frame, fg_color="transparent")
-    uni_buttons.grid(row=0, column=1, sticky="e")
+    uni_buttons.pack(anchor="e")
 
     log_box = ctk.CTkTextbox(
         uni_card, height=180, fg_color="#1e1e1e", text_color="#a3a3a3",
