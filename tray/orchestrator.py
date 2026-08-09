@@ -36,11 +36,6 @@ def get_platform_python(is_daemon=False):
     if "hecos_tray.exe" in base_exe.lower() or "hecos_dashboard.exe" in base_exe.lower():
         base_exe = shutil.which("python") or base_exe
 
-    if sys.platform == "win32":
-        from tray.system_utils import get_named_executable
-        name = "hecos_daemon" if is_daemon else "hecos_main"
-        return get_named_executable(name, base_exe=base_exe)
-
     return base_exe
 
 def _wait_and_respawn(proc):
