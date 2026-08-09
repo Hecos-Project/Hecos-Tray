@@ -56,29 +56,48 @@ def get_platform_python():
     return base_exe
 
 
+def _read_boot_trace_tail(n_lines=30) -> str:
+    """Reads the last N lines of hecos_boot_trace.log for crash diagnosis."""
+    boot_log_path = os.path.join(_ROOT, "hecos", "logs", "hecos_boot_trace.log")
+    try:
+        with open(boot_log_path, "r", encoding="utf-8", errors="replace") as f:
+            lines = f.readlines()
+        tail = lines[-n_lines:] if len(lines) > n_lines else lines
+        return "".join(tail).strip()
+    except Exception as e:
+        return f"(could not read boot trace: {e})"
+
+
 def _wait_and_respawn(proc):
     """Waits for the subprocess to finish. If exit code is 42, respawns it."""
     proc.wait()
-    # If returned 42, it means the Web UI requested a reboot
-    if getattr(proc, 'returncode', None) == 42:
+    code = getattr(proc, 'returncode', '?')
+
+    if code == 42:
         print("[ORCHESTRATOR] Hecos requested reboot (Exit 42). Respawning...")
-        
+
         # Wait up to 5 seconds for the port to release
         for _ in range(10):
             if not is_hecos_online():
                 break
             time.sleep(0.5)
-            
+
         # If it's still online (ghost process or TIME_WAIT), forcefully kill by port
         if is_hecos_online():
             print("[ORCHESTRATOR] Port still held after Exit 42, forcing kill...")
             _kill_by_port()
             time.sleep(1)
-            
+
         start_hecos()
+    elif code != 0:
+        # Non-zero, non-42 exit: log the crash trace to help diagnose
+        print(f"[ORCHESTRATOR] Hecos process ended with error (exit code {code}).")
+        trace = _read_boot_trace_tail()
+        if trace:
+            print(f"[ORCHESTRATOR] Last boot trace output:\n--- BOOT TRACE ---\n{trace}\n--- END TRACE ---")
     else:
-        code = getattr(proc, 'returncode', '?')
-        print(f"[ORCHESTRATOR] Hecos process ended (exit code {code}).")
+        print("[ORCHESTRATOR] Hecos process ended normally (exit code 0).")
+
 
 
 def start_hecos():
