@@ -592,10 +592,10 @@ del "%~f0"
     b2.grid(row=0, column=1, padx=6, sticky="ew")
 
     b3 = ctk.CTkButton(
-        uni_buttons, text="🔴  Full Nuke (Both)",
+        uni_buttons, text="🔴  Full Wipe (Both)",
         fg_color="transparent", border_width=1, border_color=RED,
         text_color=RED, hover_color="#3a1a1a",
-        command=lambda: _confirm_and_run("full", "Full Nuke"), **uni_cfg
+        command=lambda: _confirm_and_run("full", "Full Wipe"), **uni_cfg
     )
     b3.grid(row=0, column=2, padx=(6, 0), sticky="ew")
     _uninstall_buttons.extend([b1, b2, b3])
