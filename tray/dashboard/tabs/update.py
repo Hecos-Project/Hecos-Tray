@@ -338,12 +338,9 @@ def build_update(ctx):
             success = install_core_from_scratch(prog, stat)
             prog_bar.pack_forget()
             if success:
-                status_lbl.configure(text="\u2705 Core downloaded. Click 'Setup Wizard' to continue.", text_color="#4ade80")
-                dl_btn.configure(state="normal", text="\U0001f4e5 Re-Download", fg_color=BORDER, text_color=TEXT)
-                if setup_btn: setup_btn.configure(state="normal")
-                if upd_btn: upd_btn.configure(state="normal")
+                install_card.after(0, lambda: ctx.switch_tab_fn("update"))
             else:
-                dl_btn.configure(state="normal", text="\U0001f4e5 Download Core" if not core_ok else "\U0001f4e5 Re-Download")
+                dl_btn.configure(state="normal", text="\U0001f4e5 Download Core" if not core_ok else "Download")
                 if setup_btn: setup_btn.configure(state="disabled" if not core_ok else "normal")
                 if upd_btn: upd_btn.configure(state="normal")
         threading.Thread(target=_task, daemon=True).start()

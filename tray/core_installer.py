@@ -172,13 +172,13 @@ def run_setup_wizard(status_callback=None):
 
     try:
         if sys.platform == "win32":
-            wizard = os.path.join(_ROOT, "scripts", "windows", "setup", "HECOS_SETUP_CONSOLE_WIN.bat")
+            wizard = os.path.join(_ROOT, "scripts", "windows", "setup", "HECOS_SETUP_WIZARD.bat")
             if not os.path.exists(wizard):
                 _status(f"⚠ Setup script not found at:\n{wizard}")
                 return False
             subprocess.Popen(["cmd.exe", "/c", wizard], creationflags=0x00000010, cwd=_ROOT)
         else:
-            wizard = os.path.join(_ROOT, "scripts", "linux", "setup", "HECOS_SETUP_CONSOLE_LINUX.sh")
+            wizard = os.path.join(_ROOT, "scripts", "linux", "setup", "HECOS_SETUP_WIZARD.sh")
             if not os.path.exists(wizard):
                 _status(f"⚠ Setup script not found at:\n{wizard}")
                 return False
