@@ -565,6 +565,7 @@ del "%~f0"
         # Second click confirms
         for btn in _uninstall_buttons:
             btn.configure(state="disabled")
+        confirm_btn.pack(fill="x", padx=16, pady=(4, 14))
         confirm_btn.configure(
             state="normal", text=f"CONFIRM: {label}",
             command=lambda: _launch_live_terminator(mode)
@@ -604,4 +605,5 @@ del "%~f0"
         fg_color=RED, hover_color="#7f1d1d", text_color="white",
         height=32, corner_radius=8, font=ctk.CTkFont(size=11, weight="bold")
     )
-    confirm_btn.pack(fill="x", padx=16, pady=(4, 14))
+    # Packed dynamically inside _confirm_and_run
+

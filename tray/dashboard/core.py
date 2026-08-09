@@ -78,8 +78,8 @@ def run_dashboard():
     app.resizable(True, True)
     
     # ── Native Splash Screen (Toplevel, safe for Tkinter) ──────────
-    from tray.config import _ROOT
-    logo_path = os.path.join(_ROOT, "hecos", "assets", "Hecos_Logo_SQR_NBG_LogoOnly.png")
+    from tray.config import _TRAY_DIR
+    logo_path = os.path.abspath(os.path.join(_TRAY_DIR, "..", "assets", "Hecos_Logo_SQR_NBG_LogoOnly.png"))
 
     import tkinter as tk
     _splash_root = [None]
