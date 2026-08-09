@@ -8,11 +8,11 @@ color 0B
 :: All wizard output is mirrored to logs\wizard.log for debugging
 if not exist "logs" mkdir "logs"
 set "WIZARD_LOG=%~dp0logs\wizard.log"
-echo [%DATE% %TIME%] HECOS SETUP WIZARD STARTED >> "!WIZARD_LOG!"
+echo [%DATE% %TIME%] HECOS TRAY SETUP STARTED >> "!WIZARD_LOG!"
 echo [%DATE% %TIME%] Tray dir: %~dp0 >> "!WIZARD_LOG!"
 
 :: ─────────────────────────────────────────────────────────────────────────────
-::  HECOS SETUP WIZARD  (launched from C:\Hecos-Tray)
+::  HECOS TRAY SETUP  (launched from C:\Hecos-Tray)
 ::  This script handles:
 ::    1. Detecting the Hecos Core directory
 ::    2. Detecting ANY available Python (no re-download if already present)
@@ -79,7 +79,7 @@ if exist "%~dp0..\..\hecos\core\version" (
 )
 
 echo ==============================================================================
-echo                          HECOS SETUP WIZARD
+echo                          HECOS TRAY SETUP
 echo ==============================================================================
 echo.
 

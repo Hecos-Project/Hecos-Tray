@@ -1,6 +1,6 @@
 #!/bin/bash
 # ─────────────────────────────────────────────────────────────────────────────
-#  HECOS SETUP WIZARD (LINUX) — launched from C:/Hecos-Tray
+#  HECOS TRAY SETUP (LINUX) — launched from C:/Hecos-Tray
 #  Handles:
 #    1. Detecting Tray and Core directories (versioned folder support)
 #    2. Detecting ANY available Python (no re-install if already present)
@@ -33,7 +33,7 @@ CORE_FOUND=0
 [ -f "$ROOT_DIR/hecos/core/version" ] && CORE_FOUND=1
 
 echo "=============================================================================="
-echo "                     HECOS SETUP WIZARD (LINUX)"
+echo "                     HECOS TRAY SETUP (LINUX)"
 echo "=============================================================================="
 echo ""
 

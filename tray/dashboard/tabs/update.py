@@ -304,20 +304,23 @@ def build_update(ctx):
     
     btn_cfg = dict(height=28, width=70, corner_radius=8, font=ctk.CTkFont(size=12))
     
-    if core_ok:
-        setup_btn = ctk.CTkButton(btn_row, text="Setup", fg_color=BORDER, text_color=TEXT, hover_color=ACCENT, **btn_cfg)
-        setup_btn.pack(side="left", padx=(0, 6))
-        
-        dl_btn = ctk.CTkButton(btn_row, text="Download", fg_color=BORDER, text_color=TEXT, hover_color=ACCENT, **btn_cfg)
-        dl_btn.pack(side="left", padx=(0, 6))
-        
-        upd_btn = ctk.CTkButton(btn_row, text="Update", fg_color=ACCENT, text_color="#000", hover_color=ACCENT, **btn_cfg)
-        upd_btn.pack(side="left")
-    else:
-        dl_btn = ctk.CTkButton(btn_row, text="Download Core", fg_color=ACCENT, text_color="#000", hover_color=ACCENT, **btn_cfg)
-        dl_btn.pack(side="right")
-        setup_btn = None
-        upd_btn = None
+    setup_btn = ctk.CTkButton(
+        btn_row, text="Setup", fg_color=BORDER, text_color=TEXT if core_ok else MUTED,
+        hover_color=ACCENT, state="normal" if core_ok else "disabled", **btn_cfg
+    )
+    setup_btn.pack(side="left", padx=(0, 6))
+    
+    dl_btn = ctk.CTkButton(
+        btn_row, text="Download", fg_color=BORDER, text_color=TEXT, hover_color=ACCENT, **btn_cfg
+    )
+    dl_btn.pack(side="left", padx=(0, 6))
+    
+    upd_btn = ctk.CTkButton(
+        btn_row, text="Update", fg_color=ACCENT if core_ok else BORDER,
+        text_color="#000" if core_ok else MUTED, hover_color=ACCENT,
+        state="normal" if core_ok else "disabled", **btn_cfg
+    )
+    upd_btn.pack(side="left")
 
     status_lbl = ctk.CTkLabel(install_card, text="", text_color=MUTED, font=ctk.CTkFont(size=11))
     status_lbl.pack(anchor="w", padx=16)

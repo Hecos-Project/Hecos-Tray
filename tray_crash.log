@@ -7,3 +7,5 @@
 [2026-08-09 06:49:24] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
 [2026-08-09 07:10:49] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
 [2026-08-09 07:11:33] [STDOUT] [ORCHESTRATOR] Killed process 11124 on port 7070.
+[2026-08-09 08:12:25] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-09 08:12:25] [STDOUT] [ORCHESTRATOR] No process found on port 7070.

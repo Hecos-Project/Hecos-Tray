@@ -44,7 +44,7 @@ if [ -z "$PY_CMD" ]; then
     echo "   Fedora:         sudo dnf install python3"
     echo "   Arch:           sudo pacman -S python"
     echo ""
-    echo " Or run HECOS_SETUP_WIZARD.sh to configure the environment."
+    echo " Or run HECOS_TRAY_SETUP.sh to configure the environment."
     echo ""
     read -p "Press Enter to exit..."
     exit 1

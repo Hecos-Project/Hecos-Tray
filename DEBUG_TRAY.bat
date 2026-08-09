@@ -6,7 +6,7 @@ cd /d "%~dp0"
 echo [*] Working directory: %CD%
 echo.
 
-:: Detect Python using the exact same logic as HECOS_SETUP_WIZARD.bat
+:: Detect Python using the exact same logic as HECOS_TRAY_SETUP.bat
 set "ROOT_DIR=C:\Hecos"
 
 :: Priority 1: Core portable python_env

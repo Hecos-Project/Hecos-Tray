@@ -115,7 +115,7 @@ color 0C
 echo [ERROR] Python is not installed or not found.
 echo.
 echo Hecos Tray requires Python to run.
-echo Please run HECOS_SETUP_WIZARD.bat to install Python.
+echo Please run HECOS_TRAY_SETUP.bat to install Python.
 echo.
 pause
 exit
