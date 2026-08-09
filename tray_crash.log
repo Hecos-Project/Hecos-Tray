@@ -6,3 +6,7 @@
 [2026-08-09 08:56:30] [STDOUT] [ORCHESTRATOR] Hecos Supervisor (Daemon) spawned successfully.
 [2026-08-09 08:56:32] [STDOUT] [ORCHESTRATOR] Spawning under new Watchdog Daemon...
 [2026-08-09 08:56:32] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-09 09:08:56] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-09 09:09:15] [STDOUT] [ORCHESTRATOR] Killed process 8312 on port 7070.
+[2026-08-09 09:09:23] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-09 09:09:23] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
