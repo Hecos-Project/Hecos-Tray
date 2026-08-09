@@ -517,7 +517,7 @@ def build_update(ctx):
     ctk.CTkLabel(
         uni_info_frame,
         text="Permanently remove Hecos from your system.\nThe selected components will be uninstalled while you watch.",
-        font=ctk.CTkFont(size=11), text_color=MUTED, justify="left", wraplength=460
+        font=ctk.CTkFont(size=11), text_color=MUTED, justify="left"
     ).grid(row=0, column=0, sticky="w")
 
     uni_buttons = ctk.CTkFrame(uni_info_frame, fg_color="transparent")
@@ -539,14 +539,30 @@ def build_update(ctx):
         _append_log("\n[!] Tray self-destruct initiated. Closing in 3 seconds...\n")
         log_box.update()
 
-        tray_root = os.path.abspath(os.path.join(_TRAY_PKG_DIR, "..", ".."))
+        # __file__ is: C:\Hecos-Tray\tray\dashboard\tabs\update.py
+        # So 3 levels up -> C:\Hecos-Tray
+        tray_root = os.path.abspath(os.path.join(_TRAY_PKG_DIR, "..", "..", ".."))
+        _append_log(f"[i] Will delete: {tray_root}\n")
+        log_box.update()
+
         tmp_dir = tempfile.gettempdir()
         bat_path = os.path.join(tmp_dir, "hecos_suicide.bat")
         with open(bat_path, "w") as f:
             f.write(
                 f"@echo off\n"
-                f"timeout /t 5 /nobreak >nul\n"
+                f":: Wait for the Python process to fully exit\n"
+                f"timeout /t 6 /nobreak >nul\n"
+                f":: Retry loop: try up to 5 times with 2s gaps\n"
+                f"set RETRIES=5\n"
+                f":RETRY\n"
                 f"rmdir /s /q \"{tray_root}\" >nul 2>&1\n"
+                f"if exist \"{tray_root}\" (\n"
+                f"    if !RETRIES! GTR 0 (\n"
+                f"        set /a RETRIES-=1\n"
+                f"        timeout /t 2 /nobreak >nul\n"
+                f"        goto RETRY\n"
+                f"    )\n"
+                f")\n"
                 f"del \"%~f0\" >nul 2>&1\n"
             )
 
