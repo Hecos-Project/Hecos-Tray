@@ -102,11 +102,19 @@ def _delete_folder(path):
         print(f"  ~ Folder not found, skipping: {path}")
         return
     print(f"  [*] Deleting: {path}")
-    try:
-        shutil.rmtree(path, ignore_errors=False)
-        print(f"    OK: Deleted {path}")
-    except Exception as e:
-        print(f"    [!] Error deleting {path}: {e}")
+    for attempt in range(5):
+        try:
+            shutil.rmtree(path, ignore_errors=False)
+            print(f"    OK: Deleted {path}")
+            return
+        except Exception as e:
+            if attempt < 4:
+                print(f"    [!] Error (locked?), retrying in 1s: {e}")
+                time.sleep(1)
+            else:
+                print(f"    [!] Error deleting {path}: {e}")
+                # Fallback: force delete ignoring errors
+                shutil.rmtree(path, ignore_errors=True)
 
 
 def main():

@@ -599,7 +599,7 @@ def build_update(ctx):
                 exe_cmd = exe_cmd[:-len("pythonw.exe")] + "python.exe"
 
             proc = subprocess.Popen(
-                [exe_cmd, dest, "--mode", mode, "--wait", "1", "--skip-tray-delete"],
+                [exe_cmd, dest, "--mode", mode, "--wait", "4", "--skip-tray-delete"],
                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1,
                 creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
             )
@@ -625,6 +625,15 @@ def build_update(ctx):
             confirm_btn.pack_forget()
             log_box.pack(fill="x", padx=16, pady=(10, 14))
             _append_log(f"Initializing {mode.upper()} wipe...\n")
+            
+            # CRITICAL: Stop Hecos Core backend BEFORE wipe to release file locks!
+            try:
+                from tray.orchestrator import stop_hecos
+                _append_log("Stopping background processes...\n")
+                stop_hecos()
+            except Exception as e:
+                _append_log(f"⚠ Could not stop Hecos processes: {e}\n")
+
             dest = os.path.join(tempfile.gettempdir(), "hecos_uninstall_terminator.py")
             shutil.copy2(_TERMINATOR_SRC, dest)
             threading.Thread(target=_run_terminator_thread, args=(mode, dest), daemon=True).start()
