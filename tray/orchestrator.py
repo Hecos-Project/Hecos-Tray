@@ -165,9 +165,8 @@ def _kill_by_port():
 def is_hecos_running() -> bool:
     """
     Returns True if we see the process handle is alive, OR if the port is responding.
-    (If the Tray app crashed and was restarted, _hecos_process might be None but is_hecos_online() will be True).
     """
-    global _hecos_process
+    global _hecos_process, _daemon_process
     
     # Fast reliable check if we started it
     if _hecos_process is not None:
@@ -176,6 +175,12 @@ def is_hecos_running() -> bool:
         else:
             # Process died
             _hecos_process = None
+
+    if _daemon_process is not None:
+        if _daemon_process.poll() is None:
+            return True
+        else:
+            _daemon_process = None
             
     # Fallback: check if the port is bound
     return is_hecos_online()
