@@ -33,3 +33,1211 @@
 [2026-08-09 15:04:44] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
 [2026-08-09 15:04:44] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
 [2026-08-09 15:04:44] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-10 10:08:05] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-10 10:08:05] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 68600.1s.
+[2026-08-10 10:08:05] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+==================================================
+
+==================================================
+[2026-08-09 06:36:49] ORCHESTRATOR: Spawning Hecos backend...
+==================================================
+
+==================================================
+[2026-08-09 06:49:24] ORCHESTRATOR: Spawning Hecos backend...
+==================================================
+
+==================================================
+[2026-08-09 08:56:30] ORCHESTRATOR: Spawning Hecos via Daemon Supervisor...
+==================================================
+C:\Users\Tony\AppData\Local\Programs\Python\Python311\hecos_main.exe: No module named hecos.core.daemon.__main__; 'hecos.core.daemon' is a package and cannot be directly executed
+
+==================================================
+[2026-08-09 08:56:32] ORCHESTRATOR: Spawning Hecos backend...
+==================================================
+
+==================================================
+[2026-08-09 10:53:54] ORCHESTRATOR: Spawning Hecos backend...
+  Python: C:\Windows\py.EXE
+  Mode  : watchdog (hecos.monitor)
+==================================================
+
+==================================================
+[2026-08-09 15:04:44] ORCHESTRATOR: Spawning Hecos backend...
+  Python: py -3
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+--- END TRACE ---
+[2026-08-10 10:08:05] [STDOUT] [ORCHESTRATOR] Killed process 12052 on port 7070.
+[2026-08-10 10:08:17] [INFO] ============================================================
+[2026-08-10 10:08:17] [INFO] === TRAY SESSION STARTED ===
+[2026-08-10 10:08:17] [INFO] ============================================================
+[2026-08-10 10:08:17] [INFO]   Timestamp : 2026-08-10 10:08:17
+[2026-08-10 10:08:17] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-10 10:08:17] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-10 10:08:17] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-10 10:08:17] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-10 10:08:17] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-10 10:08:17] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-10 10:08:17] [INFO] ============================================================
+[2026-08-10 10:08:20] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-10 10:08:28] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-10 10:08:28] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-10 10:08:38] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-10 10:08:42] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-10 10:08:42] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-10 10:08:42] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-10 10:38:00] [INFO] ============================================================
+[2026-08-10 10:38:00] [INFO] === TRAY SESSION STARTED ===
+[2026-08-10 10:38:00] [INFO] ============================================================
+[2026-08-10 10:38:00] [INFO]   Timestamp : 2026-08-10 10:38:00
+[2026-08-10 10:38:01] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-10 10:38:01] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-10 10:38:01] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-10 10:38:01] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-10 10:38:01] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-10 10:38:01] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-10 10:38:01] [INFO] ============================================================
+[2026-08-10 10:38:02] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-10 10:38:11] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-10 10:38:11] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-10 10:38:21] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-10 10:38:25] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-10 10:38:25] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-10 10:38:25] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-10 11:07:46] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-10 11:07:46] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 1760.9s.
+[2026-08-10 11:07:46] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+[GENERATOR] [GENERATOR] Read key from .env file directly for horde
+[GENERATOR] [GENERATOR] Attempt 2/5 — horde/DreamShaper XL (hf_server=hf-inference)
+[GENERATOR WARN] [GENERATOR] Retriable error on attempt 2: Artist [Horde] rejected: Horde submit HTTP 403: {"message": "Due to heavy demand, for requests over 1024x1024 or over 50 steps (10 steps for LCM work, 30 steps for Stable Cascade, and half those steps for k_heun, dpmpp_sde, and dpm_2*) the client n
+[GENERATOR] [GENERATOR] Read key from .env file directly for horde
+[GENERATOR] [GENERATOR] Attempt 3/5 — horde/DreamShaper XL (hf_server=hf-inference)
+[GENERATOR WARN] [GENERATOR] Retriable error on attempt 3: Artist [Horde] rejected: Horde submit HTTP 403: {"message": "Due to heavy demand, for requests over 1024x1024 or over 50 steps (10 steps for LCM work, 30 steps for Stable Cascade, and half those steps for k_heun, dpmpp_sde, and dpm_2*) the client n
+[GENERATOR] [GENERATOR] Read key from .env file directly for horde
+[GENERATOR] [GENERATOR] Attempt 4/5 — horde/DreamShaper XL (hf_server=hf-inference)
+[GENERATOR WARN] [GENERATOR] Retriable error on attempt 4: Artist [Horde] rejected: Horde submit HTTP 403: {"message": "Due to heavy demand, for requests over 1024x1024 or over 50 steps (10 steps for LCM work, 30 steps for Stable Cascade, and half those steps for k_heun, dpmpp_sde, and dpm_2*) the client n
+[GENERATOR] [GENERATOR] Read key from .env file directly for horde
+[GENERATOR] [GENERATOR] Attempt 5/5 — horde/DreamShaper XL (hf_server=hf-inference)
+[GENERATOR WARN] [GENERATOR] Retriable error on attempt 5: Artist [Horde] rejected: Horde submit HTTP 403: {"message": "Due to heavy demand, for requests over 1024x1024 or over 50 steps (10 steps for LCM work, 30 steps for Stable Cascade, and half those steps for k_heun, dpmpp_sde, and dpm_2*) the client n
+[GENERATOR ERR] [GENERATOR] Generation failed: Artist [Horde] rejected: Horde submit HTTP 403: {"message": "Due to heavy demand, for requests over 1024x1024 or over 50 steps (10 steps for LCM work, 30 steps for Stable Cascade, and half those steps for k_heun, dpmpp_sde, and dpm_2*) the client n
+⚙️ [Tool] Tool execution result: IMAGE_GEN
+🧠 [Agent] Analyzing tool results...
+🧠 [Agent] Thinking (Loop 2)...
+✅ [Success] Response formulated.
+🧠 [Agent] Analyzing incoming user request...
+🧠 [Agent] Thinking (Loop 1)...
+✅ [Success] Response formulated.
+
+==================================================
+[2026-08-10 10:38:25] ORCHESTRATOR: Spawning Hecos backend...
+  Python: py -3
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+
+==================================================
+[2026-08-10 11:07:46] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-08-10 11:08:13] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-08-10 11:08:13] [STDOUT] [ORCHESTRATOR] Killed process 8908 on port 7070.
+[2026-08-10 11:08:18] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-10 11:08:18] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-10 11:08:18] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-10 11:23:36] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-10 11:23:36] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 917.7s.
+[2026-08-10 11:23:36] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+[2026-08-10 10:38:25] ORCHESTRATOR: Spawning Hecos backend...
+  Python: py -3
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+
+==================================================
+[2026-08-10 11:07:46] RESTART TRIGGERED FROM TRAY
+==================================================
+
+==================================================
+[2026-08-10 11:08:18] ORCHESTRATOR: Spawning Hecos backend...
+  Python: py -3
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+
+[WEB_UI] Riavvio del sistema in corso...
+🧠 [Agent] Analyzing incoming user request...
+🧠 [Agent] Thinking (Loop 1)...
+
+Give Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new
+LiteLLM.Info: If you need to debug this error, use `litellm._turn_on_debug()'.
+
+✅ [Success] Response formulated.
+🧠 [Agent] Analyzing incoming user request...
+🧠 [Agent] Thinking (Loop 1)...
+
+Give Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new
+LiteLLM.Info: If you need to debug this error, use `litellm._turn_on_debug()'.
+
+✅ [Success] Response formulated.
+--- END TRACE ---
+[2026-08-11 07:36:05] [STDOUT] [ORCHESTRATOR] Killed process 9796 on port 7070.
+[2026-08-12 05:44:38] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-12 05:44:38] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-12 05:44:38] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-12 10:23:17] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-12 10:23:17] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 16718.6s.
+[2026-08-12 10:23:17] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+[2026-08-10 11:07:46] RESTART TRIGGERED FROM TRAY
+==================================================
+
+==================================================
+[2026-08-10 11:08:18] ORCHESTRATOR: Spawning Hecos backend...
+  Python: py -3
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+
+[WEB_UI] Riavvio del sistema in corso...
+🧠 [Agent] Analyzing incoming user request...
+🧠 [Agent] Thinking (Loop 1)...
+
+Give Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new
+LiteLLM.Info: If you need to debug this error, use `litellm._turn_on_debug()'.
+
+✅ [Success] Response formulated.
+🧠 [Agent] Analyzing incoming user request...
+🧠 [Agent] Thinking (Loop 1)...
+
+Give Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new
+LiteLLM.Info: If you need to debug this error, use `litellm._turn_on_debug()'.
+
+✅ [Success] Response formulated.
+
+==================================================
+[2026-08-12 05:44:38] ORCHESTRATOR: Spawning Hecos backend...
+  Python: py -3
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+--- END TRACE ---
+[2026-08-12 10:27:32] [INFO] ============================================================
+[2026-08-12 10:27:32] [INFO] === TRAY SESSION STARTED ===
+[2026-08-12 10:27:32] [INFO] ============================================================
+[2026-08-12 10:27:32] [INFO]   Timestamp : 2026-08-12 10:27:32
+[2026-08-12 10:27:32] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-12 10:27:32] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-12 10:27:32] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-12 10:27:32] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-12 10:27:32] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-12 10:27:32] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-12 10:27:32] [INFO] ============================================================
+[2026-08-12 10:27:43] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-12 10:27:52] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-12 10:27:52] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-12 10:28:02] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-12 10:28:06] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-12 10:28:06] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-12 10:28:06] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-12 13:21:45] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 10419.1s.
+[2026-08-12 13:21:45] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 150, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+
+==================================================
+[2026-08-12 13:21:45] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-08-12 13:22:12] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-08-12 13:22:12] [STDOUT] [ORCHESTRATOR] Killed process 8696 on port 7070.
+[2026-08-12 13:22:17] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-12 13:22:17] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-12 13:22:17] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-13 01:14:00] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 42702.4s).
+[2026-08-13 11:28:16] [STDOUT] [ORCHESTRATOR] Killed process 7360 on port 7070.
+[2026-08-13 11:28:27] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-13 11:28:27] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-13 11:28:37] [INFO] ============================================================
+[2026-08-13 11:28:37] [INFO] === TRAY SESSION STARTED ===
+[2026-08-13 11:28:37] [INFO] ============================================================
+[2026-08-13 11:28:37] [INFO]   Timestamp : 2026-08-13 11:28:37
+[2026-08-13 11:28:37] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-13 11:28:37] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-13 11:28:37] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-13 11:28:37] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-13 11:28:37] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-13 11:28:37] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-13 11:28:37] [INFO] ============================================================
+[2026-08-13 11:28:40] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-13 11:28:48] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-13 11:28:48] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-13 11:28:58] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-13 11:29:02] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-13 11:29:02] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-13 11:29:02] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-13 13:31:14] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 7331.7s).
+[2026-08-13 13:36:01] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-13 13:36:01] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-13 13:36:09] [INFO] ============================================================
+[2026-08-13 13:36:09] [INFO] === TRAY SESSION STARTED ===
+[2026-08-13 13:36:09] [INFO] ============================================================
+[2026-08-13 13:36:09] [INFO]   Timestamp : 2026-08-13 13:36:09
+[2026-08-13 13:36:09] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-13 13:36:09] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-13 13:36:09] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-13 13:36:09] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-13 13:36:09] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-13 13:36:09] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-13 13:36:09] [INFO] ============================================================
+[2026-08-13 13:36:09] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-13 13:36:17] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-13 13:36:17] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-13 13:36:27] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-13 13:36:31] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-13 13:36:31] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-13 13:36:31] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-13 14:02:09] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+ error (exit code 1) after 1537.6s.
+[2026-08-13 14:02:09] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 150, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+--- END TRACE ---
+[2026-08-13 14:11:36] [STDOUT] [ORCHESTRATOR] Killed process 1784 on port 7070.
+[2026-08-13 15:26:25] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-13 15:26:37] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-13 15:26:37] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-13 15:26:37] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-14 02:00:11] [INFO] ============================================================
+[2026-08-14 02:00:11] [INFO] === TRAY SESSION STARTED ===
+[2026-08-14 02:00:11] [INFO] ============================================================
+[2026-08-14 02:00:11] [INFO]   Timestamp : 2026-08-14 02:00:11
+[2026-08-14 02:00:11] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-14 02:00:11] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-14 02:00:11] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-14 02:00:11] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-14 02:00:11] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-14 02:00:11] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-14 02:00:11] [INFO] ============================================================
+[2026-08-14 02:00:12] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-14 02:00:21] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-14 02:00:21] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-14 02:00:30] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-14 02:00:34] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-14 02:00:34] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-14 02:00:34] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-14 05:13:57] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 11602.9s).
+[2026-08-14 07:17:16] [STDOUT] [ORCHESTRATOR] Killed process 14292 on port 7070.
+[2026-08-14 07:21:29] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-14 07:21:41] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-14 07:21:41] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-14 07:21:41] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-14 07:25:02] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-14 07:25:02] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 201.3s.
+[2026-08-14 07:25:02] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 150, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+--- END TRACE ---
+[2026-08-14 07:35:44] [STDOUT] [ORCHESTRATOR] Killed process 5312 on port 7070.
+[2026-08-14 07:42:19] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-14 07:42:31] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-14 07:42:31] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-14 07:42:31] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-14 08:06:37] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 1445.8s.
+[2026-08-14 08:06:37] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 150, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+
+==================================================
+[2026-08-14 08:06:37] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-08-14 08:07:04] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-08-14 08:07:04] [STDOUT] [ORCHESTRATOR] Killed process 7016 on port 7070.
+[2026-08-14 08:07:04] [STDOUT] [ORCHESTRATOR] Killed process 2236 on port 7070.
+[2026-08-14 08:07:09] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-14 08:07:09] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-14 08:07:09] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-14 08:29:34] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 1345.0s.
+[2026-08-14 08:29:34] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-14 08:29:34] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 150, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+
+==================================================
+[2026-08-14 08:29:34] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-08-14 08:58:13] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-14 08:58:25] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-14 08:58:25] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-14 08:58:25] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-14 08:58:25] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 0.4s.
+[2026-08-14 08:58:26] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+[WEB_UI] Riavvio del sistema in corso...
+
+==================================================
+[2026-08-14 08:58:08] RESTART TRIGGERED FROM TRAY
+==================================================
+
+==================================================
+[2026-08-14 08:58:13] RESTART TRIGGERED FROM TRAY
+==================================================
+
+==================================================
+[2026-08-14 08:58:20] ORCHESTRATOR: Spawning Hecos backend...
+  Python: py -3
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+
+==================================================
+[2026-08-14 08:58:25] ORCHESTRATOR: Spawning Hecos backend...
+  Python: py -3
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+
+-------------------------------------------------------
+ [MONITOR] Hecos Watchdog Active
+-------------------------------------------------------
+
+
+[MONITOR] ERROR: Another instance of Hecos (hecos_web) is already running.
+[MONITOR] Please close the existing instance before starting a new one.
+--- END TRACE ---
+[2026-08-14 14:59:16] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-14 14:59:28] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-14 14:59:28] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-14 14:59:28] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-14 14:59:28] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 0.4s.
+[2026-08-14 14:59:28] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+[WEB_UI] Riavvio del sistema in corso...
+
+==================================================
+[2026-08-14 14:59:09] RESTART TRIGGERED FROM TRAY
+==================================================
+
+==================================================
+[2026-08-14 14:59:16] RESTART TRIGGERED FROM TRAY
+==================================================
+
+==================================================
+[2026-08-14 14:59:21] ORCHESTRATOR: Spawning Hecos backend...
+  Python: py -3
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+
+==================================================
+[2026-08-14 14:59:28] ORCHESTRATOR: Spawning Hecos backend...
+  Python: py -3
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+
+-------------------------------------------------------
+ [MONITOR] Hecos Watchdog Active
+-------------------------------------------------------
+
+
+[MONITOR] ERROR: Another instance of Hecos (hecos_web) is already running.
+[MONITOR] Please close the existing instance before starting a new one.
+--- END TRACE ---
+[2026-08-15 10:12:11] [INFO] ============================================================
+[2026-08-15 10:12:11] [INFO] === TRAY SESSION STARTED ===
+[2026-08-15 10:12:11] [INFO] ============================================================
+[2026-08-15 10:12:11] [INFO]   Timestamp : 2026-08-15 10:12:11
+[2026-08-15 10:12:11] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-15 10:12:11] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-15 10:12:11] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-15 10:12:11] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-15 10:12:11] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-15 10:12:11] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-15 10:12:11] [INFO] ============================================================
+[2026-08-15 10:12:17] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-15 10:12:25] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-15 10:12:25] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-15 10:12:35] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-15 10:12:39] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-15 10:12:39] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-15 10:12:39] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-15 11:14:10] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 3690.4s).
+[2026-08-16 17:36:57] [STDOUT] [ORCHESTRATOR] Killed process 10628 on port 7070.
+[2026-08-16 17:45:44] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-16 17:45:44] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-16 17:45:44] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-16 18:36:44] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+ error (exit code 1) after 3059.7s.
+[2026-08-16 18:36:44] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+--- END TRACE ---
+[2026-08-16 18:38:16] [STDOUT] [ORCHESTRATOR] Could not terminate PID 5840: timeout after 3 seconds (pid=5840)
+[2026-08-16 18:38:16] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-16 18:48:34] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-16 18:48:46] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-16 18:48:46] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-16 18:48:46] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-16 20:50:51] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 4294967295) after 7325.5s.
+[2026-08-16 20:50:51] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8
+--- END TRACE ---
+[2026-08-16 21:04:24] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-16 21:04:25] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-16 21:04:25] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-16 21:17:56] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 4294967295) after 811.2s.
+[2026-08-16 21:17:56] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8
+--- END TRACE ---
+[2026-08-16 21:18:46] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-16 21:18:58] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-16 21:18:58] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-16 21:18:58] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-16 21:27:57] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 4294967295) after 539.1s.
+[2026-08-16 21:27:58] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+--- END TRACE ---
+[2026-08-17 05:26:44] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-17 05:26:56] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-17 05:26:56] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-17 05:26:56] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-17 05:37:27] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 4294967295) after 631.1s.
+[2026-08-17 05:37:28] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+--- END TRACE ---
+[2026-08-17 05:38:50] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-17 05:39:02] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-17 05:39:02] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-17 05:39:02] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-17 05:45:25] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 4294967295) after 382.9s.
+[2026-08-17 05:45:25] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+--- END TRACE ---
+[2026-08-17 09:09:48] [STDOUT] [ORCHESTRATOR] Killed process 10876 on port 7070.
+[2026-08-17 09:10:00] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-17 09:10:00] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-17 09:10:00] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-19 06:48:14] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-19 06:48:14] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 164293.9s.
+[2026-08-19 06:48:14] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+
+==================================================
+[2026-08-19 06:48:14] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-08-19 06:48:41] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-08-19 06:48:41] [STDOUT] [ORCHESTRATOR] Killed process 12060 on port 7070.
+[2026-08-19 06:48:46] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-19 06:48:46] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-19 06:48:46] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-19 09:48:13] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 10766.5s.
+[2026-08-19 09:48:13] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-19 09:48:13] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+
+==================================================
+[2026-08-19 09:48:13] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-08-19 09:48:40] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-08-19 09:48:40] [STDOUT] [ORCHESTRATOR] Killed process 3712 on port 7070.
+[2026-08-19 09:48:45] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-19 09:48:45] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-19 09:48:45] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-19 20:41:10] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+ error (exit code 1) after 39144.9s.
+[2026-08-19 20:41:10] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+--- END TRACE ---
+[2026-08-19 20:44:47] [STDOUT] [ORCHESTRATOR] Killed process 8892 on port 7070.
+[2026-08-20 06:00:41] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-20 06:00:53] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-20 06:00:53] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-20 06:00:53] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-20 06:49:11] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1073807364) after 2897.5s.
+[2026-08-20 06:50:52] [INFO] ============================================================
+[2026-08-20 06:50:52] [INFO] === TRAY SESSION STARTED ===
+[2026-08-20 06:50:52] [INFO] ============================================================
+[2026-08-20 06:50:52] [INFO]   Timestamp : 2026-08-20 06:50:52
+[2026-08-20 06:50:52] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-20 06:50:52] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-20 06:50:52] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-20 06:50:52] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-20 06:50:52] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-20 06:50:52] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-20 06:50:52] [INFO] ============================================================
+[2026-08-20 06:50:53] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-20 06:51:02] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-20 06:51:02] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-20 06:51:12] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-20 06:51:16] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-20 06:51:16] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-20 06:51:16] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-20 08:13:50] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 4954.0s).
+[2026-08-20 12:30:32] [STDOUT] [ORCHESTRATOR] Killed process 3484 on port 7070.
+[2026-08-20 12:30:44] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-20 12:30:44] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-20 12:30:44] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-20 14:02:45] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-20 14:02:45] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 5521.2s.
+[2026-08-20 14:02:45] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+
+==================================================
+[2026-08-20 14:02:45] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-08-20 14:03:12] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-08-20 14:03:12] [STDOUT] [ORCHESTRATOR] Killed process 8600 on port 7070.
+[2026-08-20 14:03:17] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-20 14:03:17] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-20 14:03:17] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-20 14:25:53] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 1355.9s.
+[2026-08-20 14:25:53] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+
+==================================================
+[2026-08-20 14:25:53] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-08-20 14:26:20] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-08-20 14:26:20] [STDOUT] [ORCHESTRATOR] Killed process 928 on port 7070.
+[2026-08-20 14:26:25] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-20 14:26:25] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-20 14:26:25] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-20 15:49:06] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-20 15:49:06] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 4960.9s.
+[2026-08-20 15:49:06] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+--- END TRACE ---
+[2026-08-20 16:03:00] [INFO] ============================================================
+[2026-08-20 16:03:00] [INFO] === TRAY SESSION STARTED ===
+[2026-08-20 16:03:00] [INFO] ============================================================
+[2026-08-20 16:03:00] [INFO]   Timestamp : 2026-08-20 16:03:00
+[2026-08-20 16:03:00] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-20 16:03:00] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-20 16:03:00] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-20 16:03:00] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-20 16:03:00] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-20 16:03:00] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-20 16:03:00] [INFO] ============================================================
+[2026-08-20 16:03:09] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-20 16:03:18] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-20 16:03:18] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-20 16:03:28] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-20 16:03:32] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-20 16:03:32] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-20 16:03:32] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-21 03:30:27] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 41215.1s.
+[2026-08-21 03:30:27] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+--- END TRACE ---
+[2026-08-21 03:30:30] [STDOUT] [ORCHESTRATOR] Killed process 2728 on port 7070.
+[2026-08-21 03:30:30] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-21 03:31:10] [INFO] ============================================================
+[2026-08-21 03:31:10] [INFO] === TRAY SESSION STARTED ===
+[2026-08-21 03:31:10] [INFO] ============================================================
+[2026-08-21 03:31:10] [INFO]   Timestamp : 2026-08-21 03:31:10
+[2026-08-21 03:31:11] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-21 03:31:11] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-21 03:31:11] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-21 03:31:11] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-21 03:31:11] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-21 03:31:11] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-21 03:31:11] [INFO] ============================================================
+[2026-08-21 03:31:14] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-21 03:31:22] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-21 03:31:22] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-21 03:31:32] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-21 03:31:36] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-21 03:31:36] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-21 03:31:36] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-21 04:45:58] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-08-21 04:45:58] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 4462.0s.
+[2026-08-21 04:45:58] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tony\AppData\Local\Programs\Python\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 266, in <module>
+    start_if_needed(cfg, root, port=7070)
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 137, in start_if_needed
+    srv.start()
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 49, in start
+    app, debug_on = create_flask_app(
+  File "C:\Hecos\hecos\modules\web_ui\server_flask.py", line 156, in create_flask_app
+    init_routes(app, config_manager, root_dir, logger, get_state_manager)
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 37, in init_routes
+    init_package_routes(app, root_dir, cfg_mgr, logger)
+  File "C:\Hecos\hecos\modules\web_ui\routes_packages.py", line 112, in init_package_routes
+    mod.init_plugin_routes(app, cfg_mgr, hecos_root, log)
+  File "C:\Hecos\hecos\hpm\lists\api.py", line 15, in init_plugin_routes
+    logger.debug("LISTS", "API blueprint registered at /api/lists")
+Message: 'LISTS'
+Arguments: ('API blueprint registered at /api/lists',)
+
+==================================================
+[2026-08-21 04:45:58] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-08-21 04:46:25] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-08-21 04:46:25] [STDOUT] [ORCHESTRATOR] Killed process 8780 on port 7070.
+[2026-08-21 04:46:30] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-21 04:46:30] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-21 04:46:30] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-21 06:20:33] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 5642.6s).
+[2026-08-21 09:50:54] [STDOUT] [ORCHESTRATOR] Killed process 13772 on port 7070.
+[2026-08-21 09:51:06] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-21 09:51:06] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-21 09:51:06] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-21 10:11:49] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 1243.0s).
+[2026-08-22 07:36:00] [STDOUT] [ORCHESTRATOR] Killed process 3344 on port 7070.
+[2026-08-22 07:45:02] [STDOUT] [ORCHESTRATOR] Killed process 14456 on port 7070.
+[2026-08-22 12:04:03] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-08-22 12:15:24] [INFO] ============================================================
+[2026-08-22 12:15:24] [INFO] === TRAY SESSION STARTED ===
+[2026-08-22 12:15:24] [INFO] ============================================================
+[2026-08-22 12:15:24] [INFO]   Timestamp : 2026-08-22 12:15:24
+[2026-08-22 12:15:25] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-22 12:15:25] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-22 12:15:25] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-22 12:15:25] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-22 12:15:25] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-22 12:15:25] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-22 12:15:25] [INFO] ============================================================
+[2026-08-22 12:15:26] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-22 12:15:35] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-22 12:15:35] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-22 12:15:44] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-22 12:15:49] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-22 12:15:49] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-22 12:15:49] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-22 14:43:12] [INFO] ============================================================
+[2026-08-22 14:43:12] [INFO] === TRAY SESSION STARTED ===
+[2026-08-22 14:43:12] [INFO] ============================================================
+[2026-08-22 14:43:12] [INFO]   Timestamp : 2026-08-22 14:43:12
+[2026-08-22 14:43:13] [INFO]   OS        : Windows 10 (10.0.18363)
+[2026-08-22 14:43:13] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+[2026-08-22 14:43:13] [INFO]   Python    : 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+[2026-08-22 14:43:13] [INFO]   Executable: C:\Users\Tony\AppData\Local\Programs\Python\Python311\pythonw.exe
+[2026-08-22 14:43:13] [INFO]   Tray root : C:\Hecos-Tray
+[2026-08-22 14:43:13] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-08-22 14:43:13] [INFO] ============================================================
+[2026-08-22 14:43:15] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': False, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-08-22 14:43:25] [STDOUT] [TRAY-PTT] Global Hotkey (Ctrl+Shift) Listener started in User Session.
+[2026-08-22 14:43:25] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-08-22 14:43:34] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-08-22 14:43:38] [STDOUT] [ORCHESTRATOR] Using system Python: py -3
+[2026-08-22 14:43:38] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (py -3)
+[2026-08-22 14:43:38] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-08-22 15:08:15] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 1476.9s).
