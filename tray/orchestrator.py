@@ -261,6 +261,8 @@ def is_hecos_running() -> bool:
 def restart_hecos():
     """Stops the existing process and spawns a new one."""
     try:
+
+
         boot_log_path = os.path.join(_ROOT, "hecos", "logs", "hecos_boot_trace.log")
         os.makedirs(os.path.dirname(boot_log_path), exist_ok=True)
         with open(boot_log_path, "a", encoding="utf-8") as f:
@@ -272,7 +274,26 @@ def restart_hecos():
     except Exception:
         pass
 
+
     stop_hecos()
+
+    # Log restart action to hecos_main.log — with a visible banner for timing analysis
+    try:
+        import time as _time
+        log_path = os.path.join(_ROOT, "hecos", "logs", "hecos_main.log")
+        os.makedirs(os.path.dirname(log_path), exist_ok=True)
+        ms = int((_time.time() % 1) * 1000)
+        ts = _time.strftime('%Y-%m-%d %H:%M:%S') + f",{ms:03d}"
+        _SEP    = "=" * 70
+        _msg    = (
+            f"{ts} [INFO] [TrayDashboard] "
+            f"User requested system reboot from tray dashboard."
+        )
+        with open(log_path, "a", encoding="utf-8") as _lf:
+            _lf.write(f"\n{_SEP}\n{_msg}\n{_SEP}\n\n")
+    except Exception as _e:
+        print(f"[ORCHESTRATOR] Failed to write restart log: {_e}")
+
 
     # Wait up to 5 seconds for the port to release
     for _ in range(10):
@@ -300,7 +321,26 @@ def start_hecos_with_daemon():
 
 def stop_daemon():
     """Deprecated: redirects to stop_hecos()."""
+
     stop_hecos()
+
+    # Log restart action to hecos_main.log — with a visible banner for timing analysis
+    try:
+        import time as _time
+        log_path = os.path.join(_ROOT, "hecos", "logs", "hecos_main.log")
+        os.makedirs(os.path.dirname(log_path), exist_ok=True)
+        ms = int((_time.time() % 1) * 1000)
+        ts = _time.strftime('%Y-%m-%d %H:%M:%S') + f",{ms:03d}"
+        _SEP    = "=" * 70
+        _msg    = (
+            f"{ts} [INFO] [TrayDashboard] "
+            f"User requested system reboot from tray dashboard."
+        )
+        with open(log_path, "a", encoding="utf-8") as _lf:
+            _lf.write(f"\n{_SEP}\n{_msg}\n{_SEP}\n\n")
+    except Exception as _e:
+        print(f"[ORCHESTRATOR] Failed to write restart log: {_e}")
+
 
 
 def is_daemon_running() -> bool:
