@@ -31,7 +31,7 @@ show_technical_menu = true
 use_daemon = true
 
 # Enable full ANSI colour output in the live-log tab
-full_color_logs = false
+full_color_logs = true
 
 autoopen_dashboard = true
 

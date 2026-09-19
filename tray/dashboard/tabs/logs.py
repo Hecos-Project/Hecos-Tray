@@ -1,14 +1,13 @@
 import os
 import time
 import threading
-import webbrowser
-import customtkinter as ctk
 import tkinter as tk
-import re as _re
+import customtkinter as ctk
 
 from tray.config import load_settings, save_settings, _ROOT
-from tray.dashboard.theme import CARD, TEXT, MUTED, ACCENT, ACCENT2, RED, AMBER, SURFACE, BORDER
-from tray.dashboard.ui import title, subtitle
+from tray.dashboard.theme import CARD, TEXT, MUTED, ACCENT, ACCENT2, RED, SURFACE, BORDER
+from tray.dashboard.ui import title, subtitle, create_tooltip
+from tray.dashboard.tabs.logs_controller import LogController
 
 def build_logs(ctx):
     # Outer container
@@ -20,9 +19,8 @@ def build_logs(ctx):
     subtitle(ctx, outer, "Read directly from disk — works even when the WebUI is offline.")
 
     # State variables
-    _last_size       = [0]
-    _last_line_count = [0]
-    full_color       = [load_settings().get("full_color_logs", True)]
+    full_color = [load_settings().get("full_color_logs", True)]
+    is_paused = [False]
 
     # Default logs directory: Hecos Core hecos/logs subfolder
     _default_logs_dir = os.path.join(_ROOT, "hecos", "logs")
@@ -31,20 +29,6 @@ def build_logs(ctx):
     if not os.path.isdir(logs_dir):
         logs_dir = _default_logs_dir
     logs_dir_var = [logs_dir]  # mutable reference
-
-    SEV_COLORS = {
-        "ERROR": RED, "CRITICAL": RED,
-        "WARNING": AMBER,
-        "INFO": "#ffffff",
-        "DEBUG": "#94a3b8",
-    }
-
-    def _sev_color(line):
-        u = line.upper()
-        for kw, col in SEV_COLORS.items():
-            if kw in u:
-                return col
-        return MUTED
 
     # ── Path Bar: shows current folder + browse button ─────────────────────
     path_row = ctk.CTkFrame(outer, fg_color="transparent")
@@ -57,30 +41,6 @@ def build_logs(ctx):
     )
     path_lbl.pack(side="left", fill="x", expand=True)
 
-    def _browse_folder():
-        from tkinter import filedialog
-        chosen = filedialog.askdirectory(
-            title="Select Logs Folder",
-            initialdir=logs_dir_var[0]
-        )
-        if not chosen:
-            return
-        logs_dir_var[0] = chosen
-        path_lbl.configure(text=chosen)
-        # Persist the choice
-        s = load_settings()
-        s["custom_logs_dir"] = chosen
-        save_settings(s)
-        # Reload the file list
-        _refresh_file_list()
-
-    ctk.CTkButton(
-        path_row, text="📂", width=34,
-        fg_color=SURFACE, text_color=ACCENT,
-        hover_color=BORDER, corner_radius=6,
-        command=_browse_folder
-    ).pack(side="right", padx=(6, 0))
-
     # ── File selector ────────────────────────────────────────────────────────
     ctrl_row = ctk.CTkFrame(outer, fg_color="transparent")
     ctrl_row.pack(fill="x", pady=(0, 6))
@@ -91,43 +51,38 @@ def build_logs(ctx):
         values=["(no logs)"],
         fg_color=CARD, button_color=ACCENT2,
         dropdown_fg_color=CARD, text_color=TEXT,
-        font=ctk.CTkFont(size=11), width=260,
-        command=lambda choice: _on_file_change(choice)
+        font=ctk.CTkFont(size=11), width=180
     )
-    file_dd.pack(side="left", padx=(0, 8))
+    file_dd.pack(side="left", padx=(0, 4))
+    create_tooltip(file_dd, "Select log file to monitor")
+
+    # Lines selector
+    lines_var = ctk.StringVar(value="400")
+    lines_dd = ctk.CTkOptionMenu(
+        ctrl_row, variable=lines_var,
+        values=["100", "400", "1000", "5000", "All"],
+        fg_color=CARD, button_color=ACCENT2,
+        dropdown_fg_color=CARD, text_color=TEXT,
+        font=ctk.CTkFont(size=11), width=80
+    )
+    lines_dd.pack(side="left", padx=(0, 4))
+    create_tooltip(lines_dd, "Select number of lines to display")
+
+    # Search box
+    search_frame = ctk.CTkFrame(ctrl_row, fg_color=CARD, border_width=1, border_color=BORDER, corner_radius=6)
+    search_frame.pack(side="left", padx=(0, 4))
+    
+    search_icon = ctk.CTkLabel(search_frame, text="🔍", width=24, text_color=MUTED)
+    search_icon.pack(side="left", padx=(6, 2))
+    
+    search_var = ctk.StringVar()
+    search_entry = ctk.CTkEntry(search_frame, textvariable=search_var, placeholder_text="Search...", width=120, height=26, fg_color="transparent", border_width=0, text_color=TEXT)
+    search_entry.pack(side="left", padx=(0, 6))
+    create_tooltip(search_entry, "Search logs (filters entire file)")
+    create_tooltip(search_icon, "Search logs (filters entire file)")
 
     lines_lbl = ctk.CTkLabel(ctrl_row, text="", font=ctk.CTkFont(size=10), text_color=MUTED)
     lines_lbl.pack(side="right")
-
-    def _refresh_file_list():
-        d = logs_dir_var[0]
-        log_files = []
-        try:
-            log_files = sorted(
-                [f for f in os.listdir(d) if f.endswith(".log")],
-                key=lambda x: os.path.getmtime(os.path.join(d, x)),
-                reverse=True
-            )
-        except Exception:
-            pass
-        if log_files:
-            file_dd.configure(values=log_files)
-            default = "hecos_main.log" if "hecos_main.log" in log_files else log_files[0]
-            file_var.set(default)
-            _last_size[0] = 0
-            _last_line_count[0] = 0
-            # _load() will be called from the end of the file
-        else:
-            file_dd.configure(values=["(no logs)"])
-            file_var.set("(no logs)")
-            log_text.configure(state="normal")
-            log_text.delete("1.0", "end")
-            log_text.insert("end", f"No .log files found in:\n{d}")
-            log_text.configure(state="disabled")
-
-    # Initial population without triggering _load() since it's not defined yet
-    _refresh_file_list()
-
 
     font_size = [10]  # mutable
 
@@ -152,24 +107,20 @@ def build_logs(ctx):
     scroll_x.pack(side="bottom", fill="x")
     log_text.pack(side="left", fill="both", expand=True)
 
+    from tray.dashboard.tabs.logs_parser import SEV_COLORS, TAG_COLORS_MAP
     # Tags for coloring — severity levels
     for kw, col in SEV_COLORS.items():
         log_text.tag_configure(kw, foreground=col)
     log_text.tag_configure("MUTED", foreground=MUTED)
     log_text.tag_configure("URL", foreground=ACCENT, underline=True)
 
-    # Tags for Source Tagging (Full Color mode)
-    TAG_COLORS_MAP = {
-        "CORE":   "#4dabf7",  # Bright Blue
-        "DAEMON": "#b197fc",  # Purple
-        "WEBUI":  "#69db7c",  # Green
-        "PLUGIN": "#ffa94d",  # Orange
-    }
+    # Tags for Source Tagging
     for tag_key, tag_col in TAG_COLORS_MAP.items():
         log_text.tag_configure(f"TAG_{tag_key}", foreground=tag_col, font=("Consolas", font_size[0], "bold"))
 
     def _open_url(event):
         try:
+            import webbrowser
             idx = log_text.index(f"@{event.x},{event.y}")
             tags = log_text.tag_names(idx)
             if "URL" in tags:
@@ -184,115 +135,88 @@ def build_logs(ctx):
     log_text.tag_bind("URL", "<Enter>", lambda e: log_text.configure(cursor="hand2"))
     log_text.tag_bind("URL", "<Leave>", lambda e: log_text.configure(cursor=""))
 
-    url_pattern = _re.compile(r'(https?://[^\s\'"<>]+)')
-    tag_pattern  = _re.compile(r'(\[(?:CORE|PLUGIN|WEBUI|DAEMON)[^\]]*\])', _re.IGNORECASE)
+    # Instantiate Controller
+    controller = LogController(
+        ctx=ctx,
+        logs_dir_var=logs_dir_var,
+        file_var=file_var,
+        lines_var=lines_var,
+        search_var=search_var,
+        is_paused=is_paused,
+        full_color=full_color,
+        log_text=log_text,
+        lines_lbl=lines_lbl,
+        file_dd=file_dd
+    )
 
-    def _get_source_tag(txt):
-        t = txt.upper()
-        if t.startswith("[CORE"):   return "TAG_CORE"
-        if t.startswith("[PLUGIN"): return "TAG_PLUGIN"
-        if t.startswith("[WEBUI"):  return "TAG_WEBUI"
-        if t.startswith("[DAEMON"): return "TAG_DAEMON"
-        return None
+    # Bindings
+    file_dd.configure(command=controller.on_file_change)
+    lines_dd.configure(command=lambda choice: (
+        setattr(controller, '_last_size', 0),
+        setattr(controller, '_last_line_count', 0),
+        controller.load()
+    ))
+    search_entry.bind("<KeyRelease>", controller.schedule_search)
 
-    def _parse_lines(lines):
-        segments_out = []
-        fc = full_color[0]
-        for line in lines:
-            stripped = line.rstrip()
-            col_tag = "MUTED"
-            u = stripped.upper()
-            for kw in ("ERROR", "CRITICAL", "WARNING", "INFO", "DEBUG"):
-                if kw in u:
-                    col_tag = kw
-                    break
-            if fc and col_tag in ("INFO", "DEBUG", "MUTED"):
-                for seg in url_pattern.split(stripped):
-                    if url_pattern.match(seg):
-                        segments_out.append((seg, ("URL", col_tag)))
-                    else:
-                        for sub in tag_pattern.split(seg):
-                            src_tag = _get_source_tag(sub)
-                            if src_tag:
-                                segments_out.append((sub, (src_tag, col_tag)))
-                            else:
-                                segments_out.append((sub, col_tag))
-            else:
-                for p in url_pattern.split(stripped):
-                    if url_pattern.match(p):
-                        segments_out.append((p, ("URL", col_tag)))
-                    else:
-                        segments_out.append((p, col_tag))
-            segments_out.append(("\n", col_tag))
-        return segments_out
+    def _browse_folder():
+        from tkinter import filedialog
+        chosen = filedialog.askopenfilename(
+            title="Select Log File",
+            initialdir=logs_dir_var[0],
+            filetypes=[("Log Files", "*.log"), ("All Files", "*.*")]
+        )
+        if not chosen:
+            return
+            
+        folder = os.path.dirname(chosen)
+        file_name = os.path.basename(chosen)
+        
+        logs_dir_var[0] = folder
+        path_lbl.configure(text=folder)
+        # Persist the choice
+        s = load_settings()
+        s["custom_logs_dir"] = folder
+        save_settings(s)
+        # Reload the file list
+        controller.refresh_file_list()
+        
+        # Select the chosen file in the dropdown
+        if file_name in file_dd.cget("values"):
+            file_var.set(file_name)
+            controller.on_file_change(file_name)
 
-    def _full_reload_on_main(segments, total, tail_len):
-        log_text.configure(state="normal")
-        log_text.delete("1.0", "end")
-        for text, tag in segments:
-            log_text.insert("end", text, tag)
-        log_text.configure(state="disabled")
-        log_text.see("end")
-        lines_lbl.configure(text=f"{total} lines — showing last {tail_len}")
-
-    def _do_full_reload(path):
-        try:
-            sz = os.path.getsize(path)
-            with open(path, "r", encoding="utf-8", errors="replace") as f:
-                all_lines = f.readlines()
-            tail = all_lines[-400:] if len(all_lines) > 400 else all_lines
-            _last_size[0] = sz
-            _last_line_count[0] = len(all_lines)
-            segments = _parse_lines(tail)
-            ctx.app.after(0, _full_reload_on_main, segments, len(all_lines), len(tail))
-        except Exception as ex:
-            ctx.app.after(0, lambda: (
-                log_text.configure(state="normal"),
-                log_text.delete("1.0", "end"),
-                log_text.insert("end", f"Error reading log: {ex}"),
-                log_text.configure(state="disabled")
-            ))
-
-    def _load(auto=False):
-        fname = file_var.get()
-        if not fname or fname == "(no logs)": return
-        path = os.path.join(logs_dir_var[0], fname)
-        if not os.path.exists(path): return
-        threading.Thread(target=_do_full_reload, args=(path,), daemon=True).start()
-
-    def _on_file_change(choice):
-        _last_size[0] = 0
-        _last_line_count[0] = 0
-        _load()
-
-    def _full_refresh_from_btn():
-        _last_size[0] = 0
-        _last_line_count[0] = 0
-        _refresh_file_list()
-        _load()
-
-    file_dd.configure(command=_on_file_change)
+    ctk.CTkButton(
+        path_row, text="📂", width=34,
+        fg_color=SURFACE, text_color=ACCENT,
+        hover_color=BORDER, corner_radius=6,
+        command=_browse_folder
+    ).pack(side="right", padx=(6, 0))
 
     def _zoom(delta):
         font_size[0] = max(6, min(24, font_size[0] + delta))
         log_text.configure(font=("Consolas", font_size[0]))
+        for tag_key, tag_col in TAG_COLORS_MAP.items():
+            log_text.tag_configure(f"TAG_{tag_key}", font=("Consolas", font_size[0], "bold"))
 
     btn_row = ctk.CTkFrame(ctrl_row, fg_color="transparent")
     btn_row.pack(side="left", padx=8)
 
-    is_paused = [False]
+    def _update_pause_btn():
+        if is_paused[0]:
+            btn_pause.configure(text="⏸ Pause", text_color=RED)
+        else:
+            btn_pause.configure(text="▶ Active", text_color=MUTED)
 
     def _toggle_pause():
         is_paused[0] = not is_paused[0]
-        if is_paused[0]:
-            btn_pause.configure(text="🔒", text_color=RED)
-        else:
-            btn_pause.configure(text="🔓", text_color=MUTED)
+        _update_pause_btn()
 
-    btn_pause = ctk.CTkButton(btn_row, text="🔓", width=34, fg_color=SURFACE, text_color=MUTED,
+    btn_pause = ctk.CTkButton(btn_row, text="", width=70, fg_color=SURFACE, text_color=MUTED,
                               hover_color=BORDER, corner_radius=6,
                               command=_toggle_pause)
+    _update_pause_btn()
     btn_pause.pack(side="left", padx=2)
+    create_tooltip(btn_pause, "Pause or resume live auto-refresh")
 
     def _toggle_full_color():
         full_color[0] = not full_color[0]
@@ -300,74 +224,42 @@ def build_logs(ctx):
         s["full_color_logs"] = full_color[0]
         save_settings(s)
         btn_color.configure(
-            text="🎨" if full_color[0] else "⬜",
+            text="❖ Color" if full_color[0] else "◇ Simple",
             text_color=ACCENT if full_color[0] else MUTED
         )
-        _last_size[0] = 0
-        _last_line_count[0] = 0
-        _load()
+        controller.load()
 
     btn_color = ctk.CTkButton(
-        btn_row, text="🎨" if full_color[0] else "⬜",
-        width=34, fg_color=SURFACE,
+        btn_row, text="❖ Color" if full_color[0] else "◇ Simple",
+        width=80, fg_color=SURFACE,
         text_color=ACCENT if full_color[0] else MUTED,
         hover_color=BORDER, corner_radius=6,
         command=_toggle_full_color
     )
     btn_color.pack(side="left", padx=2)
+    create_tooltip(btn_color, "Toggle syntax highlighting for logs")
 
-    ctk.CTkButton(btn_row, text="A-", width=34, fg_color=SURFACE, text_color=TEXT,
-                  hover_color=BORDER, corner_radius=6,
-                  command=lambda: _zoom(-2)).pack(side="left", padx=2)
-    ctk.CTkButton(btn_row, text="A+", width=34, fg_color=SURFACE, text_color=TEXT,
-                  hover_color=BORDER, corner_radius=6,
-                  command=lambda: _zoom(2)).pack(side="left", padx=2)
-    ctk.CTkButton(btn_row, text="↻", width=34, fg_color=SURFACE, text_color=ACCENT,
-                  hover_color=BORDER, corner_radius=6,
-                  command=_full_refresh_from_btn).pack(side="left", padx=2)
+    btn_zoom_out = ctk.CTkButton(btn_row, text="A-", width=34, fg_color=SURFACE, text_color=TEXT,
+                  hover_color=BORDER, corner_radius=6, command=lambda: _zoom(-2))
+    btn_zoom_out.pack(side="left", padx=2)
+    create_tooltip(btn_zoom_out, "Decrease font size")
 
-    _load()
+    btn_zoom_in = ctk.CTkButton(btn_row, text="A+", width=34, fg_color=SURFACE, text_color=TEXT,
+                  hover_color=BORDER, corner_radius=6, command=lambda: _zoom(2))
+    btn_zoom_in.pack(side="left", padx=2)
+    create_tooltip(btn_zoom_in, "Increase font size")
 
-    def _auto_refresh():
-        while ctx.active_tab["key"] == "logs":
-            time.sleep(0.5)
-            if ctx.active_tab["key"] != "logs" or is_paused[0]:
-                continue
-            fname = file_var.get()
-            if not fname or fname == "(no logs)":
-                continue
-            path = os.path.join(logs_dir_var[0], fname)
-            try:
-                sz = os.path.getsize(path)
-                if sz == _last_size[0]:
-                    continue
-                with open(path, "r", encoding="utf-8", errors="replace") as f:
-                    all_lines = f.readlines()
-                total = len(all_lines)
-                already = _last_line_count[0]
-                if total < already:
-                    _last_size[0] = 0
-                    _last_line_count[0] = 0
-                    ctx.app.after(0, _load)
-                    continue
-                new_lines = all_lines[already:]
-                if not new_lines:
-                    _last_size[0] = sz
-                    continue
-                segments = _parse_lines(new_lines)
-                _last_size[0] = sz
-                _last_line_count[0] = total
-                def _push(segs=segments, tot=total, nl=len(new_lines)):
-                    at_bottom = log_text.yview()[1] >= 0.97
-                    log_text.configure(state="normal")
-                    for text, tag in segs:
-                        log_text.insert("end", text, tag)
-                    log_text.configure(state="disabled")
-                    if at_bottom:
-                        log_text.see("end")
-                    lines_lbl.configure(text=f"{tot} lines (+{nl})")
-                ctx.app.after(0, _push)
-            except Exception:
-                pass
+    btn_refresh = ctk.CTkButton(btn_row, text="↻ Refresh", width=80, fg_color=SURFACE, text_color=ACCENT,
+                  hover_color=BORDER, corner_radius=6, command=controller.full_refresh_from_btn)
+    btn_refresh.pack(side="left", padx=2)
+    create_tooltip(btn_refresh, "Force reload the entire file")
 
-    threading.Thread(target=_auto_refresh, daemon=True).start()
+    btn_reset = ctk.CTkButton(btn_row, text="⌂ Main", width=70, fg_color=SURFACE, text_color=MUTED,
+                  hover_color=BORDER, corner_radius=6, command=controller.reset_to_main)
+    btn_reset.pack(side="left", padx=2)
+    create_tooltip(btn_reset, "Reset to hecos_main.log")
+
+    # Start
+    controller.refresh_file_list(preserve_selection=False)
+    controller.load()
+    controller.start_auto_refresh()
