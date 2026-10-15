@@ -16,7 +16,7 @@ autoopen_webui = false
 autoopen_ai_browser = false
 
 # Launch Chrome in CDP/AI-ready mode on tray startup
-auto_launch_chrome_for_ai = false
+auto_launch_chrome_for_ai = true
 
 # URL to open when the browser or WebUI auto-launch
 browser_startup_url = "http://localhost:7070"

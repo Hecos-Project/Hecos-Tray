@@ -184,23 +184,106 @@ def get_named_executable(name: str, base_exe: str = None) -> str:
 
 def set_os_startup(enable: bool):
     import sys
-    if sys.platform != "win32":
-        return
-        
-    try:
-        import winreg
-        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Run", 0, winreg.KEY_SET_VALUE)
+    import os
+    import subprocess
+
+    if sys.platform == "win32":
+        startup_dir = os.path.expandvars(r"%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup")
+        lnk_path = os.path.join(startup_dir, "HecosTray.lnk")
+
+        # Always clean up legacy or broken registry keys from Run
+        try:
+            import winreg
+            key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Run", 0, winreg.KEY_SET_VALUE)
+            for vname in ("HecosTray", "ZentraTray", "ZentraCore"):
+                try:
+                    winreg.DeleteValue(key, vname)
+                except OSError:
+                    pass
+            winreg.CloseKey(key)
+        except Exception:
+            pass
+
         if enable:
             _this_dir = os.path.dirname(os.path.abspath(__file__))
             tray_root = os.path.dirname(_this_dir)
             bat_path = os.path.join(tray_root, "START_HECOS_TRAY_WIN.bat")
-            # Enclose the path in quotes to handle spaces
-            winreg.SetValueEx(key, "HecosTray", 0, winreg.REG_SZ, f'"{bat_path}"')
-        else:
+            icon_path = os.path.join(tray_root, "assets", "Hecos_Logo_SQR_NBG_LogoOnly.ico")
+
+            # Create shortcut in Startup folder
+            created = False
             try:
-                winreg.DeleteValue(key, "HecosTray")
-            except OSError:
+                import win32com.client
+                shell = win32com.client.Dispatch("WScript.Shell")
+                sc = shell.CreateShortcut(lnk_path)
+                sc.TargetPath = bat_path
+                sc.Arguments = "--silent"
+                sc.WorkingDirectory = tray_root
+                sc.WindowStyle = 7  # Minimized
+                sc.Description = "Hecos System Tray"
+                if os.path.exists(icon_path):
+                    sc.IconLocation = f"{icon_path},0"
+                sc.Save()
+                created = True
+            except Exception:
                 pass
-        winreg.CloseKey(key)
-    except Exception as e:
-        print(f"[TRAY] Error setting OS startup: {e}")
+
+            if not created:
+                try:
+                    ico_clause = f'$s.IconLocation = "{icon_path},0"; ' if os.path.exists(icon_path) else ''
+                    ps_cmd = (
+                        f'$ws = New-Object -ComObject WScript.Shell; '
+                        f'$s = $ws.CreateShortcut("{lnk_path}"); '
+                        f'$s.TargetPath = "{bat_path}"; '
+                        f'$s.Arguments = "--silent"; '
+                        f'$s.WorkingDirectory = "{tray_root}"; '
+                        f'{ico_clause}'
+                        f'$s.WindowStyle = 7; '
+                        f'$s.Description = "Hecos System Tray"; '
+                        f'$s.Save()'
+                    )
+                    subprocess.run(
+                        ["powershell", "-NoProfile", "-NonInteractive", "-Command", ps_cmd],
+                        capture_output=True, timeout=10
+                    )
+                except Exception as e:
+                    print(f"[TRAY] Error creating startup shortcut via PowerShell: {e}")
+        else:
+            if os.path.exists(lnk_path):
+                try:
+                    os.remove(lnk_path)
+                except Exception as e:
+                    print(f"[TRAY] Error removing startup shortcut: {e}")
+
+    elif sys.platform.startswith("linux"):
+        desktop_dir = os.path.expanduser("~/.config/autostart")
+        desktop_file = os.path.join(desktop_dir, "hecos-tray.desktop")
+        if enable:
+            _this_dir = os.path.dirname(os.path.abspath(__file__))
+            tray_root = os.path.dirname(_this_dir)
+            sh_path = os.path.join(tray_root, "START_HECOS_TRAY_LINUX.sh")
+            icon_path = os.path.join(tray_root, "assets", "Hecos_Logo_SQR_NBG_LogoOnly.png")
+            os.makedirs(desktop_dir, exist_ok=True)
+            content = (
+                "[Desktop Entry]\n"
+                "Type=Application\n"
+                "Name=Hecos Tray\n"
+                "Comment=Hecos Tray Orchestrator\n"
+                f"Exec={sh_path} --silent\n"
+                f"Icon={icon_path if os.path.exists(icon_path) else 'application-default-icon'}\n"
+                "Terminal=false\n"
+                "Categories=Utility;\n"
+                "X-GNOME-Autostart-enabled=true\n"
+            )
+            try:
+                with open(desktop_file, "w", encoding="utf-8") as f:
+                    f.write(content)
+                os.chmod(desktop_file, 0o755)
+            except Exception as e:
+                print(f"[TRAY] Error writing Linux autostart: {e}")
+        else:
+            if os.path.exists(desktop_file):
+                try:
+                    os.remove(desktop_file)
+                except Exception as e:
+                    print(f"[TRAY] Error removing Linux autostart: {e}")

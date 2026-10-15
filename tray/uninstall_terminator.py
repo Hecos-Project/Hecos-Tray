@@ -71,6 +71,15 @@ def _uninstall_packages(packages, label):
 def _remove_autostart():
     print("  [*] Removing autostart entries...")
     if platform.system() == "Windows":
+        # Remove startup shortcut
+        startup_dir = os.path.expandvars(r"%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup")
+        lnk_path = os.path.join(startup_dir, "HecosTray.lnk")
+        if os.path.exists(lnk_path):
+            try:
+                os.remove(lnk_path)
+                print("    OK: Windows Startup folder shortcut removed.")
+            except Exception as e:
+                print(f"    [!] Error removing shortcut: {e}")
         try:
             import winreg
             key = winreg.OpenKey(
@@ -78,9 +87,13 @@ def _remove_autostart():
                 r"Software\Microsoft\Windows\CurrentVersion\Run",
                 0, winreg.KEY_SET_VALUE
             )
-            winreg.DeleteValue(key, "HecosTray")
+            for k in ("HecosTray", "ZentraTray", "ZentraCore"):
+                try:
+                    winreg.DeleteValue(key, k)
+                except OSError:
+                    pass
             winreg.CloseKey(key)
-            print("    OK: Windows autostart registry key removed.")
+            print("    OK: Windows autostart registry keys removed.")
         except FileNotFoundError:
             print("    ~ No autostart registry key found.")
         except Exception as e:

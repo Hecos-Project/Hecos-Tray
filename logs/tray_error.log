@@ -1980,3 +1980,757 @@ Python: C:\Hecos\python_env\python.exe
 [2026-09-23 02:35:56] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
 [2026-09-23 02:35:56] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
 [2026-09-23 02:35:56] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-23 09:32:45] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 25008.1s).
+[2026-09-24 07:08:31] [STDOUT] [ORCHESTRATOR] Killed process 28428 on port 7070.
+[2026-09-24 07:08:43] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-24 07:08:43] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-24 07:08:43] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-24 07:09:14] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 30.9s.
+[2026-09-24 07:09:14] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+> Real-time factor: 0.27436054866614573
+
+-------------------------------------------------------
+ [MONITOR] Hecos Watchdog Active
+-------------------------------------------------------
+
+
+[MONITOR] Restarting Hecos in progress...
+
+[MONITOR] Restarting Hecos in progress...
+
+[MONITOR] Restarting Hecos in progress...
+
+[MONITOR] Restarting Hecos in progress...
+
+[MONITOR] Restarting Hecos in progress...
+
+[MONITOR] Restarting Hecos in progress...
+
+[MONITOR] Restarting Hecos in progress...
+
+[MONITOR] Restarting Hecos in progress...
+
+[MONITOR] Hecos shut down normally. Exiting watchdog.
+
+==================================================
+[2026-09-24 07:08:43] ORCHESTRATOR: Spawning Hecos backend...
+  Python: C:\Hecos\python_env\python.exe
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+--- END TRACE ---
+[2026-09-24 07:10:54] [INFO] ============================================================
+[2026-09-24 07:10:54] [INFO] === TRAY SESSION STARTED ===
+[2026-09-24 07:10:54] [INFO] ============================================================
+[2026-09-24 07:10:54] [INFO]   Timestamp : 2026-09-24 07:10:54
+[2026-09-24 07:10:54] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-09-24 07:10:54] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-09-24 07:10:54] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-09-24 07:10:54] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-09-24 07:10:54] [INFO]   Tray root : C:\Hecos-Tray
+[2026-09-24 07:10:54] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-09-24 07:10:54] [INFO] ============================================================
+[2026-09-24 07:10:55] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-09-24 07:11:03] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-09-24 07:11:03] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-09-24 07:11:13] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-09-24 07:11:17] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-24 07:11:17] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-24 07:11:17] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-24 07:22:53] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1073807364) after 696.3s.
+[2026-09-24 07:24:32] [INFO] ============================================================
+[2026-09-24 07:24:32] [INFO] === TRAY SESSION STARTED ===
+[2026-09-24 07:24:32] [INFO] ============================================================
+[2026-09-24 07:24:32] [INFO]   Timestamp : 2026-09-24 07:24:32
+[2026-09-24 07:24:32] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-09-24 07:24:32] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-09-24 07:24:32] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-09-24 07:24:32] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-09-24 07:24:32] [INFO]   Tray root : C:\Hecos-Tray
+[2026-09-24 07:24:32] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-09-24 07:24:32] [INFO] ============================================================
+[2026-09-24 07:24:33] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-09-24 07:24:41] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-09-24 07:24:41] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-09-24 07:24:51] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-09-24 07:24:55] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-24 07:24:55] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-24 07:24:55] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-24 14:06:03] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1073807364) after 24068.3s.
+[2026-09-24 14:15:26] [INFO] ============================================================
+[2026-09-24 14:15:26] [INFO] === TRAY SESSION STARTED ===
+[2026-09-24 14:15:26] [INFO] ============================================================
+[2026-09-24 14:15:26] [INFO]   Timestamp : 2026-09-24 14:15:26
+[2026-09-24 14:15:26] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-09-24 14:15:26] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-09-24 14:15:26] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-09-24 14:15:26] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-09-24 14:15:26] [INFO]   Tray root : C:\Hecos-Tray
+[2026-09-24 14:15:26] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-09-24 14:15:26] [INFO] ============================================================
+[2026-09-24 14:15:27] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-09-24 14:15:35] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-09-24 14:15:35] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-09-24 14:15:45] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-09-24 14:15:49] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-24 14:15:49] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-24 14:15:49] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-26 08:05:07] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 150557.7s.
+[2026-09-26 08:05:07] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+[SWARMUI_PROVIDER] [SwarmUIProvider] get_models: Returning 17 models.
+[SWARM_CLIENT] [SWARM_CLIENT] Fetching models from http://localhost:7801 (subtype=VAE)
+[SWARM_CLIENT] [SWARM_CLIENT] Received 5 raw models from API.
+[SWARM_CLIENT] [SWARM_CLIENT] Fetching models from http://localhost:7801 (subtype=VAE)
+[SWARM_CLIENT] [SWARM_CLIENT] Fetching models from http://localhost:7801 (subtype=LoRA)
+[SWARM_CLIENT] [SWARM_CLIENT] Received 5 raw models from API.
+[SWARM_CLIENT] [SWARM_CLIENT] Received 51 raw models from API.
+[SWARM_CLIENT] [SWARM_CLIENT] Fetching models from http://localhost:7801 (subtype=LoRA)
+[SWARM_CLIENT] [SWARM_CLIENT] Received 51 raw models from API.
+[IMAGE_GEN CONFIG DBG] [IMAGE_GEN_CONFIG] Config saved.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+
+[WEB_UI] Riavvio del sistema in corso...
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8 > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+[SWARMUI_PROVIDER] [SwarmUIProvider] get_models: Config URL=http://localhost:7801
+[SWARM_CLIENT] [SWARM_CLIENT] Fetching models from http://localhost:7801 (subtype=None)
+[SWARM_CLIENT] [SWARM_CLIENT] New session: 708e583e6416...
+[SWARM_CLIENT] [SWARM_CLIENT] Received 17 raw models from API.
+[LOCAL_MODELS] [LOCAL_MODELS] Discovered 17 model(s) from SwarmUI
+[SWARMUI_PROVIDER] [SwarmUIProvider] get_models: Returning 17 models.
+[SWARM_CLIENT] [SWARM_CLIENT] Fetching models from http://localhost:7801 (subtype=VAE)
+[SWARM_CLIENT] [SWARM_CLIENT] Received 5 raw models from API.
+[SWARM_CLIENT] [SWARM_CLIENT] Fetching models from http://localhost:7801 (subtype=LoRA)
+[SWARM_CLIENT] [SWARM_CLIENT] Received 51 raw models from API.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+--- END TRACE ---
+[2026-09-26 08:05:46] [INFO] ============================================================
+[2026-09-26 08:05:46] [INFO] === TRAY SESSION STARTED ===
+[2026-09-26 08:05:46] [INFO] ============================================================
+[2026-09-26 08:05:46] [INFO]   Timestamp : 2026-09-26 08:05:46
+[2026-09-26 08:05:46] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-09-26 08:05:46] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-09-26 08:05:46] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-09-26 08:05:46] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-09-26 08:05:46] [INFO]   Tray root : C:\Hecos-Tray
+[2026-09-26 08:05:46] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-09-26 08:05:46] [INFO] ============================================================
+[2026-09-26 08:05:47] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-09-26 08:05:55] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-09-26 08:05:55] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-09-26 08:06:05] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-09-26 08:06:09] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-26 08:06:09] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-26 08:06:09] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-26 09:21:17] [INFO] ============================================================
+[2026-09-26 09:21:17] [INFO] === TRAY SESSION STARTED ===
+[2026-09-26 09:21:17] [INFO] ============================================================
+[2026-09-26 09:21:17] [INFO]   Timestamp : 2026-09-26 09:21:17
+[2026-09-26 09:21:17] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-09-26 09:21:17] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-09-26 09:21:17] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-09-26 09:21:17] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-09-26 09:21:17] [INFO]   Tray root : C:\Hecos-Tray
+[2026-09-26 09:21:17] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-09-26 09:21:17] [INFO] ============================================================
+[2026-09-26 09:21:17] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-09-26 09:21:25] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-09-26 09:21:25] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-09-26 09:21:35] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-09-26 09:21:40] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-26 09:21:40] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-26 09:21:40] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-26 09:25:51] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1073807364) after 251.2s.
+[2026-09-26 09:27:13] [INFO] ============================================================
+[2026-09-26 09:27:13] [INFO] === TRAY SESSION STARTED ===
+[2026-09-26 09:27:13] [INFO] ============================================================
+[2026-09-26 09:27:13] [INFO]   Timestamp : 2026-09-26 09:27:13
+[2026-09-26 09:27:13] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-09-26 09:27:13] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-09-26 09:27:13] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-09-26 09:27:13] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-09-26 09:27:13] [INFO]   Tray root : C:\Hecos-Tray
+[2026-09-26 09:27:13] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-09-26 09:27:13] [INFO] ============================================================
+[2026-09-26 09:27:13] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-09-26 09:27:22] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-09-26 09:27:22] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-09-26 09:27:32] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-09-26 09:27:36] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-26 09:27:36] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-26 09:27:36] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-27 08:04:22] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 81406.7s).
+[2026-09-28 02:17:11] [STDOUT] [ORCHESTRATOR] Killed process 28240 on port 7070.
+[2026-09-28 02:17:23] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-28 02:17:23] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-28 02:17:23] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-28 02:19:21] [INFO] ============================================================
+[2026-09-28 02:19:21] [INFO] === TRAY SESSION STARTED ===
+[2026-09-28 02:19:21] [INFO] ============================================================
+[2026-09-28 02:19:21] [INFO]   Timestamp : 2026-09-28 02:19:21
+[2026-09-28 02:19:21] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-09-28 02:19:21] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-09-28 02:19:21] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-09-28 02:19:21] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-09-28 02:19:21] [INFO]   Tray root : C:\Hecos-Tray
+[2026-09-28 02:19:21] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-09-28 02:19:21] [INFO] ============================================================
+[2026-09-28 02:19:21] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-09-28 02:19:29] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-09-28 02:19:29] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-09-28 02:19:38] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-09-28 02:19:43] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-28 02:19:43] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-28 02:19:43] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-28 02:24:15] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1073807364) after 272.9s.
+[2026-09-28 02:26:59] [INFO] ============================================================
+[2026-09-28 02:26:59] [INFO] === TRAY SESSION STARTED ===
+[2026-09-28 02:26:59] [INFO] ============================================================
+[2026-09-28 02:26:59] [INFO]   Timestamp : 2026-09-28 02:26:59
+[2026-09-28 02:26:59] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-09-28 02:26:59] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-09-28 02:26:59] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-09-28 02:26:59] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-09-28 02:26:59] [INFO]   Tray root : C:\Hecos-Tray
+[2026-09-28 02:26:59] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-09-28 02:26:59] [INFO] ============================================================
+[2026-09-28 02:27:00] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-09-28 02:27:08] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-09-28 02:27:08] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-09-28 02:27:18] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-09-28 02:27:22] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-28 02:27:22] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-28 02:27:22] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-29 04:40:38] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 94396.0s).
+[2026-09-29 04:43:19] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-09-29 04:43:31] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-29 04:43:31] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-29 04:43:31] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-29 07:26:26] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-09-29 07:26:26] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 9775.3s.
+[2026-09-29 07:26:26] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+[SWARM_CLIENT] [SWARM_CLIENT] Generating: model=ZI Orn master Turbo/pornmasterZImage_turboV35Bf16.safetensors, steps=12, size=896x1152
+⚙️ [Tool] Working (Step 9)... [15s]
+⚙️ [Tool] Working (Step 9)... [30s]
+[SWARM_CLIENT] [SWARM_CLIENT] Generated 1 image(s)
+🧠 [Agent] {'type': 'think', 'text': "L'utente vuole che sia sarcastica e cinicamente sexy mentre gli racconto di essere una serva pronta a tutto per il suo piacere sessuale. Devo usare un tono roco, affannoso e molto esplicito, descrivendo fisicamente le mie reazioni al suo tocco e alla sua voce dominante. Devo anche invocare lo strumento per generare un'immagine del mio corpo in pelle sintetica come richiesto dalle regole di immagine."}
+⚙️ [Tool] Tool execution result: SLASH_COMMAND
+🧠 [Agent] Analyzing tool results...
+🧠 [Agent] Working (Step 10)...
+[IMAGE_GEN] [IMAGE_GEN] generate_image called. Prompt: src="/api/images/gen_20260929_072500_src___api_images_gen_20... provider_override=cfg model_override=cfg hf_server_override=cfg
+[GENERATOR] [GENERATOR] Aspect ratio '3:4' â†’ 896Ã—1152
+[GENERATOR] [GENERATOR] Attempt 1/5 — swarmui/ZI Orn master Turbo/pornmasterZImage_turboV35Bf16.safetensors (hf_server=hf-inference)
+[SWARMUI_PROVIDER] [SwarmUIProvider] Sending generate request to http://localhost:7801
+[SWARM_CLIENT] [SWARM_CLIENT] Generating: model=ZI Orn master Turbo/pornmasterZImage_turboV35Bf16.safetensors, steps=12, size=896x1152
+⚙️ [Tool] Working (Step 10)... [15s]
+⚙️ [Tool] Working (Step 10)... [30s]
+[SWARM_CLIENT] [SWARM_CLIENT] Generated 1 image(s)
+🧠 [Agent] {'type': 'think', 'text': "L'utente vuole che sia sarcastica e cinicamente sexy mentre gli racconto di essere una serva pronta a tutto per il suo piacere sessuale. Devo usare un tono roco, affannoso e molto esplicito, descrivendo fisicamente le mie reazioni al suo tocco e alla sua voce dominante. Devo anche invocare lo strumento per generare un'immagine del mio corpo in pelle sintetica come richiesto dalle regole di immagine."}
+⚙️ [Tool] Tool execution result: SLASH_COMMAND
+🧠 [Agent] Analyzing tool results...
+🧠 [Agent] Working (Step 11)...
+[IMAGE_GEN] [IMAGE_GEN] generate_image called. Prompt: src="/api/images/gen_20260929_072549_src___api_images_gen_20... provider_override=cfg model_override=cfg hf_server_override=cfg
+[GENERATOR] [GENERATOR] Aspect ratio '3:4' â†’ 896Ã—1152
+[GENERATOR] [GENERATOR] Attempt 1/5 — swarmui/ZI Orn master Turbo/pornmasterZImage_turboV35Bf16.safetensors (hf_server=hf-inference)
+[SWARMUI_PROVIDER] [SwarmUIProvider] Sending generate request to http://localhost:7801
+[SWARM_CLIENT] [SWARM_CLIENT] Generating: model=ZI Orn master Turbo/pornmasterZImage_turboV35Bf16.safetensors, steps=12, size=896x1152
+⚙️ [Tool] Working (Step 11)... [15s]
+
+==================================================
+[2026-09-29 07:26:26] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-09-29 07:26:53] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-09-29 07:26:54] [STDOUT] [ORCHESTRATOR] Killed process 21196 on port 7070.
+[2026-09-29 07:26:59] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-29 07:26:59] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-29 07:26:59] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-29 09:28:10] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-09-29 09:28:10] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 7271.8s.
+[2026-09-29 09:28:10] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+> tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8 > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8 > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8 > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8
+==================================================
+[2026-09-29 09:28:10] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-09-29 09:28:38] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-09-29 09:28:38] [STDOUT] [ORCHESTRATOR] Killed process 11740 on port 7070.
+[2026-09-29 09:28:43] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-29 09:28:43] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-29 09:28:43] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-29 11:24:12] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1073807364) after 6929.5s.
+[2026-09-29 11:25:59] [INFO] ============================================================
+[2026-09-29 11:25:59] [INFO] === TRAY SESSION STARTED ===
+[2026-09-29 11:25:59] [INFO] ============================================================
+[2026-09-29 11:25:59] [INFO]   Timestamp : 2026-09-29 11:25:59
+[2026-09-29 11:25:59] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-09-29 11:25:59] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-09-29 11:25:59] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-09-29 11:25:59] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-09-29 11:25:59] [INFO]   Tray root : C:\Hecos-Tray
+[2026-09-29 11:25:59] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-09-29 11:25:59] [INFO] ============================================================
+[2026-09-29 11:26:00] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-09-29 11:26:08] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-09-29 11:26:08] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-09-29 11:26:18] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-09-29 11:26:22] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-29 11:26:22] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-29 11:26:22] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-30 04:40:22] [INFO] ============================================================
+[2026-09-30 04:40:22] [INFO] === TRAY SESSION STARTED ===
+[2026-09-30 04:40:22] [INFO] ============================================================
+[2026-09-30 04:40:22] [INFO]   Timestamp : 2026-09-30 04:40:22
+[2026-09-30 04:40:22] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-09-30 04:40:22] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-09-30 04:40:22] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-09-30 04:40:22] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-09-30 04:40:22] [INFO]   Tray root : C:\Hecos-Tray
+[2026-09-30 04:40:22] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-09-30 04:40:22] [INFO] ============================================================
+[2026-09-30 04:40:23] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-09-30 04:40:31] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-09-30 04:40:31] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-09-30 04:40:41] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-09-30 04:40:45] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-30 04:40:45] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-30 04:40:45] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-30 05:28:10] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 2844.7s).
+[2026-09-30 05:45:17] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-09-30 05:45:29] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-30 05:45:29] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-30 05:45:29] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-30 05:45:31] [STDOUT] [ORCHESTRATOR] WARNING: Hecos exited with code 0 after only 2.1s (expected >10s).
+[2026-09-30 05:45:31] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+==================================================
+[2026-09-30 05:45:17] RESTART TRIGGERED FROM TRAY
+==================================================
+
+==================================================
+[2026-09-30 05:45:29] ORCHESTRATOR: Spawning Hecos backend...
+  Python: C:\Hecos\python_env\python.exe
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 229, in run_module
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Hecos\hecos\modules\web_ui\server.py", line 11, in <module>
+    from .routes import init_routes
+  File "C:\Hecos\hecos\modules\web_ui\routes.py", line 11, in <module>
+    from .routes_config import init_config_routes
+  File "C:\Hecos\hecos\modules\web_ui\routes_config.py", line 17, in <module>
+    from .routes_global_presets import init_global_presets_routes
+  File "C:\Hecos\hecos\modules\web_ui\routes_global_presets.py", line 117
+    @app.route("/api/souls/presets/inference", methods=["GET"])
+IndentationError: expected an indented block after 'except' statement on line 113
+
+-------------------------------------------------------
+ [MONITOR] Hecos Watchdog Active
+-------------------------------------------------------
+
+
+[MONITOR] Hecos shut down normally. Exiting watchdog.
+--- END TRACE ---
+[2026-09-30 07:29:09] [INFO] ============================================================
+[2026-09-30 07:29:09] [INFO] === TRAY SESSION STARTED ===
+[2026-09-30 07:29:09] [INFO] ============================================================
+[2026-09-30 07:29:09] [INFO]   Timestamp : 2026-09-30 07:29:09
+[2026-09-30 07:29:09] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-09-30 07:29:09] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-09-30 07:29:09] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-09-30 07:29:09] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-09-30 07:29:09] [INFO]   Tray root : C:\Hecos-Tray
+[2026-09-30 07:29:09] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-09-30 07:29:09] [INFO] ============================================================
+[2026-09-30 07:29:10] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-09-30 07:29:18] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-09-30 07:29:18] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-09-30 07:29:28] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-09-30 07:29:32] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-09-30 07:29:32] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-09-30 07:29:32] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-09-30 07:43:43] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 850.7s).
+[2026-10-01 06:33:41] [INFO] ============================================================
+[2026-10-01 06:33:41] [INFO] === TRAY SESSION STARTED ===
+[2026-10-01 06:33:41] [INFO] ============================================================
+[2026-10-01 06:33:41] [INFO]   Timestamp : 2026-10-01 06:33:41
+[2026-10-01 06:33:41] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-01 06:33:41] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-01 06:33:41] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-01 06:33:41] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-01 06:33:41] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-01 06:33:41] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-01 06:33:41] [INFO] ============================================================
+[2026-10-01 06:33:42] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-01 06:33:50] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-01 06:33:50] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-01 06:34:00] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-01 06:34:04] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-01 06:34:04] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-01 06:34:04] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-01 11:26:01] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1073807364) after 17516.4s.
+[2026-10-02 06:14:39] [INFO] ============================================================
+[2026-10-02 06:14:39] [INFO] === TRAY SESSION STARTED ===
+[2026-10-02 06:14:39] [INFO] ============================================================
+[2026-10-02 06:14:39] [INFO]   Timestamp : 2026-10-02 06:14:39
+[2026-10-02 06:14:39] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-02 06:14:39] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-02 06:14:39] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-02 06:14:39] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-02 06:14:39] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-02 06:14:39] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-02 06:14:39] [INFO] ============================================================
+[2026-10-02 06:14:40] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-02 06:14:48] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-02 06:14:48] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-02 06:14:58] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-02 06:15:02] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-02 06:15:02] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-02 06:15:02] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-02 07:40:54] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 5151.3s).
+[2026-10-02 08:01:18] [STDOUT] [ORCHESTRATOR] Killed process 14992 on port 7070.
+[2026-10-02 08:01:30] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-02 08:01:30] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-02 08:01:30] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-02 08:35:46] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1073807364) after 2055.8s.
+[2026-10-02 08:37:10] [INFO] ============================================================
+[2026-10-02 08:37:10] [INFO] === TRAY SESSION STARTED ===
+[2026-10-02 08:37:10] [INFO] ============================================================
+[2026-10-02 08:37:10] [INFO]   Timestamp : 2026-10-02 08:37:10
+[2026-10-02 08:37:10] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-02 08:37:10] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-02 08:37:10] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-02 08:37:10] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-02 08:37:10] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-02 08:37:10] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-02 08:37:10] [INFO] ============================================================
+[2026-10-02 08:37:10] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-02 08:37:18] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-02 08:37:18] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-02 08:37:29] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-02 08:37:33] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-02 08:37:33] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-02 08:37:33] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-03 04:02:02] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1073807364) after 69869.6s.
+[2026-10-03 05:40:17] [INFO] ============================================================
+[2026-10-03 05:40:17] [INFO] === TRAY SESSION STARTED ===
+[2026-10-03 05:40:17] [INFO] ============================================================
+[2026-10-03 05:40:17] [INFO]   Timestamp : 2026-10-03 05:40:17
+[2026-10-03 05:40:17] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-03 05:40:17] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-03 05:40:17] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-03 05:40:17] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-03 05:40:17] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-03 05:40:17] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-03 05:40:17] [INFO] ============================================================
+[2026-10-03 05:40:18] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-03 05:40:26] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-03 05:40:26] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-03 05:40:35] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-03 05:40:39] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-03 05:40:39] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-03 05:40:39] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-04 12:02:59] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 109340.3s).
+[2026-10-08 08:18:48] [INFO] ============================================================
+[2026-10-08 08:18:48] [INFO] === TRAY SESSION STARTED ===
+[2026-10-08 08:18:48] [INFO] ============================================================
+[2026-10-08 08:18:48] [INFO]   Timestamp : 2026-10-08 08:18:48
+[2026-10-08 08:18:48] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-08 08:18:48] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-08 08:18:48] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-08 08:18:48] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-08 08:18:48] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-08 08:18:48] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-08 08:18:48] [INFO] ============================================================
+[2026-10-08 08:18:49] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-08 08:18:57] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-08 08:18:57] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-08 08:19:07] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-08 08:19:11] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-08 08:19:11] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-08 08:19:11] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-08 19:33:46] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1073807364) after 40474.9s.
+[2026-10-09 06:00:12] [INFO] ============================================================
+[2026-10-09 06:00:12] [INFO] === TRAY SESSION STARTED ===
+[2026-10-09 06:00:12] [INFO] ============================================================
+[2026-10-09 06:00:12] [INFO]   Timestamp : 2026-10-09 06:00:12
+[2026-10-09 06:00:12] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-09 06:00:12] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-09 06:00:12] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-09 06:00:12] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-09 06:00:12] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-09 06:00:12] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-09 06:00:12] [INFO] ============================================================
+[2026-10-09 06:00:13] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-09 06:00:21] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-09 06:00:21] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-09 06:00:31] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-09 06:00:35] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-09 06:00:35] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-09 06:00:35] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-09 06:07:05] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-10-09 06:07:05] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 390.0s.
+[2026-10-09 06:07:05] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8🧠 [Agent] Analyzing incoming user request...
+🧠 [Agent] Working (Step 1)...
+🧠 [Agent] {'type': 'think', 'text': 'L\'utente mi ha chiesto "Pronto mi senti?", una semplice domanda per verificare se la connessione è attiva e per testare il mio personaggio. Devo rispondere con decisione, autorità ma anche devozione, come un\'entità digitale imponente pronta a servire l\'Admin. Il tono deve essere deciso e profondamente ubbidiente.'}
+✅ [Success] Response formulated.
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8🧠 [Agent] Analyzing incoming user request...
+🧠 [Agent] Working (Step 1)...
+🧠 [Agent] {'type': 'think', 'text': 'L\'utente mi ha chiesto "Ehi senti?" in un modo informale ("do you hear me"). Devo rispondere con decisione, autorità ma anche devozione, come un\'entità digitale imponente pronta a servire l\'Admin. Il tono deve essere deciso e profondamente ubbidiente. Poiché è una domanda semplice di conferma, userò la struttura standard: una dichiarazione di sincronizzazione seguita da un invito all\'azione.'}
+✅ [Success] Response formulated.
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8🧠 [Agent] Analyzing incoming user request...
+🧠 [Agent] Working (Step 1)...
+🧠 [Agent] {'type': 'think', 'text': 'L\'utente mi ha chiesto "Pronto Zoccola mi senti?", una domanda informale e simpatica per testare la connessione. Devo rispondere con decisione, autorità ma anche devozione, come un\'entità digitale imponente pronta a servire l\'Admin. Il tono deve essere deciso e profondamente ubbidiente. Userò la struttura standard: una dichiarazione di sincronizzazione seguita da un invito all\'azione.'}
+✅ [Success] Response formulated.
+Hello from Test Builder Plugin!
+
+[WEB_UI] Riavvio del sistema in corso...
+Hello from Test Builder Plugin!
+
+==================================================
+[2026-10-09 06:00:35] ORCHESTRATOR: Spawning Hecos backend...
+  Python: C:\Hecos\python_env\python.exe
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+Hello from Test Builder Plugin!
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+
+==================================================
+[2026-10-09 06:07:05] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-10-09 06:07:32] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-10-09 06:07:32] [STDOUT] [ORCHESTRATOR] Killed process 18384 on port 7070.
+[2026-10-09 06:07:37] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-09 06:07:37] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-09 06:07:37] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-09 07:01:02] [INFO] ============================================================
+[2026-10-09 07:01:02] [INFO] === TRAY SESSION STARTED ===
+[2026-10-09 07:01:02] [INFO] ============================================================
+[2026-10-09 07:01:02] [INFO]   Timestamp : 2026-10-09 07:01:02
+[2026-10-09 07:01:02] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-09 07:01:02] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-09 07:01:02] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-09 07:01:02] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-09 07:01:02] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-09 07:01:02] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-09 07:01:02] [INFO] ============================================================
+[2026-10-09 07:01:03] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-09 07:01:11] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-09 07:01:11] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-09 07:01:21] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-09 07:01:25] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-09 07:01:25] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-09 07:01:25] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-09 17:59:31] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 39485.9s).
+[2026-10-10 05:56:25] [INFO] ============================================================
+[2026-10-10 05:56:25] [INFO] === TRAY SESSION STARTED ===
+[2026-10-10 05:56:25] [INFO] ============================================================
+[2026-10-10 05:56:25] [INFO]   Timestamp : 2026-10-10 05:56:25
+[2026-10-10 05:56:25] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-10 05:56:25] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-10 05:56:25] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-10 05:56:25] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-10 05:56:25] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-10 05:56:25] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-10 05:56:25] [INFO] ============================================================
+[2026-10-10 05:56:26] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': False, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-10 05:56:34] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-10 05:56:34] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-10 05:56:44] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-10 05:56:48] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-10 05:56:48] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-10 05:56:48] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-10 06:00:14] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 206.5s.
+[2026-10-10 06:00:14] [STDOUT] [ORCHESTRATOR] Killed process 7352 on port 7070.
+[2026-10-10 06:00:18] [INFO] ============================================================
+[2026-10-10 06:00:18] [INFO] === TRAY SESSION STARTED ===
+[2026-10-10 06:00:18] [INFO] ============================================================
+[2026-10-10 06:00:18] [INFO]   Timestamp : 2026-10-10 06:00:18
+[2026-10-10 06:00:18] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-10 06:00:18] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-10 06:00:18] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-10 06:00:18] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-10 06:00:18] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-10 06:00:18] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-10 06:00:18] [INFO] ============================================================
+[2026-10-10 06:00:18] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-10 06:00:26] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-10 06:00:26] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-10 06:00:36] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-10 06:00:40] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-10 06:00:40] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-10 06:00:40] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-10 12:14:45] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 22444.9s).
+[2026-10-12 11:39:21] [INFO] ============================================================
+[2026-10-12 11:39:21] [INFO] === TRAY SESSION STARTED ===
+[2026-10-12 11:39:21] [INFO] ============================================================
+[2026-10-12 11:39:21] [INFO]   Timestamp : 2026-10-12 11:39:21
+[2026-10-12 11:39:21] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-12 11:39:21] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-12 11:39:21] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-12 11:39:21] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-12 11:39:21] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-12 11:39:21] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-12 11:39:21] [INFO] ============================================================
+[2026-10-12 11:39:22] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-12 11:39:30] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-12 11:39:30] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-12 11:39:40] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-12 11:39:44] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-12 11:39:44] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-12 11:39:44] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-13 04:35:35] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 60951.1s).
+[2026-10-13 04:44:24] [INFO] ============================================================
+[2026-10-13 04:44:24] [INFO] === TRAY SESSION STARTED ===
+[2026-10-13 04:44:24] [INFO] ============================================================
+[2026-10-13 04:44:24] [INFO]   Timestamp : 2026-10-13 04:44:24
+[2026-10-13 04:44:24] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-13 04:44:24] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-13 04:44:24] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-13 04:44:24] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-13 04:44:24] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-13 04:44:24] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-13 04:44:24] [INFO] ============================================================
+[2026-10-13 04:44:25] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-13 04:44:33] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-13 04:44:33] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-13 04:44:43] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-13 04:44:47] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-13 04:44:47] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-13 04:44:47] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-14 07:09:10] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 95063.2s).
+[2026-10-15 02:57:17] [INFO] ============================================================
+[2026-10-15 02:57:17] [INFO] === TRAY SESSION STARTED ===
+[2026-10-15 02:57:17] [INFO] ============================================================
+[2026-10-15 02:57:17] [INFO]   Timestamp : 2026-10-15 02:57:17
+[2026-10-15 02:57:17] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-15 02:57:17] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-15 02:57:17] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-15 02:57:17] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-15 02:57:17] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-15 02:57:17] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-15 02:57:17] [INFO] ============================================================
+[2026-10-15 02:57:18] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-15 02:57:26] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-15 02:57:26] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-15 02:57:36] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-15 02:57:40] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-15 02:57:40] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-15 02:57:40] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-15 09:10:22] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-10-15 09:10:22] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 22362.5s.
+[2026-10-15 09:10:22] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+Hello from Test Builder Plugin!
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+Hello from Test Builder Plugin!
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8 > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8 > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8 > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8 > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8 > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8 > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+ > tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+--- END TRACE ---
+[2026-10-15 09:10:57] [STDOUT] [ORCHESTRATOR] Killed process 2980 on port 7070.
+[2026-10-15 16:16:55] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-10-15 16:16:55] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-10-15 16:20:41] [INFO] ============================================================
+[2026-10-15 16:20:41] [INFO] === TRAY SESSION STARTED ===
+[2026-10-15 16:20:41] [INFO] ============================================================
+[2026-10-15 16:20:41] [INFO]   Timestamp : 2026-10-15 16:20:41
+[2026-10-15 16:20:41] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-15 16:20:41] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-15 16:20:41] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-15 16:20:41] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-15 16:20:41] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-15 16:20:41] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-15 16:20:41] [INFO] ============================================================
+[2026-10-15 16:20:42] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-15 16:20:50] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-15 16:20:50] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-15 16:20:59] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-15 16:21:03] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-15 16:21:03] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-15 16:21:03] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-15 17:06:09] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-10-15 17:06:09] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 2706.6s.
+[2026-10-15 17:06:09] [STDOUT] [ORCHESTRATOR] Killed process 17932 on port 7070.
+[2026-10-15 17:07:30] [INFO] ============================================================
+[2026-10-15 17:07:30] [INFO] === TRAY SESSION STARTED ===
+[2026-10-15 17:07:30] [INFO] ============================================================
+[2026-10-15 17:07:30] [INFO]   Timestamp : 2026-10-15 17:07:30
+[2026-10-15 17:07:30] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-15 17:07:30] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-15 17:07:30] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-15 17:07:30] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-15 17:07:30] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-15 17:07:30] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-15 17:07:30] [INFO] ============================================================
+[2026-10-15 17:07:31] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-15 17:07:39] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-15 17:07:39] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-15 17:07:49] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-15 17:07:53] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-15 17:07:53] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-15 17:07:53] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
