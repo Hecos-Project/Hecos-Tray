@@ -69,6 +69,99 @@ def terminate_consoles():
                 pass
     _managed_consoles = []
 
+# ── Ollama Process Utilities ──────────────────────────────────────────────────
+
+_OLLAMA_PROCESS_NAMES = {"ollama.exe", "ollama_llama_server.exe", "ollama app.exe"}
+
+def get_ollama_processes():
+    """Returns a list of dicts describing running Ollama-related processes.
+    Each dict: {pid, name, type, vram_mb, cpu_percent, status}
+    type is one of: 'Ollama Server' | 'Ollama GPU Runner' | 'Ollama App'
+    """
+    try:
+        import psutil
+    except ImportError:
+        return []
+
+    results = []
+    for proc in psutil.process_iter(['pid', 'name', 'status', 'cpu_percent']):
+        try:
+            name_lower = (proc.info.get('name') or '').lower()
+            if name_lower not in {n.lower() for n in _OLLAMA_PROCESS_NAMES}:
+                continue
+
+            if 'llama_server' in name_lower or 'llama-server' in name_lower:
+                p_type = 'Ollama GPU Runner'
+            elif 'ollama app' in name_lower:
+                p_type = 'Ollama App (GUI)'
+            else:
+                p_type = 'Ollama Server'
+
+            # Try to read memory info
+            vram_mb = 0
+            try:
+                mem = proc.memory_info()
+                vram_mb = round(mem.rss / (1024 * 1024))
+            except Exception:
+                pass
+
+            results.append({
+                'pid':         proc.info['pid'],
+                'name':        proc.info.get('name', ''),
+                'type':        p_type,
+                'vram_mb':     vram_mb,
+                'cpu_percent': round(proc.info.get('cpu_percent') or 0.0, 1),
+                'status':      proc.info.get('status', 'unknown'),
+            })
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            continue
+    return results
+
+
+def is_ollama_api_responding(url: str = "http://127.0.0.1:11434", timeout: int = 2) -> bool:
+    """Returns True if Ollama's HTTP API is actually responding (model can accept requests)."""
+    try:
+        import urllib.request
+        req = urllib.request.Request(f"{url}/api/tags", method="GET")
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return resp.status == 200
+    except Exception:
+        return False
+
+
+def kill_ollama_processes():
+    """Kills all Ollama-related processes using taskkill /F /T on Windows,
+    ensuring child GPU runners are also terminated and VRAM is freed.
+    Returns number of processes killed.
+    """
+    import subprocess, sys
+    killed = 0
+    if sys.platform == 'win32':
+        for exe in ('ollama.exe', 'ollama_llama_server.exe', 'ollama app.exe'):
+            try:
+                result = subprocess.run(
+                    ['taskkill', '/F', '/T', '/IM', exe],
+                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5
+                )
+                if result.returncode == 0:
+                    killed += 1
+            except Exception:
+                pass
+    else:
+        try:
+            import psutil
+            for proc in psutil.process_iter(['pid', 'name']):
+                if (proc.info.get('name') or '').lower() in {'ollama', 'ollama_llama_server'}:
+                    try:
+                        proc.kill()
+                        killed += 1
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+    return killed
+
+
 def get_hecos_processes():
     import os
     try:

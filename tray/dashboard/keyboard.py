@@ -34,7 +34,11 @@ class KeyboardNavigator:
         # Listen to all mouse clicks to keep our virtual focus in sync
         self.app.bind_all("<Button-1>", self._on_click_anywhere, add="+")
         
-        self.app.after(300, lambda: self._focus_widget(self._get_widgets(self.sidebar)[0]))
+        def _initial_focus():
+            widgets = self._get_widgets(self.sidebar)
+            if widgets:
+                self._focus_widget(widgets[0])
+        self.app.after(300, _initial_focus)
 
     def _is_typing(self):
         # Allow native typing and text navigation

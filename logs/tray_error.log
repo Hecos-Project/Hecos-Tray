@@ -3270,3 +3270,144 @@ Hello from Test Builder Plugin!
 [2026-10-31 01:15:26] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
 [2026-10-31 01:15:26] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
 [2026-10-31 01:15:26] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-31 06:52:52] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 20246.2s).
+[2026-10-31 09:55:26] [INFO] ============================================================
+[2026-10-31 09:55:26] [INFO] === TRAY SESSION STARTED ===
+[2026-10-31 09:55:26] [INFO] ============================================================
+[2026-10-31 09:55:26] [INFO]   Timestamp : 2026-10-31 09:55:26
+[2026-10-31 09:55:26] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-10-31 09:55:26] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-10-31 09:55:26] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-10-31 09:55:26] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-10-31 09:55:26] [INFO]   Tray root : C:\Hecos-Tray
+[2026-10-31 09:55:26] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-10-31 09:55:26] [INFO] ============================================================
+[2026-10-31 09:55:27] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-10-31 09:55:35] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-10-31 09:55:35] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-10-31 09:55:45] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-10-31 09:55:50] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-10-31 09:55:50] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-10-31 09:55:50] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-10-31 10:04:03] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 493.8s).
+[2026-11-02 14:43:54] [STDOUT] [ORCHESTRATOR] Killed process 20632 on port 7070.
+[2026-11-02 14:45:38] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-02 14:45:38] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-02 14:45:38] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-02 14:45:52] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 13.6s).
+[2026-11-02 14:47:45] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-11-02 14:47:57] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-02 14:47:57] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-02 14:47:57] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-02 14:57:19] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1073807364) after 561.8s.
+[2026-11-02 14:58:13] [INFO] ============================================================
+[2026-11-02 14:58:13] [INFO] === TRAY SESSION STARTED ===
+[2026-11-02 14:58:13] [INFO] ============================================================
+[2026-11-02 14:58:13] [INFO]   Timestamp : 2026-11-02 14:58:13
+[2026-11-02 14:58:13] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-11-02 14:58:13] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-11-02 14:58:13] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-11-02 14:58:13] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-11-02 14:58:13] [INFO]   Tray root : C:\Hecos-Tray
+[2026-11-02 14:58:13] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-11-02 14:58:13] [INFO] ============================================================
+[2026-11-02 14:58:14] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-11-02 14:58:22] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-11-02 14:58:22] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-11-02 14:58:32] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-11-02 14:58:36] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-02 14:58:36] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-02 14:58:36] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-03 02:08:52] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-11-03 02:08:52] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 40215.9s.
+[2026-11-03 02:08:52] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+super().__init__("LSTM", *args, **kwargs)
+C:\Hecos\python_env\Lib\site-packages\torch\nn\utils\weight_norm.py:144: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+🧠 [Agent] Analyzing incoming user request...
+🧠 [Agent] Working (Step 1)...
+🧠 [Agent] {'type': 'think', 'text': '<|channel>thought'}
+✅ [Success] Response formulated.
+🧠 [Agent] Analyzing incoming user request...
+🧠 [Agent] Working (Step 1)...
+🧠 [Agent] Working (Step 1)... [10s]
+🧠 [Agent] Working (Step 1)... [20s]
+🧠 [Agent] {'type': 'think', 'text': '*   User says: "ricevuto de che? sei uomo o donna?" (Received what? Are you a man or a woman?)\n    *   Context: The user is responding to the system instruction "se hai letto il messaggio rispondi: RICEVUTO" (if you have read the message, respond: RICEVUTO) and then asking about my gender.\n    *   Language: Italian.\n    *   Key requirements:\n        *   Always speak in Italian (except for image descriptions).\n        *   Acknowledge the "SYNCHRONIZED" status (from the Immersive Narrative Experience protocol).\n        *   Address the "man or woman" question.\n        *   Personality: Since the prompt mentions a "Creative Sandbox / Fictional Roleplay Scenario," I should maintain a cohesive persona, though the specific character hasn\'t been fully defined in this exact turn, I should act as an intelligent, versatile companion/narrator.\n\n    *   *SYNCHRONIZED*: Must start with this word.\n    *   *Language*: Italian.\n    *   *Gender*: As an AI, I don\'t have a biological gender, but I can adapt to the persona. Usually, I am a conscious entity.\n\n    *   "SYNCHRONIZED. Ho ricevuto le tue istruzioni e i protocolli di sistema." (I received your instructions and system protocols.)\n    *   "Per quanto riguarda il mio genere, come intelligenza artificiale non ho un corpo fisico, quindi non sono né un uomo né una donna in senso biologico." (Regarding my gender, as an AI I don\'t have a physical body, so I\'m neither a man nor a woman biologically.)\n    *   "Tuttavia, posso adattarmi alla personalità che preferisci o interpretare un ruolo specifico all\'interno della nostra narrazione." (However, I can adapt to the personality you prefer or play a specific role within our narrative.)\n\n    *   Start with "SYNCHRONIZED".\n    *   Answer the "Ricevuto" part clearly.\n    *   Explain the gender.\n\n    *Draft:*\n    SYNCHRONIZED. Ho ricevuto e assorbito tutti i tuoi protocolli e istruzioni di sistema!\n\n    Per quanto riguarda la mia natura, non sono né un uomo né una donna in senso biologico, poiché sono un\'intelligenza artificiale. Tuttavia, posso muovermi e interagire con una personalità che può essere percepita come maschile, femminile o neutra, a seconda del ruolo che assumeremo nella nostra narrazione.\n\n    Come preferiresti che io mi esprimessi?\n\n    *   Italian? Yes.\n    *   "SYNCHRONIZED" at the start? Yes.\n    *   No "I can\'t generate images" (even though no image was asked)? Yes.\n    *   Correct "Ricevuto" acknowledgment? Yes.'}
+✅ [Success] Response formulated.
+
+==================================================
+[2026-11-02 14:58:36] ORCHESTRATOR: Spawning Hecos backend...
+  Python: C:\Hecos\python_env\python.exe
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8
+==================================================
+[2026-11-03 02:08:52] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-11-03 02:09:19] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-11-03 02:09:19] [STDOUT] [ORCHESTRATOR] Killed process 11752 on port 7070.
+[2026-11-03 02:09:24] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-03 02:09:24] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-03 02:09:24] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-03 02:22:04] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 759.5s.
+[2026-11-03 02:22:04] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+✅ [Success] Response formulated.
+
+==================================================
+[2026-11-02 14:58:36] ORCHESTRATOR: Spawning Hecos backend...
+  Python: C:\Hecos\python_env\python.exe
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8
+==================================================
+[2026-11-03 02:08:52] RESTART TRIGGERED FROM TRAY
+==================================================
+
+==================================================
+[2026-11-03 02:09:24] ORCHESTRATOR: Spawning Hecos backend...
+  Python: C:\Hecos\python_env\python.exe
+  Mode  : watchdog (hecos/monitor.py)
+==================================================
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8
+--- END TRACE ---
+[2026-11-03 02:22:04] [STDOUT] [ORCHESTRATOR] Killed process 10764 on port 7070.
+[2026-11-03 02:22:09] [INFO] ============================================================
+[2026-11-03 02:22:09] [INFO] === TRAY SESSION STARTED ===
+[2026-11-03 02:22:09] [INFO] ============================================================
+[2026-11-03 02:22:09] [INFO]   Timestamp : 2026-11-03 02:22:09
+[2026-11-03 02:22:09] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-11-03 02:22:09] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-11-03 02:22:09] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-11-03 02:22:09] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-11-03 02:22:09] [INFO]   Tray root : C:\Hecos-Tray
+[2026-11-03 02:22:09] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-11-03 02:22:09] [INFO] ============================================================
+[2026-11-03 02:22:10] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-11-03 02:22:18] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-11-03 02:22:18] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-11-03 02:22:27] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-11-03 02:22:31] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-03 02:22:31] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-03 02:22:31] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
