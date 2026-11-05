@@ -3411,3 +3411,43 @@ Hello from Test Builder Plugin!
 [2026-11-03 02:22:31] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
 [2026-11-03 02:22:31] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
 [2026-11-03 02:22:31] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-03 07:18:42] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-11-03 07:18:42] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 17771.4s.
+[2026-11-03 07:18:42] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+[HPM] Installing builder_studio-1.6.2.hpkg [90.0%] - Registering in database...
+Hello from Test Builder Plugin!
+[HPM] Installing builder_studio-1.6.2.hpkg -> DONE (100%): builder_studio-1.6.2.hpkg installed successfully.
+
+[WEB_UI] Riavvio del sistema in corso...
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+
+[WEB_UI] Riavvio del sistema in corso...
+Hello from Test Builder Plugin!
+C:\Hecos\python_env\Lib\site-packages\pygame\pkgdata.py:25: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_stream, resource_exists
+pygame 2.6.1 (SDL 2.28.4, Python 3.11.9)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+Hello from Test Builder Plugin!
+🧠 [Agent] Analyzing incoming user request...
+🧠 [Agent] Working (Step 1)...
+🧠 [Agent] Working (Step 1)... [10s]
+🧠 [Agent] Working (Step 1)... [20s]
+🧠 [Agent] Working (Step 1)... [30s]
+✅ [Success] Response formulated.
+WARNING: Defaulting repo_id to hexgrad/Kokoro-82M. Pass repo_id='hexgrad/Kokoro-82M' to suppress this warning.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+C:\Hecos\python_env\Lib\site-packages\torch\nn\modules\rnn.py:1013: UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+  super().__init__("LSTM", *args, **kwargs)
+C:\Hecos\python_env\Lib\site-packages\torch\nn\utils\weight_norm.py:144: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+--- END TRACE ---
+[2026-11-03 07:19:24] [STDOUT] [ORCHESTRATOR] Killed process 6264 on port 7070.
+[2026-11-05 02:44:42] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-11-05 02:44:55] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-05 02:44:55] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-05 02:44:55] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.

@@ -130,35 +130,42 @@ def is_ollama_api_responding(url: str = "http://127.0.0.1:11434", timeout: int =
 
 
 def kill_ollama_processes():
-    """Kills all Ollama-related processes using taskkill /F /T on Windows,
-    ensuring child GPU runners are also terminated and VRAM is freed.
+    """Kills all Ollama-related processes cleanly.
+    Uses psutil first for silent, instantaneous in-memory termination (no console windows).
+    Falls back to taskkill /F /T with CREATE_NO_WINDOW on Windows.
     Returns number of processes killed.
     """
     import subprocess, sys
     killed = 0
-    if sys.platform == 'win32':
+
+    # 1. Pure Python termination via psutil (completely silent on all platforms)
+    try:
+        import psutil
+        target_names = {'ollama.exe', 'ollama_llama_server.exe', 'ollama app.exe', 'ollama'}
+        for proc in psutil.process_iter(['pid', 'name']):
+            if (proc.info.get('name') or '').lower() in target_names:
+                try:
+                    proc.kill()
+                    killed += 1
+                except Exception:
+                    pass
+    except Exception:
+        pass
+
+    # 2. Windows fallback if psutil was not available
+    if sys.platform == 'win32' and killed == 0:
         for exe in ('ollama.exe', 'ollama_llama_server.exe', 'ollama app.exe'):
             try:
                 result = subprocess.run(
                     ['taskkill', '/F', '/T', '/IM', exe],
-                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5
+                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5,
+                    creationflags=subprocess.CREATE_NO_WINDOW
                 )
                 if result.returncode == 0:
                     killed += 1
             except Exception:
                 pass
-    else:
-        try:
-            import psutil
-            for proc in psutil.process_iter(['pid', 'name']):
-                if (proc.info.get('name') or '').lower() in {'ollama', 'ollama_llama_server'}:
-                    try:
-                        proc.kill()
-                        killed += 1
-                    except Exception:
-                        pass
-        except Exception:
-            pass
+
     return killed
 
 
