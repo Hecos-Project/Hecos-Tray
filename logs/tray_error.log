@@ -3451,3 +3451,43 @@ C:\Hecos\python_env\Lib\site-packages\torch\nn\utils\weight_norm.py:144: FutureW
 [2026-11-05 02:44:55] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
 [2026-11-05 02:44:55] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
 [2026-11-05 02:44:55] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-05 08:34:52] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-11-05 08:34:52] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 20997.1s.
+[2026-11-05 08:34:52] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+File "C:\Hecos\python_env\Lib\site-packages\litellm\_logging.py", line 377, in <module>
+    numeric_level: Final[str] = getattr(logging, log_level.upper())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'logging' has no attribute ''
+
+[WEB_UI] Riavvio del sistema in corso...
+Hello from Test Builder Plugin!
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8Exception in thread Thread-901 (_run_inference):
+Traceback (most recent call last):
+  File "threading.py", line 1045, in _bootstrap_inner
+  File "threading.py", line 982, in run
+  File "C:\Hecos\hecos\modules\web_ui\routes_chat_inference.py", line 38, in _run_inference
+    from hecos.core.llm import brain  # noqa: F401 – ensure core is importable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Hecos\hecos\core\llm\brain.py", line 9, in <module>
+    from hecos.core.llm import client
+  File "C:\Hecos\hecos\core\llm\client.py", line 6, in <module>
+    import litellm
+  File "C:\Hecos\python_env\Lib\site-packages\litellm\__init__.py", line 51, in <module>
+    from litellm.litellm_core_utils.core_helpers import drop_params_env_flag
+  File "C:\Hecos\python_env\Lib\site-packages\litellm\litellm_core_utils\core_helpers.py", line 12, in <module>
+    from litellm._logging import verbose_logger
+  File "C:\Hecos\python_env\Lib\site-packages\litellm\_logging.py", line 377, in <module>
+    numeric_level: Final[str] = getattr(logging, log_level.upper())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'logging' has no attribute ''
+
+==================================================
+[2026-11-05 08:34:52] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-11-05 08:35:19] [STDOUT] [ORCHESTRATOR] Port still held after stop_hecos, forcing kill...
+[2026-11-05 08:35:19] [STDOUT] [ORCHESTRATOR] Killed process 35536 on port 7070.
+[2026-11-05 08:35:24] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-05 08:35:24] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-05 08:35:24] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
