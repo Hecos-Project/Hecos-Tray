@@ -10,6 +10,9 @@ from tray.utils import is_hecos_online
 # Hold a reference to the subprocess so we can terminate it later
 _hecos_process = None
 
+# Track PIDs intentionally stopped by the user/tray to suppress false crash logs
+_stopping_pids = set()
+
 # Global lock — prevents two concurrent start_hecos() / restart_hecos() calls
 _start_lock = threading.Lock()
 
@@ -84,6 +87,12 @@ def _wait_and_respawn(proc):
     proc.wait()
     elapsed = time.time() - start_time
     code = getattr(proc, 'returncode', '?')
+    pid = getattr(proc, 'pid', None)
+
+    if pid in _stopping_pids:
+        _stopping_pids.discard(pid)
+        print(f"[ORCHESTRATOR] Hecos process stopped by user (ran {elapsed:.1f}s).")
+        return
 
     if code == 42:
         print("[ORCHESTRATOR] Hecos requested reboot (Exit 42). Respawning...")
@@ -185,7 +194,13 @@ def start_hecos():
         if sys.platform == "win32":
             kwargs["creationflags"] = 0x08000000  # CREATE_NO_WINDOW
 
-        _hecos_process = subprocess.Popen(cmd, **kwargs)
+        try:
+            _hecos_process = subprocess.Popen(cmd, **kwargs)
+        finally:
+            try:
+                boot_log.close()
+            except Exception:
+                pass
 
         # Background thread handles exit code 42 (self-requested reboot)
         threading.Thread(target=_wait_and_respawn, args=(_hecos_process,), daemon=True).start()
@@ -198,41 +213,137 @@ def start_hecos():
 
 
 
-def stop_hecos():
-    """Terminates the background Hecos subprocess."""
-    global _hecos_process
-    if _hecos_process is not None:
+def _kill_process_tree(pid: int) -> bool:
+    """Terminates a process and all of its descendants (watchdog + server + workers)."""
+    if not pid:
+        return False
+    try:
+        import psutil
         try:
-            _hecos_process.terminate()
-            _hecos_process.wait(timeout=5)
-        except subprocess.TimeoutExpired:
-            _hecos_process.kill()
+            parent = psutil.Process(pid)
+        except psutil.NoSuchProcess:
+            return False
+
+        try:
+            children = parent.children(recursive=True)
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            children = []
+
+        # Terminate parent first so a watchdog/launcher cannot respawn children,
+        # then terminate all descendant processes.
+        targets = [parent] + children
+        for p in targets:
+            try:
+                p.terminate()
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                pass
+
+        _, alive = psutil.wait_procs(targets, timeout=3)
+        for p in alive:
+            try:
+                p.kill()
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                pass
+        if alive:
+            psutil.wait_procs(alive, timeout=2)
+        return True
+    except ImportError:
+        if sys.platform == "win32":
+            subprocess.run(
+                ["taskkill", "/F", "/T", "/PID", str(pid)],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                creationflags=0x08000000,
+                timeout=5,
+            )
+            return True
+    except Exception as e:
+        print(f"[ORCHESTRATOR] _kill_process_tree({pid}) error: {e}")
+        if sys.platform == "win32":
+            try:
+                subprocess.run(
+                    ["taskkill", "/F", "/T", "/PID", str(pid)],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    creationflags=0x08000000,
+                    timeout=5,
+                )
+                return True
+            except Exception:
+                pass
+    return False
+
+
+def stop_hecos():
+    """Terminates the background Hecos process tree and frees HECOS_PORT."""
+    global _hecos_process
+    proc = _hecos_process
+    _hecos_process = None
+
+    if proc is not None:
+        _stopping_pids.add(proc.pid)
+        _kill_process_tree(proc.pid)
+        try:
+            proc.wait(timeout=2)
         except Exception:
             pass
-        _hecos_process = None
         print("[ORCHESTRATOR] Hecos process stopped.")
-    else:
-        # Tray was restarted while Hecos was already running — kill by port
-        _kill_by_port()
+
+    # Always check HECOS_PORT as well: on Windows with use_daemon=True or py.exe
+    # launcher, child/orphan server processes may outlive the immediate Popen handle.
+    _kill_by_port(quiet=(proc is not None))
+
+    # Wait briefly until the TCP port is actually released so UI refreshes see Offline
+    for _ in range(15):
+        if not is_hecos_online():
+            break
+        time.sleep(0.2)
 
 
-def _kill_by_port():
-    """Find and kill whichever process is holding HECOS_PORT."""
+def _kill_by_port(quiet: bool = False):
+    """Find and kill whichever process tree is holding HECOS_PORT."""
     from tray.config import HECOS_PORT
     try:
         import psutil
         killed = False
+        seen_pids = set()
         for conn in psutil.net_connections(kind="tcp"):
-            if conn.laddr.port == HECOS_PORT and conn.status == "LISTEN":
+            if (
+                conn.laddr
+                and conn.laddr.port == HECOS_PORT
+                and conn.status == "LISTEN"
+                and conn.pid
+                and conn.pid not in seen_pids
+            ):
+                seen_pids.add(conn.pid)
                 try:
                     proc = psutil.Process(conn.pid)
-                    proc.terminate()
-                    proc.wait(timeout=3)
+                    # If the server is supervised by an orphaned monitor.py parent,
+                    # kill from the watchdog parent down so monitor.py exits cleanly too.
+                    target_pid = conn.pid
+                    try:
+                        parent = proc.parent()
+                        if parent and parent.pid != os.getpid():
+                            parent_cmd = " ".join(parent.cmdline() or []).lower()
+                            if "monitor.py" in parent_cmd:
+                                target_pid = parent.pid
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        pass
+
+                    _stopping_pids.add(target_pid)
+                    _stopping_pids.add(conn.pid)
+                    if _kill_process_tree(target_pid):
+                        killed = True
+                    if target_pid != conn.pid and psutil.pid_exists(conn.pid):
+                        if _kill_process_tree(conn.pid):
+                            killed = True
+                    if killed:
+                        print(f"[ORCHESTRATOR] Killed process {conn.pid} on port {HECOS_PORT}.")
+                except psutil.NoSuchProcess:
                     killed = True
-                    print(f"[ORCHESTRATOR] Killed process {conn.pid} on port {HECOS_PORT}.")
                 except Exception as e:
                     print(f"[ORCHESTRATOR] Could not terminate PID {conn.pid}: {e}")
-        if not killed:
+        if not killed and not quiet:
             print(f"[ORCHESTRATOR] No process found on port {HECOS_PORT}.")
     except ImportError:
         print("[ORCHESTRATOR] psutil not available — cannot kill by port.")

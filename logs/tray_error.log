@@ -3491,3 +3491,99 @@ AttributeError: module 'logging' has no attribute ''
 [2026-11-05 08:35:24] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
 [2026-11-05 08:35:24] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
 [2026-11-05 08:35:24] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-06 15:29:37] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+ error (exit code 1) after 111253.0s.
+[2026-11-06 15:29:37] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+*   System Context:… (0ms)
+✅ [Done] Response formulated (14.4s)
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8🧠 [Agent] Analyzing request & generating response — gemma-4-abliterated:12b-qat (ollama)
+🧠 [Agent] Analyzing request & generating response (18327ms)
+🧠 [Agent] Model internal reasoning
+🧠 [Agent] Model internal reasoning — "Sei una zoccola" (Italian)
+"You are a [bitch/slut/whore]" (A common,… (0ms)
+✅ [Done] Response formulated (18.3s)
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8🧠 [Agent] Analyzing request & generating response — qwen3.5-claude-4.6-opus:4b (ollama)
+🧠 [Agent] Analyzing request & generating response (16094ms)
+✅ [Done] Response formulated (16.1s)
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8🧠 [Agent] Analyzing request & generating response — qwen3.5-claude-4.6-opus:4b (ollama)
+🧠 [Agent] Analyzing request & generating response (23686ms)
+🧠 [Agent] Model internal reasoning
+🧠 [Agent] Model internal reasoning — Let me work through this problem step by step.
+
+Problem: ci sei o no… (0ms)
+✅ [Done] Response formulated (23.7s)
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8🧠 [Agent] Analyzing request & generating response — qwen3.5-claude-4.6-opus:latest (ollama)
+🧠 [Agent] Analyzing request & generating response (17546ms)
+🧠 [Agent] Model internal reasoning
+🧠 [Agent] Model internal reasoning — Let me think through this carefully.
+
+The question/task: La conosci La… (0ms)
+✅ [Done] Response formulated (17.5s)
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8🧠 [Agent] Analyzing request & generating response — qwen3.5-claude-4.6-opus:latest (ollama)
+🧠 [Agent] Analyzing request & generating response (9750ms)
+🧠 [Agent] Model internal reasoning
+🧠 [Agent] Model internal reasoning — The user is asking a provocative question in Italian, essentially aski… (0ms)
+✅ [Done] Response formulated (9.8s)
+--- END TRACE ---
+[2026-11-06 15:29:49] [STDOUT] [ORCHESTRATOR] Killed process 6648 on port 7070.
+[2026-11-07 05:49:13] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-11-07 05:49:25] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-07 05:49:25] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-07 05:49:25] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-07 14:53:54] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 1) after 32669.0s.
+[2026-11-07 14:53:54] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+11:43:44 - LiteLLM:DEBUG: litellm_logging.py:240 - [Non-Blocking] Unable to import GenericAPILogger - LiteLLM Enterprise Feature - No module named 'litellm_enterprise'
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1172 - Using AiohttpTransport...
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1238 - Creating AiohttpTransport...
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1275 - NEW SESSION: Creating new ClientSession (no shared session provided)
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1172 - Using AiohttpTransport...
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1238 - Creating AiohttpTransport...
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1275 - NEW SESSION: Creating new ClientSession (no shared session provided)
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1172 - Using AiohttpTransport...
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1238 - Creating AiohttpTransport...
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1275 - NEW SESSION: Creating new ClientSession (no shared session provided)
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1172 - Using AiohttpTransport...
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1238 - Creating AiohttpTransport...
+11:43:45 - LiteLLM:DEBUG: http_handler.py:1275 - NEW SESSION: Creating new ClientSession (no shared session provided)
+
+[WEB_UI] Riavvio del sistema in corso...
+Hello from Test Builder Plugin!
+12:32:26 - LiteLLM:DEBUG: litellm_logging.py:240 - [Non-Blocking] Unable to import GenericAPILogger - LiteLLM Enterprise Feature - No module named 'litellm_enterprise'
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1172 - Using AiohttpTransport...
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1238 - Creating AiohttpTransport...
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1275 - NEW SESSION: Creating new ClientSession (no shared session provided)
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1172 - Using AiohttpTransport...
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1238 - Creating AiohttpTransport...
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1275 - NEW SESSION: Creating new ClientSession (no shared session provided)
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1172 - Using AiohttpTransport...
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1238 - Creating AiohttpTransport...
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1275 - NEW SESSION: Creating new ClientSession (no shared session provided)
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1172 - Using AiohttpTransport...
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1238 - Creating AiohttpTransport...
+12:32:27 - LiteLLM:DEBUG: http_handler.py:1275 - NEW SESSION: Creating new ClientSession (no shared session provided)
+7                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           87                   STATUS: 🔴 LISTENING | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                   87                                                  🔴 RECORDING...                                                  87                      STATUS: READY | MODEL: N/D | SOUL: N/D | MIC: ON | VOICE: ON | PTT: ON                      87                                           PRESS CONTROL+SHIFT TO SPEAK                                           8
+--- END TRACE ---
+[2026-11-07 14:54:02] [STDOUT] [ORCHESTRATOR] Killed process 29416 on port 7070.
+[2026-11-08 03:53:39] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-11-08 03:53:46] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-11-08 03:53:46] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-11-08 03:53:54] [INFO] ============================================================
+[2026-11-08 03:53:54] [INFO] === TRAY SESSION STARTED ===
+[2026-11-08 03:53:54] [INFO] ============================================================
+[2026-11-08 03:53:54] [INFO]   Timestamp : 2026-11-08 03:53:54
+[2026-11-08 03:53:54] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-11-08 03:53:54] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-11-08 03:53:54] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-11-08 03:53:54] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-11-08 03:53:54] [INFO]   Tray root : C:\Hecos-Tray
+[2026-11-08 03:53:54] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-11-08 03:53:54] [INFO] ============================================================
+[2026-11-08 03:53:55] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-11-08 03:53:56] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-11-08 03:53:56] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-11-08 03:53:59] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-11-08 03:53:59] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-08 03:53:59] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-08 03:53:59] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.

@@ -57,16 +57,17 @@ def refresh_ui(icon: "pystray.Icon"):
         return
     online = is_hecos_online()
     icon.icon = load_icon(online)
-    icon.menu = build_menu([icon])
+    icon.menu = build_menu([icon], online=online)
 
 
-def build_menu(icon_ref: list):
+def build_menu(icon_ref: list, online: bool = None):
     """
     Lean native tray right-click menu.
     All detailed controls live in the Tray Dashboard (left-click or top button).
     """
     settings  = load_settings()
-    online    = is_hecos_online()
+    if online is None:
+        online = is_hecos_online()
     version   = get_version()
     scheme    = get_scheme()
     _, _      = get_urls()
@@ -115,7 +116,7 @@ def build_menu(icon_ref: list):
             play_beep(300, 150)
             terminate_consoles()
             stop_hecos()
-            time.sleep(1.5)
+            time.sleep(0.2)
             refresh_ui(icon)
         threading.Thread(target=_do, daemon=True).start()
 

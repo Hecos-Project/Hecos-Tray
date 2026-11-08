@@ -35,7 +35,7 @@ def get_urls():
 def is_hecos_online():
     """Checks if the Hecos backend is responding on port 7070."""
     try:
-        with socket.create_connection(("localhost", HECOS_PORT), timeout=2):
+        with socket.create_connection(("127.0.0.1", HECOS_PORT), timeout=0.5):
             return True
     except OSError:
         return False

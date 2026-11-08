@@ -165,6 +165,8 @@ def _monitor_status(icon: "pystray.Icon"):
 
             # Auto-start service if the toggle says it should be running
             # (use is_hecos_running() here — process check is enough for start logic)
+            if online or is_hecos_running():
+                attempted_start = True
             if settings["start_hecos_on_launch"] and not is_hecos_running() and not attempted_start:
                 attempted_start = True
                 print("[TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…")
