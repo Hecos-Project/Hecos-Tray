@@ -71,7 +71,31 @@ def terminate_consoles():
 
 # ── Ollama Process Utilities ──────────────────────────────────────────────────
 
-_OLLAMA_PROCESS_NAMES = {"ollama.exe", "ollama_llama_server.exe", "ollama app.exe"}
+_OLLAMA_PROCESS_NAMES = {"ollama.exe", "ollama_llama_server.exe", "ollama app.exe", "llama-server.exe", "llama-server"}
+
+
+def _is_ollama_proc(proc) -> bool:
+    """Returns True if proc belongs to Ollama (verifying path/cmdline for llama-server)."""
+    try:
+        name_lower = (proc.info.get('name') or '').lower()
+        if name_lower in {"ollama.exe", "ollama_llama_server.exe", "ollama app.exe", "ollama"}:
+            return True
+        if name_lower in {"llama-server.exe", "llama-server"}:
+            exe_l = ""
+            cmd_l = ""
+            try:
+                exe_l = (proc.exe() or "").lower()
+            except Exception:
+                pass
+            try:
+                cmd_l = " ".join(proc.cmdline() or []).lower()
+            except Exception:
+                pass
+            return ("ollama" in exe_l) or (".ollama" in cmd_l)
+    except Exception:
+        pass
+    return False
+
 
 def get_ollama_processes():
     """Returns a list of dicts describing running Ollama-related processes.
@@ -83,25 +107,45 @@ def get_ollama_processes():
     except ImportError:
         return []
 
+    # Query /api/ps for loaded model & GPU VRAM residency (fast 0.4s timeout)
+    loaded_vram_mb = 0
+    loaded_model_short = ""
+    try:
+        import json, urllib.request
+        req = urllib.request.Request("http://127.0.0.1:11434/api/ps", method="GET")
+        with urllib.request.urlopen(req, timeout=0.4) as resp:
+            ps_data = json.loads(resp.read().decode("utf-8", errors="replace"))
+            models = ps_data.get("models") or []
+            if models:
+                loaded_vram_mb = sum(round((m.get("size_vram") or 0) / (1024 * 1024)) for m in models)
+                mname = (models[0].get("name") or "").split("/")[-1]
+                loaded_model_short = mname[:24]
+    except Exception:
+        pass
+
     results = []
-    for proc in psutil.process_iter(['pid', 'name', 'status', 'cpu_percent']):
+    for proc in psutil.process_iter(['pid', 'ppid', 'name', 'status', 'cpu_percent']):
         try:
             name_lower = (proc.info.get('name') or '').lower()
-            if name_lower not in {n.lower() for n in _OLLAMA_PROCESS_NAMES}:
+            if name_lower not in _OLLAMA_PROCESS_NAMES:
+                continue
+            if not _is_ollama_proc(proc):
                 continue
 
-            if 'llama_server' in name_lower or 'llama-server' in name_lower:
-                p_type = 'Ollama GPU Runner'
+            is_runner = ('llama_server' in name_lower or 'llama-server' in name_lower)
+            if is_runner:
+                p_type = f"GPU Runner ({loaded_model_short})" if loaded_model_short else 'Ollama GPU Runner'
             elif 'ollama app' in name_lower:
                 p_type = 'Ollama App (GUI)'
             else:
                 p_type = 'Ollama Server'
 
-            # Try to read memory info
+            # Read RAM RSS (plus VRAM residency for active runner)
             vram_mb = 0
             try:
                 mem = proc.memory_info()
-                vram_mb = round(mem.rss / (1024 * 1024))
+                rss_mb = round(mem.rss / (1024 * 1024))
+                vram_mb = loaded_vram_mb if (is_runner and loaded_vram_mb > 0 and rss_mb > 50) else rss_mb
             except Exception:
                 pass
 
@@ -130,25 +174,47 @@ def is_ollama_api_responding(url: str = "http://127.0.0.1:11434", timeout: int =
 
 
 def kill_ollama_processes():
-    """Kills all Ollama-related processes cleanly.
-    Uses psutil first for silent, instantaneous in-memory termination (no console windows).
-    Falls back to taskkill /F /T with CREATE_NO_WINDOW on Windows.
+    """Kills all Ollama-related processes cleanly (including modern 'llama-server.exe' GPU runners).
+    First asks Ollama API to unload loaded models (keep_alive=0), then terminates processes via psutil.
     Returns number of processes killed.
     """
-    import subprocess, sys
+    import subprocess, sys, json, urllib.request
     killed = 0
+
+    # 0. Best-effort graceful VRAM unload before killing processes
+    try:
+        req = urllib.request.Request("http://127.0.0.1:11434/api/ps", method="GET")
+        with urllib.request.urlopen(req, timeout=1.5) as resp:
+            ps_data = json.loads(resp.read().decode("utf-8", errors="replace"))
+        for m in ps_data.get("models", []):
+            mname = m.get("name")
+            if mname:
+                body = json.dumps({"model": mname, "prompt": "", "keep_alive": 0, "stream": False}).encode("utf-8")
+                ureq = urllib.request.Request(
+                    "http://127.0.0.1:11434/api/generate",
+                    data=body,
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                with urllib.request.urlopen(ureq, timeout=4) as _:
+                    pass
+    except Exception:
+        pass
 
     # 1. Pure Python termination via psutil (completely silent on all platforms)
     try:
         import psutil
-        target_names = {'ollama.exe', 'ollama_llama_server.exe', 'ollama app.exe', 'ollama'}
+        to_wait = []
         for proc in psutil.process_iter(['pid', 'name']):
-            if (proc.info.get('name') or '').lower() in target_names:
+            if (proc.info.get('name') or '').lower() in _OLLAMA_PROCESS_NAMES and _is_ollama_proc(proc):
                 try:
                     proc.kill()
+                    to_wait.append(proc)
                     killed += 1
                 except Exception:
                     pass
+        if to_wait:
+            psutil.wait_procs(to_wait, timeout=3)
     except Exception:
         pass
 

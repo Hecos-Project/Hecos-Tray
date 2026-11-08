@@ -186,8 +186,13 @@ def build_processes(ctx):
                 ctx.app.after(0, lambda: _ol_log(f"Launching: {exe}"))
                 _cfg2 = dict(_cfg)
                 _cfg2.setdefault("backend", {}).setdefault("ollama", {})["auto_start_server"] = True
-                OllamaLifecycleManager.get_instance().maybe_auto_start_server(_cfg2)
-                ctx.app.after(0, lambda: _ol_log("✅ Start signal sent. Server should be online in ~5 s."))
+                mgr = OllamaLifecycleManager.get_instance()
+                mgr.maybe_auto_start_server(_cfg2)
+                if _cfg2.get("backend", {}).get("ollama", {}).get("warmup_model", False):
+                    mgr.maybe_warmup_model(_cfg2, delay=4.5)
+                    ctx.app.after(0, lambda: _ol_log("✅ Start + model warm-up scheduled (~5–10 s)."))
+                else:
+                    ctx.app.after(0, lambda: _ol_log("✅ Start signal sent. Server should be online in ~5 s."))
             except Exception as ex:
                 ctx.app.after(0, lambda: _ol_log(f"Error: {ex}"))
             ctx.app.after(0, lambda: btn_ol_start.configure(state="normal", text="▶  Start Server"))
