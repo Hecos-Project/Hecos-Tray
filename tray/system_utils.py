@@ -561,6 +561,145 @@ def get_named_executable(name: str, base_exe: str = None) -> str:
     except Exception:
         return base_exe
 
+
+# ── SwarmUI helpers ────────────────────────────────────────────────────────────
+
+_SWARMUI_PROCESS_NAMES = {"swarmui", "swarmui.exe", "dotnet", "dotnet.exe"}
+
+
+def _is_swarmui_proc(proc) -> bool:
+    """Return True if the process looks like a SwarmUI or SwarmUI dotnet process."""
+    try:
+        name_lower = (proc.info.get("name") or "").lower()
+        if "swarmui" in name_lower:
+            return True
+        if "dotnet" in name_lower:
+            cmdline = " ".join(proc.cmdline()).lower()
+            return "swarmui" in cmdline
+    except Exception:
+        pass
+    return False
+
+
+def get_swarmui_processes() -> list:
+    """Return a list of dicts describing active SwarmUI / dotnet-SwarmUI processes."""
+    import psutil
+    results = []
+    for proc in psutil.process_iter(["pid", "name", "status", "cpu_percent"]):
+        try:
+            name_lower = (proc.info.get("name") or "").lower()
+            if not any(n in name_lower for n in ("swarmui", "dotnet")):
+                continue
+            if not _is_swarmui_proc(proc):
+                continue
+            p_type = "SwarmUI.exe" if "swarmui" in name_lower else "SwarmUI (dotnet)"
+            ram_mb = 0
+            try:
+                ram_mb = round(proc.memory_info().rss / (1024 * 1024))
+            except Exception:
+                pass
+            results.append({
+                "pid":         proc.info["pid"],
+                "name":        proc.info.get("name", ""),
+                "type":        p_type,
+                "ram_mb":      ram_mb,
+                "cpu_percent": round(proc.info.get("cpu_percent") or 0.0, 1),
+                "status":      proc.info.get("status", "unknown"),
+            })
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            continue
+    return results
+
+
+def is_swarmui_api_responding(url: str = "http://127.0.0.1:7801", timeout: int = 2) -> bool:
+    """Return True if SwarmUI's HTTP API is responding."""
+    try:
+        import urllib.request
+        req = urllib.request.Request(f"{url}/API/GetNewSession", method="POST",
+                                     data=b"{}", headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return resp.status < 500
+    except Exception:
+        pass
+    # Fallback: simple TCP connect on port 7801
+    try:
+        import socket
+        host = url.split("//")[-1].split(":")[0]
+        port_str = url.split(":")[-1].split("/")[0]
+        port = int(port_str) if port_str.isdigit() else 7801
+        with socket.create_connection((host, port), timeout=timeout):
+            return True
+    except Exception:
+        return False
+
+
+def kill_swarmui_processes() -> int:
+    """
+    Kill all SwarmUI-related processes.
+    Returns the number of processes killed.
+    """
+    import psutil
+    killed = 0
+    to_wait = []
+
+    for proc in psutil.process_iter(["pid", "name"]):
+        if not _is_swarmui_proc(proc):
+            continue
+        try:
+            proc.terminate()
+            to_wait.append(proc)
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            pass
+
+    import time
+    deadline = time.monotonic() + 4.0
+    for proc in to_wait:
+        try:
+            remaining = max(0.1, deadline - time.monotonic())
+            proc.wait(timeout=remaining)
+            killed += 1
+        except (psutil.TimeoutExpired, psutil.NoSuchProcess):
+            try:
+                proc.kill()
+                killed += 1
+            except Exception:
+                pass
+
+    # Windows fallback: taskkill by image name
+    if sys.platform == "win32":
+        try:
+            subprocess.call(
+                ["taskkill", "/F", "/IM", "SwarmUI.exe"],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            )
+        except Exception:
+            pass
+
+    return killed
+
+
+def start_swarmui() -> tuple:
+    """
+    Try to launch SwarmUI from the Hecos image_gen config or auto-discovered path.
+    Returns (ok: bool, message: str).
+    """
+    _hecos_root = r"C:\Hecos"
+    if _hecos_root not in sys.path:
+        sys.path.insert(0, _hecos_root)
+    try:
+        from hecos.hpm.image_gen.plugin.local.launcher import SwarmUILauncher
+        launcher = SwarmUILauncher.get_instance()
+        try:
+            from hecos.hpm.image_gen.igen_config.config_manager import get_image_gen_config
+            local_cfg = get_image_gen_config().get("local", {})
+        except Exception:
+            local_cfg = {}
+        ok, code, msg = launcher.ensure_running(local_cfg, force_start=True)
+        return ok, msg
+    except Exception as exc:
+        return False, f"Could not import Hecos image_gen launcher: {exc}"
+
+
 def set_os_startup(enable: bool):
     import sys
     import os

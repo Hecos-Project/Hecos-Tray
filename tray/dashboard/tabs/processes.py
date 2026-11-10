@@ -9,6 +9,7 @@ from tray.system_utils import (
     get_hecos_processes, kill_all_hecos_processes, kill_duplicate_hecos_processes,
     get_ollama_processes, is_ollama_api_responding, kill_ollama_processes,
     get_tts_engines_status, control_tts_engine,
+    get_swarmui_processes, is_swarmui_api_responding, kill_swarmui_processes, start_swarmui,
 )
 
 # ── Colour palette for Ollama status ─────────────────────────────────────────
@@ -450,6 +451,150 @@ def build_processes(ctx):
 
     btn_tts_stop_all.configure(command=_on_tts_stop_all)
 
+
+    # ══════════════════════════════════════════════════════════════════════════
+    # ── SWARMUI SECTION ───────────────────────────────────────────────────────
+    # ══════════════════════════════════════════════════════════════════════════
+    swarm_card = make_card(outer)
+    swarm_card.pack(fill="x", pady=(12, 0))
+
+    swarm_header = ctk.CTkFrame(swarm_card, fg_color="transparent")
+    swarm_header.pack(fill="x", padx=15, pady=(12, 4))
+
+    ctk.CTkLabel(
+        swarm_header,
+        text="🖼  SwarmUI",
+        font=ctk.CTkFont(size=13, weight="bold"),
+        fg_color="transparent",
+        text_color=TEXT,
+    ).pack(side="left")
+
+    swarm_badge = ctk.CTkLabel(
+        swarm_header,
+        text="● Checking...",
+        font=ctk.CTkFont(size=11, weight="bold"),
+        fg_color="transparent",
+        text_color=_DIMMED,
+    )
+    swarm_badge.pack(side="left", padx=(12, 0))
+
+    btn_swarm_stop = ctk.CTkButton(
+        swarm_header,
+        text="⏹  Stop & Free RAM",
+        fg_color=RED, text_color="#fff", hover_color="#b91c1c",
+        width=135, height=26,
+        font=ctk.CTkFont(size=11),
+    )
+    btn_swarm_stop.pack(side="right", padx=(6, 0))
+
+    btn_swarm_start = ctk.CTkButton(
+        swarm_header,
+        text="▶  Start",
+        fg_color="#16a34a", text_color="#fff", hover_color="#15803d",
+        width=70, height=26,
+        font=ctk.CTkFont(size=11),
+    )
+    btn_swarm_start.pack(side="right")
+
+    swarm_txt = ctk.CTkTextbox(
+        swarm_card,
+        height=72,
+        fg_color=BG,
+        text_color=TEXT,
+        font=ctk.CTkFont("Consolas", size=12),
+        wrap="none",
+        state="disabled",
+    )
+    swarm_txt.pack(fill="x", padx=10, pady=(4, 4))
+
+    swarm_log = ctk.CTkTextbox(
+        swarm_card,
+        height=52,
+        fg_color=BG,
+        text_color="#a3e4a3",
+        font=ctk.CTkFont("Consolas", size=11),
+        wrap="word",
+        state="disabled",
+    )
+    swarm_log.pack(fill="x", padx=10, pady=(0, 12))
+
+    def _swarm_log(msg: str):
+        ts = _dt.datetime.now().strftime("%H:%M:%S")
+        swarm_log.configure(state="normal")
+        swarm_log.insert("end", f"[{ts}] {msg}\n")
+        swarm_log.see("end")
+        swarm_log.configure(state="disabled")
+
+    def _refresh_swarmui():
+        """Update the SwarmUI section. Called every 3 s from the background loop."""
+        if ctx.active_tab.get("key") != "processes":
+            return
+        try:
+            procs  = get_swarmui_processes()
+            api_ok = is_swarmui_api_responding()
+
+            if api_ok:
+                badge_txt   = "● API Online"
+                badge_color = _GREEN
+            elif procs:
+                badge_txt   = "● Running (API not ready)"
+                badge_color = _AMBER
+            else:
+                badge_txt   = "● Offline"
+                badge_color = _DIMMED
+
+            swarm_badge.configure(text=badge_txt, text_color=badge_color)
+            btn_swarm_stop.configure(state="normal" if (procs or api_ok) else "disabled")
+            btn_swarm_start.configure(state="disabled" if (procs or api_ok) else "normal")
+
+            swarm_txt.configure(state="normal")
+            swarm_txt.delete("1.0", "end")
+            if not procs:
+                swarm_txt.insert("end", "  No SwarmUI processes found.\n")
+            else:
+                for p in procs:
+                    mem_str = f"{p['ram_mb']} MB RAM" if p["ram_mb"] else "—"
+                    line = (
+                        f"  {p['type']:<22} PID: {p['pid']:<8} "
+                        f"CPU: {p['cpu_percent']:>5.1f}%   Mem: {mem_str:<10}  [{p['status']}]\n"
+                    )
+                    swarm_txt.insert("end", line)
+            swarm_txt.configure(state="disabled")
+        except Exception as e:
+            swarm_badge.configure(text=f"● Error: {e}", text_color=RED)
+
+    def _on_swarm_stop():
+        btn_swarm_stop.configure(state="disabled", text="Stopping...")
+        _swarm_log("Sending stop signal to SwarmUI (taskkill + process scan)...")
+        def _bg():
+            try:
+                n = kill_swarmui_processes()
+                ctx.app.after(0, lambda: _swarm_log(
+                    f"Done — {n} process(es) terminated. RAM freed." if n else "No SwarmUI processes were running."
+                ))
+            except Exception as ex:
+                ctx.app.after(0, lambda: _swarm_log(f"Error: {ex}"))
+            ctx.app.after(0, lambda: btn_swarm_stop.configure(state="normal", text="⏹  Stop & Free RAM"))
+            ctx.app.after(0, _refresh_swarmui)
+        threading.Thread(target=_bg, daemon=True).start()
+
+    def _on_swarm_start():
+        btn_swarm_start.configure(state="disabled", text="Starting...")
+        _swarm_log("Launching SwarmUI via Hecos image_gen launcher...")
+        def _bg():
+            try:
+                ok, msg = start_swarmui()
+                prefix = "✅" if ok else "❌"
+                ctx.app.after(0, lambda: _swarm_log(f"{prefix} {msg}"))
+            except Exception as ex:
+                ctx.app.after(0, lambda: _swarm_log(f"Error: {ex}"))
+            ctx.app.after(0, lambda: btn_swarm_start.configure(state="normal", text="▶  Start"))
+            ctx.app.after(3000, _refresh_swarmui)
+        threading.Thread(target=_bg, daemon=True).start()
+
+    btn_swarm_stop.configure(command=_on_swarm_stop)
+    btn_swarm_start.configure(command=_on_swarm_start)
+
     # ══════════════════════════════════════════════════════════════════════════
     # ── HECOS PROCESSES SECTION ───────────────────────────────────────────────
     # ══════════════════════════════════════════════════════════════════════════
@@ -555,6 +700,7 @@ def build_processes(ctx):
     # ── Initial paint ─────────────────────────────────────────────────────────
     _refresh_ollama()
     _refresh_tts()
+    _refresh_swarmui()
     _refresh_hecos()
 
     # ── Background refresh loop (every 3 s) ───────────────────────────────────
