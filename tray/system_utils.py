@@ -683,7 +683,7 @@ def start_swarmui() -> tuple:
     Try to launch SwarmUI from the Hecos image_gen config or auto-discovered path.
     Returns (ok: bool, message: str).
     """
-    _hecos_root = r"C:\Hecos"
+    from tray.config import _ROOT as _hecos_root
     if _hecos_root not in sys.path:
         sys.path.insert(0, _hecos_root)
     try:

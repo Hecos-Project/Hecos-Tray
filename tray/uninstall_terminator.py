@@ -21,31 +21,90 @@ import subprocess
 import argparse
 import platform
 
+try:
+    import tomllib  # Python 3.11+
+except ImportError:
+    tomllib = None
+
 if platform.system() == "Windows":
-    CORE_DIR = "C:\\Hecos"
-    TRAY_DIR = "C:\\Hecos-Tray"
+    DEFAULT_CORE_DIR = "C:\\Hecos"
+    DEFAULT_TRAY_DIR = "C:\\Hecos-Tray"
 else:
-    CORE_DIR = "/opt/hecos"
-    TRAY_DIR = "/opt/hecos-tray"
+    DEFAULT_CORE_DIR = os.path.join(os.path.expanduser("~"), "Hecos")
+    DEFAULT_TRAY_DIR = os.path.join(os.path.expanduser("~"), "Hecos-Tray")
+
+
+def _read_install_registry():
+    if os.name == "nt":
+        base = os.environ.get("LOCALAPPDATA") or os.path.join(os.path.expanduser("~"), "AppData", "Local")
+        reg_path = os.path.join(base, "Hecos", "install.toml")
+    else:
+        xdg = os.environ.get("XDG_CONFIG_HOME") or os.path.join(os.path.expanduser("~"), ".config")
+        reg_path = os.path.join(xdg, "hecos", "install.toml")
+    if not os.path.isfile(reg_path):
+        return {}
+    try:
+        if tomllib is not None:
+            with open(reg_path, "rb") as f:
+                return {str(k): str(v) for k, v in tomllib.load(f).items() if v is not None}
+    except Exception:
+        pass
+    data = {}
+    try:
+        with open(reg_path, "r", encoding="utf-8", errors="replace") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, v = line.split("=", 1)
+                data[k.strip()] = v.strip().strip("'\"")
+    except Exception:
+        pass
+    return data
 
 
 def _parse_toml_deps(toml_path):
     packages = []
     if not os.path.exists(toml_path):
-        print(f"  [!] pyproject.toml not found at: {toml_path}")
+        print(f"  [WARN] pyproject.toml not found at: {toml_path}")
         return packages
+    raw = []
     try:
-        with open(toml_path, "r", encoding="utf-8") as f:
-            content = f.read()
-        match = re.search(r"dependencies\s*=\s*\[(.*?)\]", content, re.DOTALL)
-        if match:
-            raw = re.findall(r'"([^"]+)"', match.group(1))
-            for pkg in raw:
-                name = re.split(r"[;>=<~]", pkg)[0].strip()
-                if name:
-                    packages.append(name)
+        if tomllib is not None:
+            with open(toml_path, "rb") as f:
+                data = tomllib.load(f)
+            proj = data.get("project", {})
+            raw.extend(proj.get("dependencies", []) or [])
+            opt = proj.get("optional-dependencies", {}) or {}
+            raw.extend(opt.get("service", []) or [])
     except Exception as e:
-        print(f"  [!] Failed to parse {toml_path}: {e}")
+        print(f"  [WARN] tomllib parse failed for {toml_path}: {e}")
+
+    if not raw:
+        try:
+            with open(toml_path, "r", encoding="utf-8") as f:
+                in_array = False
+                for line in f:
+                    s = line.strip()
+                    if not in_array:
+                        if re.match(r"^(dependencies|service)\s*=\s*\[", s):
+                            in_array = True
+                            if s.endswith("]"):
+                                raw.extend(re.findall(r'"([^"]+)"', s))
+                                in_array = False
+                    else:
+                        if s.startswith("]"):
+                            in_array = False
+                            continue
+                        if not s.startswith("#"):
+                            raw.extend(re.findall(r'"([^"]+)"', s))
+        except Exception as e:
+            print(f"  [WARN] Failed to parse {toml_path}: {e}")
+
+    for pkg in raw:
+        name = re.split(r"[\[\];>=<~!@]", pkg)[0].strip()
+        if name:
+            packages.append(name)
     return packages
 
 
@@ -135,10 +194,18 @@ def main():
     parser.add_argument("--mode", choices=["full", "core", "tray"], required=True)
     parser.add_argument("--wait", type=int, default=4)
     parser.add_argument("--skip-tray-delete", action="store_true")
+    parser.add_argument("--core-dir", default=None)
+    parser.add_argument("--tray-dir", default=None)
     args = parser.parse_args()
+
+    reg = _read_install_registry()
+    core_dir = args.core_dir or reg.get("core_path") or DEFAULT_CORE_DIR
+    tray_dir = args.tray_dir or reg.get("tray_path") or DEFAULT_TRAY_DIR
 
     print("=" * 64)
     print("  HECOS UNINSTALL TERMINATOR  |  Mode:", args.mode.upper())
+    print("  Core:", core_dir)
+    print("  Tray:", tray_dir)
     print("=" * 64)
     print(f"\n  Waiting {args.wait}s for all Hecos processes to exit...\n")
     time.sleep(args.wait)
@@ -147,14 +214,14 @@ def main():
 
     if mode in ("full", "core"):
         print("[1] Removing Hecos Core dependencies...")
-        pkgs = _parse_toml_deps(os.path.join(CORE_DIR, "pyproject.toml"))
+        pkgs = _parse_toml_deps(os.path.join(core_dir, "pyproject.toml"))
         pkgs.extend(["hecos-core", "hecos"])
         _uninstall_packages(list(set(pkgs)), "Core")
         print()
 
     if mode in ("full", "tray"):
         print("[2] Removing Hecos Tray dependencies...")
-        pkgs = _parse_toml_deps(os.path.join(TRAY_DIR, "pyproject.toml"))
+        pkgs = _parse_toml_deps(os.path.join(tray_dir, "pyproject.toml"))
         pkgs.extend(["hecos-tray"])
         _uninstall_packages(list(set(pkgs)), "Tray")
         print()
@@ -166,12 +233,12 @@ def main():
 
     print("[4] Deleting folders...")
     if mode in ("full", "core"):
-        _delete_folder(CORE_DIR)
+        _delete_folder(core_dir)
     if mode in ("full", "tray"):
         if args.skip_tray_delete:
-            print(f"  ~ Skipping deletion of {TRAY_DIR} (--skip-tray-delete enabled)")
+            print(f"  ~ Skipping deletion of {tray_dir} (--skip-tray-delete enabled)")
         else:
-            _delete_folder(TRAY_DIR)
+            _delete_folder(tray_dir)
 
     print()
     print("=" * 64)

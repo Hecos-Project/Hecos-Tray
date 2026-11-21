@@ -7,7 +7,8 @@ import zipfile
 import shutil
 import tempfile
 import subprocess
-from tray.config import _ROOT
+from tray.config import _ROOT, _TRAY_ROOT, set_core_path
+from tray.install_registry import update_registry
 from tray.update_sources import load_sources
 
 
@@ -149,10 +150,16 @@ def install_core_from_scratch(progress_callback=None, status_callback=None) -> b
 
         _progress(1.0)
 
-        # --- Step 4: Verify and run setup ---
+        # --- Step 4: Verify, register, and report ---
         version_file = os.path.join(_ROOT, "hecos", "core", "version")
         if not os.path.exists(version_file):
             _status("⚠ Warning: Core installed but version file not found. Try running Setup.")
+        else:
+            try:
+                set_core_path(_ROOT)
+                update_registry(core_path=_ROOT, tray_path=_TRAY_ROOT)
+            except Exception:
+                pass
 
         _status("Core downloaded! Launch Setup to continue.")
         return True
@@ -164,7 +171,8 @@ def install_core_from_scratch(progress_callback=None, status_callback=None) -> b
 
 def run_setup_wizard(status_callback=None):
     """
-    Launches the Hecos Setup Wizard (web-based, via the console bat/sh).
+    Launches the Hecos Core Setup Wizard via its bootstrap script,
+    passing --tray-dir so Core knows where this Tray lives.
     """
     def _status(msg):
         if status_callback:
@@ -176,15 +184,23 @@ def run_setup_wizard(status_callback=None):
             if not os.path.exists(wizard):
                 _status(f"⚠ Setup script not found at:\n{wizard}")
                 return False
-            subprocess.Popen(["cmd.exe", "/c", wizard], creationflags=0x00000010, cwd=_ROOT)
+            subprocess.Popen(
+                ["cmd.exe", "/c", wizard, "--tray-dir", _TRAY_ROOT],
+                creationflags=0x00000010,
+                cwd=_ROOT,
+            )
         else:
             wizard = os.path.join(_ROOT, "scripts", "linux", "setup", "HECOS_SETUP_WIZARD.sh")
             if not os.path.exists(wizard):
                 _status(f"⚠ Setup script not found at:\n{wizard}")
                 return False
-            subprocess.Popen(["bash", wizard], start_new_session=True, cwd=_ROOT)
+            subprocess.Popen(
+                ["bash", wizard, "--tray-dir", _TRAY_ROOT],
+                start_new_session=True,
+                cwd=_ROOT,
+            )
 
-        _status("Setup Wizard launched — check your browser.")
+        _status("Setup Wizard launched — check the setup terminal.")
         return True
 
     except Exception as e:

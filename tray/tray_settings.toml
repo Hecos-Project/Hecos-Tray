@@ -36,3 +36,5 @@ full_color_logs = true
 autoopen_dashboard = true
 
 start_tray_on_os_boot = true
+
+core_path = 'C:\Hecos'

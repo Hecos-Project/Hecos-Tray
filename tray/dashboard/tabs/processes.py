@@ -170,7 +170,7 @@ def build_processes(ctx):
         def _bg():
             try:
                 import sys as _sys, os as _os
-                hecos_root = r"C:\Hecos"
+                from tray.config import _ROOT as hecos_root
                 if hecos_root not in _sys.path:
                     _sys.path.insert(0, hecos_root)
                 import yaml as _yaml

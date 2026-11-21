@@ -547,21 +547,22 @@ def build_update(ctx):
         bat_path = os.path.join(tmp_dir, "hecos_suicide.bat")
         with open(bat_path, "w") as f:
             f.write(
-                f"@echo off\n"
-                f":: Wait for the Python process to fully exit\n"
-                f"timeout /t 6 /nobreak >nul\n"
-                f":: Retry loop: try up to 5 times with 2s gaps\n"
-                f"set RETRIES=5\n"
-                f":RETRY\n"
-                f"rmdir /s /q \"{tray_root}\" >nul 2>&1\n"
-                f"if exist \"{tray_root}\" (\n"
-                f"    if !RETRIES! GTR 0 (\n"
-                f"        set /a RETRIES-=1\n"
-                f"        timeout /t 2 /nobreak >nul\n"
-                f"        goto RETRY\n"
-                f"    )\n"
-                f")\n"
-                f"del \"%~f0\" >nul 2>&1\n"
+                f"@echo off\r\n"
+                f"setlocal enabledelayedexpansion\r\n"
+                f"rem Wait for the Python process to fully exit\r\n"
+                f"timeout /t 6 /nobreak >nul\r\n"
+                f"rem Retry loop: try up to 5 times with 2s gaps\r\n"
+                f"set RETRIES=5\r\n"
+                f":RETRY\r\n"
+                f"rmdir /s /q \"{tray_root}\" >nul 2>&1\r\n"
+                f"if exist \"{tray_root}\" (\r\n"
+                f"    if !RETRIES! GTR 0 (\r\n"
+                f"        set /a RETRIES-=1\r\n"
+                f"        timeout /t 2 /nobreak >nul\r\n"
+                f"        goto RETRY\r\n"
+                f"    )\r\n"
+                f")\r\n"
+                f"del \"%~f0\" >nul 2>&1\r\n"
             )
 
         try:
@@ -596,8 +597,16 @@ def build_update(ctx):
             if exe_cmd.lower().endswith("pythonw.exe"):
                 exe_cmd = exe_cmd[:-len("pythonw.exe")] + "python.exe"
 
+            from tray.config import _ROOT as core_root, _TRAY_ROOT as tray_root
             proc = subprocess.Popen(
-                [exe_cmd, dest, "--mode", mode, "--wait", "4", "--skip-tray-delete"],
+                [
+                    exe_cmd, dest,
+                    "--mode", mode,
+                    "--wait", "4",
+                    "--skip-tray-delete",
+                    "--core-dir", core_root,
+                    "--tray-dir", tray_root,
+                ],
                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1,
                 creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
             )

@@ -1,0 +1,15 @@
+[21/11/2026  5:13:10,40] HECOS TRAY SETUP STARTED (tray_dir=C:\Hecos-Tray) 
+[21/11/2026  5:13:10,89] Python ready: System Python (py -3) (3.14.7) 
+[21/11/2026  5:13:10,89] Checking Tray dependencies... 
+[21/11/2026  5:13:11,29] Tray deps OK 
+[21/11/2026  5:13:11,45] Reached READY menu. CORE_FOUND=1 ROOT_DIR=C:\Hecos 
+[21/11/2026  5:15:33,60] HECOS TRAY SETUP STARTED (tray_dir=C:\Hecos-Tray) 
+[21/11/2026  5:15:33,95] Python ready: System Python (py -3) (3.14.7) 
+[21/11/2026  5:15:33,95] Checking Tray dependencies... 
+[21/11/2026  5:15:34,24] Tray deps OK 
+[21/11/2026  5:15:34,39] Reached READY menu. CORE_FOUND=1 ROOT_DIR=C:\Hecos 
+[21/11/2026  5:35:46,03] HECOS TRAY SETUP STARTED (tray_dir=C:\Hecos-Tray) 
+[21/11/2026  5:35:46,39] Python ready: System Python (py -3) (3.14.7) 
+[21/11/2026  5:35:46,39] Checking Tray dependencies... 
+[21/11/2026  5:35:46,71] Tray deps OK 
+[21/11/2026  5:35:46,87] Reached READY menu. CORE_FOUND=1 ROOT_DIR=C:\Hecos 

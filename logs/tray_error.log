@@ -3655,3 +3655,159 @@ C:\Hecos\python_env\Lib\site-packages\torch\nn\utils\weight_norm.py:144: FutureW
 [2026-11-10 06:58:35] RESTART TRIGGERED FROM TRAY
 ==================================================
 --- END TRACE ---
+[2026-11-13 12:08:00] [INFO] ============================================================
+[2026-11-13 12:08:00] [INFO] === TRAY SESSION STARTED ===
+[2026-11-13 12:08:00] [INFO] ============================================================
+[2026-11-13 12:08:00] [INFO]   Timestamp : 2026-11-13 12:08:00
+[2026-11-13 12:08:00] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-11-13 12:08:00] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-11-13 12:08:00] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-11-13 12:08:00] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-11-13 12:08:00] [INFO]   Tray root : C:\Hecos-Tray
+[2026-11-13 12:08:00] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-11-13 12:08:00] [INFO] ============================================================
+[2026-11-13 12:08:01] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-11-13 12:08:02] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-11-13 12:08:02] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-11-13 12:08:05] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-11-13 12:08:06] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-13 12:08:06] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-13 12:08:06] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-14 09:49:57] [STDOUT] [ORCHESTRATOR] Hecos process ended with error (exit code 15) after 78111.3s.
+[2026-11-14 09:49:57] [STDOUT] [ORCHESTRATOR] Last boot trace output:
+--- BOOT TRACE ---
+rv = self.dispatch_request()
+  File "C:\Hecos\python_env\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Hecos\python_env\Lib\site-packages\flask_login\utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "C:\Hecos\hecos\modules\web_ui\extensions\weather_pro_widget\main.py", line 39, in api_weather_pro_data
+    data = instance.get_weather_data(city)
+  File "C:\Hecos\hecos\hpm\weather_pro\main.py", line 167, in get_weather_data
+    units_param = "celsius" if self._get_units() != "fahrenheit" else "fahrenheit"
+  File "C:\Hecos\hecos\hpm\weather_pro\main.py", line 82, in _get_units
+    cfg = _get_own_config()
+  File "C:\Hecos\hecos\hpm\weather_pro\main.py", line 30, in _get_own_config
+    logger.warning("WEATHER_PRO", f"Could not load autonomous config: {e}")
+  File "logging\__init__.py", line 1501, in warning
+  File "logging\__init__.py", line 1634, in _log
+  File "logging\__init__.py", line 1644, in handle
+  File "logging\__init__.py", line 1706, in callHandlers
+  File "logging\__init__.py", line 978, in handle
+  File "logging\handlers.py", line 77, in emit
+Message: 'WEATHER_PRO'
+Arguments: ("Could not load autonomous config: No module named 'weather_pro_config'",)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+C:\Hecos\python_env\Lib\site-packages\torch\nn\modules\rnn.py:1013: UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+  super().__init__("LSTM", *args, **kwargs)
+C:\Hecos\python_env\Lib\site-packages\torch\nn\utils\weight_norm.py:144: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+
+==================================================
+[2026-11-14 09:49:57] RESTART TRIGGERED FROM TRAY
+==================================================
+--- END TRACE ---
+[2026-11-16 13:33:34] [STDOUT] [ORCHESTRATOR] Killed process 38460 on port 7070.
+[2026-11-16 15:30:54] [STDOUT] [ORCHESTRATOR] Killed process 15356 on port 7070.
+[2026-11-16 15:30:56] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-16 15:30:56] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-16 15:30:56] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-17 05:29:06] [STDOUT] [ORCHESTRATOR] Hecos process stopped by user (ran 50290.3s).
+[2026-11-17 05:29:07] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-11-17 05:29:07] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-11-18 03:43:18] [INFO] ============================================================
+[2026-11-18 03:43:18] [INFO] === TRAY SESSION STARTED ===
+[2026-11-18 03:43:18] [INFO] ============================================================
+[2026-11-18 03:43:18] [INFO]   Timestamp : 2026-11-18 03:43:18
+[2026-11-18 03:43:18] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-11-18 03:43:18] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-11-18 03:43:18] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-11-18 03:43:18] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-11-18 03:43:18] [INFO]   Tray root : C:\Hecos-Tray
+[2026-11-18 03:43:18] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-11-18 03:43:18] [INFO] ============================================================
+[2026-11-18 03:43:18] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-11-18 03:43:18] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-11-18 03:43:18] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-11-18 14:25:26] [STDOUT] [ORCHESTRATOR] Killed process 12308 on port 7070.
+[2026-11-18 16:13:35] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-11-18 16:13:35] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-11-19 04:42:10] [INFO] ============================================================
+[2026-11-19 04:42:10] [INFO] === TRAY SESSION STARTED ===
+[2026-11-19 04:42:10] [INFO] ============================================================
+[2026-11-19 04:42:10] [INFO]   Timestamp : 2026-11-19 04:42:10
+[2026-11-19 04:42:10] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-11-19 04:42:10] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-11-19 04:42:10] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-11-19 04:42:10] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-11-19 04:42:10] [INFO]   Tray root : C:\Hecos-Tray
+[2026-11-19 04:42:10] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-11-19 04:42:10] [INFO] ============================================================
+[2026-11-19 04:42:11] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-11-19 04:42:12] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-11-19 04:42:12] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-11-19 04:42:15] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-11-19 04:42:15] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-19 04:42:15] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-19 04:42:15] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-19 07:53:16] [STDOUT] [ORCHESTRATOR] Hecos process stopped by user (ran 11461.0s).
+[2026-11-19 07:53:16] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-11-19 10:31:28] [INFO] ============================================================
+[2026-11-19 10:31:28] [INFO] === TRAY SESSION STARTED ===
+[2026-11-19 10:31:28] [INFO] ============================================================
+[2026-11-19 10:31:28] [INFO]   Timestamp : 2026-11-19 10:31:28
+[2026-11-19 10:31:28] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-11-19 10:31:28] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-11-19 10:31:28] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-11-19 10:31:28] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-11-19 10:31:28] [INFO]   Tray root : C:\Hecos-Tray
+[2026-11-19 10:31:28] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-11-19 10:31:28] [INFO] ============================================================
+[2026-11-19 10:31:29] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True}
+[2026-11-19 10:31:30] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-11-19 10:31:30] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-11-19 10:31:33] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-11-19 10:31:34] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-19 10:31:34] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-19 10:31:34] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-20 06:13:06] [STDOUT] [ORCHESTRATOR] Hecos process ended normally (exit code 0, ran 70891.8s).
+[2026-11-20 08:42:06] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-11-21 05:39:22] [INFO] ============================================================
+[2026-11-21 05:39:22] [INFO] === TRAY SESSION STARTED ===
+[2026-11-21 05:39:22] [INFO] ============================================================
+[2026-11-21 05:39:22] [INFO]   Timestamp : 2026-11-21 05:39:22
+[2026-11-21 05:39:22] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-11-21 05:39:22] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-11-21 05:39:22] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-11-21 05:39:22] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-11-21 05:39:22] [INFO]   Tray root : C:\Hecos-Tray
+[2026-11-21 05:39:22] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-11-21 05:39:22] [INFO] ============================================================
+[2026-11-21 05:39:23] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True, 'core_path': 'C:\\Hecos'}
+[2026-11-21 05:39:24] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-11-21 05:39:24] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-11-21 05:39:27] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-11-21 05:39:27] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-21 05:39:27] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-21 05:39:27] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.
+[2026-11-21 05:49:52] [STDOUT] [ORCHESTRATOR] Hecos process stopped by user (ran 625.1s).
+[2026-11-21 05:49:52] [STDOUT] [ORCHESTRATOR] Hecos process stopped.
+[2026-11-21 05:49:53] [STDOUT] [ORCHESTRATOR] No process found on port 7070.
+[2026-11-21 05:50:01] [INFO] ============================================================
+[2026-11-21 05:50:01] [INFO] === TRAY SESSION STARTED ===
+[2026-11-21 05:50:01] [INFO] ============================================================
+[2026-11-21 05:50:01] [INFO]   Timestamp : 2026-11-21 05:50:01
+[2026-11-21 05:50:01] [INFO]   OS        : Windows 11 (10.0.26200)
+[2026-11-21 05:50:01] [INFO]   Machine   : AMD64 / Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+[2026-11-21 05:50:01] [INFO]   Python    : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]
+[2026-11-21 05:50:01] [INFO]   Executable: C:\Users\melon\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe
+[2026-11-21 05:50:01] [INFO]   Tray root : C:\Hecos-Tray
+[2026-11-21 05:50:01] [INFO]   Log file  : C:\Hecos-Tray\logs\tray_error.log
+[2026-11-21 05:50:01] [INFO] ============================================================
+[2026-11-21 05:50:01] [STDOUT] [TRAY] Settings loaded: {'start_hecos_on_launch': True, 'autoopen_webui': False, 'autoopen_ai_browser': False, 'auto_launch_chrome_for_ai': True, 'browser_startup_url': 'http://localhost:7070', 'browser_headless': False, 'show_technical_menu': True, 'use_daemon': True, 'full_color_logs': True, 'autoopen_dashboard': True, 'start_tray_on_os_boot': True, 'core_path': 'C:\\Hecos'}
+[2026-11-21 05:50:02] [STDOUT] [TRAY-PTT] pynput not installed. Global hotkeys via Tray App disabled.
+[2026-11-21 05:50:02] [STDOUT] [TRAY] Hecos tray icon started.
+[2026-11-21 05:50:04] [STDOUT] [TRAY] start_hecos_on_launch=True but offline — starting Hecos subprocess…
+[2026-11-21 05:50:05] [STDOUT] [ORCHESTRATOR] Using Core portable Python: C:\Hecos\python_env\python.exe
+[2026-11-21 05:50:05] [STDOUT] [ORCHESTRATOR] Spawning with Watchdog... (C:\Hecos\python_env\python.exe)
+[2026-11-21 05:50:05] [STDOUT] [ORCHESTRATOR] Hecos background process spawned successfully.

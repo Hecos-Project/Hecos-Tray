@@ -8,26 +8,29 @@ import platform
 # ─────────────────────────────────────────────────────────────
 #  Directories and Configuration Loading
 # ─────────────────────────────────────────────────────────────
+from tray.install_registry import resolve_core_path, update_registry
+
 # The tray directory is now independent of the Core.
 _TRAY_DIR = os.path.dirname(os.path.abspath(__file__))
+_TRAY_ROOT = os.path.abspath(os.path.join(_TRAY_DIR, ".."))
 
 # Settings and update sources live alongside the tray source code
 SETTINGS_FILE       = os.path.join(_TRAY_DIR, "tray_settings.toml")
 UPDATE_SOURCES_FILE = os.path.join(_TRAY_DIR, "update_sources.toml")
 
 # Determine the default installation path for Hecos Core
-_DEFAULT_CORE_PATH = "C:\\Hecos" if platform.system() == "Windows" else "/opt/hecos"
+_DEFAULT_CORE_PATH = "C:\\Hecos" if platform.system() == "Windows" else os.path.join(os.path.expanduser("~"), "Hecos")
 
 def _get_core_path_from_settings():
+    settings_core = None
     try:
         if os.path.exists(SETTINGS_FILE):
             with open(SETTINGS_FILE, "rb") as f:
                 data = tomllib.load(f)
-                # Read core_path if present, else use default
-                return data.get("core_path", _DEFAULT_CORE_PATH)
+                settings_core = data.get("core_path")
     except Exception:
         pass
-    return _DEFAULT_CORE_PATH
+    return resolve_core_path(_TRAY_ROOT, settings_core_path=settings_core)
 
 # _ROOT is now the path to the Hecos Core engine, completely decoupled from Tray.
 _ROOT = _get_core_path_from_settings()
@@ -94,7 +97,11 @@ def _write_toml_settings(data: dict, path: str):
         if isinstance(value, bool):
             lines.append(f"{key} = {str(value).lower()}")
         elif isinstance(value, str):
-            lines.append(f'{key} = "{value}"')
+            if "'" not in value and "\n" not in value and "\r" not in value and "\\" in value:
+                lines.append(f"{key} = '{value}'")
+            else:
+                escaped = value.replace("\\", "\\\\").replace('"', '\\"')
+                lines.append(f'{key} = "{escaped}"')
         else:
             lines.append(f"{key} = {value}")
         lines.append("")
@@ -119,6 +126,24 @@ def save_settings(settings: dict):
         _write_toml_settings(settings, SETTINGS_FILE)
     except Exception as e:
         print(f"[TRAY] Could not save settings: {e}")
+
+
+def set_core_path(new_path: str):
+    """Persist a custom Hecos Core path to tray_settings.toml and install.toml."""
+    global _ROOT, VERSION_FILE, SYSTEM_YAML, PLUGINS_YAML
+    norm = os.path.normpath(os.path.abspath(new_path))
+    _ROOT = norm
+    VERSION_FILE = os.path.join(_ROOT, "hecos", "core", "version")
+    SYSTEM_YAML = os.path.join(_ROOT, "hecos", "config", "data", "system.yaml")
+    PLUGINS_YAML = os.path.join(_ROOT, "hecos", "config", "data", "plugins.yaml")
+
+    settings = load_settings()
+    settings["core_path"] = norm
+    save_settings(settings)
+    try:
+        update_registry(core_path=norm, tray_path=_TRAY_ROOT)
+    except Exception as e:
+        print(f"[TRAY] Could not update install registry: {e}")
 
 
 # ─────────────────────────────────────────────────────────────
